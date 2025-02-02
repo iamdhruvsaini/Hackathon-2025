@@ -45,11 +45,11 @@ We analyze player performance using:
 ## 🎮 **How to Use**  
 1️⃣ Clone the repository  
 ```bash  
-git clone https://github.com/
+git clone https://github.com/https://github.com/iamdhruvsaini/Hackathon-2025.git
 ```
 2️⃣ Install dependencies  
 ```bash  
-cd  
+cd  Hackathon-2025/frontend
 npm install  # For frontend  
  
 ```
