@@ -1,0 +1,70 @@
+.playercard-left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    /* background-color: #f9f9f9; */
+    border-radius: 12px;
+}
+
+.playercard-section-title {
+    margin-bottom: 20px;
+}
+
+.playercard-section-title-text {
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    border-bottom: 3px solid orange;
+    display: inline-block;
+}
+
+.playercard-section-physical-attributes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+.playercard-section-physical-attributes-attribute {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    background-color: #fff;
+    border: 2px solid green;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.playercard-section-physical-attributes-attribute:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.attribute-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.attribute-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+}
+
+.player-doughnut-potential {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
