@@ -66,6 +66,19 @@ npm run dev
 
 
 ---
+## Images of Responsive Design:
+![image](https://github.com/user-attachments/assets/a04fefc8-9bc0-4e88-b67d-6c7e5feea7b2)
+
+![image](https://github.com/user-attachments/assets/6e622f0d-0fcb-4d47-b3fc-90fbf03ee0e3)
+
+![image](https://github.com/user-attachments/assets/360bbf53-5e6c-42fa-a8d7-5483e37e0e3f)
+
+![image](https://github.com/user-attachments/assets/cad2b904-0133-463a-95bb-66c8bfcb5042)
+
+
+
+
+
 
 ## 📌 **Future Enhancements**  
 ✔ Add **real-time match simulations**  
