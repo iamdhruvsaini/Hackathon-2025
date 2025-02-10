@@ -25,7 +25,9 @@ const NavItems = () => {
         </Link>
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger>Players</MenubarTrigger>
+        <Link to={"/stat"}>
+          <MenubarTrigger>Stats</MenubarTrigger>
+        </Link>
       </MenubarMenu>
       <MenubarMenu>
         <Link to={"/basket"}>

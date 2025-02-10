@@ -1,5 +1,6 @@
+import FootballAd from "@/components/FootballAd";
 import React from "react";
-import FootballVideo from "./FootballVideo";
+
 
 const BasketMain = () => {
   return (
@@ -146,7 +147,7 @@ const BasketMain = () => {
           </p>
         </div>
       </div>
-      <FootballVideo />
+      <FootballAd />
     </div>
   );
 };

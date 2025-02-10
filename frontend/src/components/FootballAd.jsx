@@ -1,7 +1,7 @@
 import React from "react";
-import league from "../../assets/league.gif";
+import league from "../assets/league.gif";
 
-const FootballVideo = () => {
+const FootballAd = () => {
   return (
     <section>
       <div  className="mx-auto grid max-w-screen-xl rounded-lg p-4 md:p-8 lg:grid-cols-12 lg:gap-8 lg:p-16 xl:gap-16">
@@ -24,4 +24,4 @@ const FootballVideo = () => {
   );
 };
 
-export default FootballVideo;
+export default FootballAd;
