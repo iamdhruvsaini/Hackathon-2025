@@ -6,6 +6,7 @@ import { RiWindowsFill } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
 import StepsContent from "./StepsContent";
 import Paidplans from "./Paidplans";
+import Questions from "./Questions";
 
 const Home = () => {
   return (
@@ -61,6 +62,7 @@ const Home = () => {
           </div>
           <StepsContent></StepsContent>
           <Paidplans></Paidplans>
+          <Questions></Questions>
         </div>
       </div>
     </>

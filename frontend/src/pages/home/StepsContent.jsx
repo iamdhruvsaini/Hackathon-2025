@@ -4,7 +4,7 @@ const StepsContent = () => {
   return (
     <div className="sm:px-10 xl:px-0 mt-12 flex flex-col gap-10">
       <p className="text-4xl font-bold text-gray-700">How It Works</p>
-      <div className="lg:w-[90%] w-full mx-auto rounded-2xl p-[2px] bg-gradient-to-r from-blue-200 via-pink-200 to-yellow-200 hover:bg-gradient-to-r hover:from-blue-300 hover:via-pink-300 hover:to-yellow-300">
+      <div className="lg:w-[94%] w-full mx-auto rounded-2xl p-[2px] bg-gradient-to-r from-blue-200 via-pink-200 to-yellow-200 hover:bg-gradient-to-r hover:from-blue-300 hover:via-pink-300 hover:to-yellow-300">
         <div className="rounded-t-2xl flex flex-col md:flex-row bg-white">
           <div className="lg:w-[60%] flex flex-col  gap-6 p-6 sm:p-10">
             <p className="w-fit bg-yellow-100 py-1 px-4 border border-yellow-300 rounded-md font-medium">

@@ -1,6 +1,9 @@
 import App from "@/App";
 import LoginPage from "@/components/LoginPage";
 import SignUpPage from "@/components/SignUpPage";
+import BasketMain from "@/pages/basket/BasketMain";
+import CartPage from "@/pages/cart/CartPage";
+import Dashboard from "@/pages/dashboard/dashboard";
 import Home from "@/pages/home/Home";
 import PlayerCard from "@/pages/players-card/PlayerCard";
 
@@ -28,7 +31,24 @@ const router=createBrowserRouter([
             {
                 path:'/card',
                 element:<PlayerCard/>
+            },
+            {
+                path:'/dashboard',
+                element:<Dashboard/>
+            },
+            {
+                path:'/basket',
+                element:<BasketMain/>
+            },
+            {
+                path:'/cart',
+                element:<CartPage/>
+            },
+            {
+                path:'/basket',
+                element:<BasketMain/>
             }
+
         ]
     }
 ])
