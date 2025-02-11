@@ -1,5 +1,6 @@
 import App from "@/App";
 import LoginPage from "@/components/LoginPage";
+import PageNotFound from "@/components/PageNotFound";
 import SignUpPage from "@/components/SignUpPage";
 import BasketMain from "@/pages/basket/BasketMain";
 import CartPage from "@/pages/cart/CartPage";
@@ -55,6 +56,10 @@ const router=createBrowserRouter([
             }
 
         ]
+    },
+    {
+        path:'*',
+        element:<PageNotFound/>
     }
 ])
 

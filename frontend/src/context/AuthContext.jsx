@@ -8,8 +8,9 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
+
 import Loading from "@/components/Loading";
-import PreLoader from "@/components/PreLoader";
+
 
 const AuthContext = createContext();
 
