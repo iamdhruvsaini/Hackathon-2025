@@ -3,6 +3,8 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import { DominionFcModel } from './database/model.js';
+import { InsertData } from './data/data.js';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;

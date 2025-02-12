@@ -2,6 +2,7 @@ import App from "@/App";
 import LoginPage from "@/components/LoginPage";
 import PageNotFound from "@/components/PageNotFound";
 import SignUpPage from "@/components/SignUpPage";
+import StatsTable from "@/components/StatsTable";
 import BasketMain from "@/pages/basket/BasketMain";
 import CartPage from "@/pages/cart/CartPage";
 import Dashboard from "@/pages/dashboard/dashboard";
@@ -53,6 +54,10 @@ const router=createBrowserRouter([
             {
                 path:'/stat',
                 element:<StatLink/>
+            },
+            {
+                path:'/table/:id',
+                element:<StatsTable/>
             }
 
         ]

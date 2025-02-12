@@ -1,7 +1,7 @@
 import { sql } from "../neon/connection.js";
 
 export const DominionFcModel=async ()=>{
-    // Users Table (Fix: Ensuring only one `user_id` column)
+    // Users Table
     await sql`
     CREATE TABLE IF NOT EXISTS users (
         user_id UUID PRIMARY KEY
@@ -12,12 +12,37 @@ export const DominionFcModel=async ()=>{
     await sql`
     CREATE TABLE IF NOT EXISTS wages (
         wage_id SERIAL PRIMARY KEY,
+        bought smallint DEFAULT 0,
         wage_eur DECIMAL(10,2),
         value_eur DECIMAL(10,2)
     );
     `;
 
-    // Players Table
+    //players table
+
+     await sql `
+     CREATE TABLE IF NOT EXISTS players (
+        player_id SERIAL PRIMARY KEY,
+        short_name TEXT NOT NULL,
+        long_name TEXT,
+        nationality_name TEXT,
+        club_name TEXT,
+        overall INT,
+        potential INT,
+        league_name TEXT,
+        league_level INT,
+        wage_id INT,
+        player_face_url TEXT NOT NULL,
+        club_position VARCHAR(100),
+        club_jersey_number INT,
+        bmi DECIMAL(10,2),
+        trending VARCHAR(5) DEFAULT 'NO',
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (wage_id) REFERENCES wages(wage_id) ON DELETE SET NULL
+    );
+    `
+
+    // Player skills Table
     await sql`
     CREATE TABLE IF NOT EXISTS player_skills (
         skill_id SERIAL PRIMARY KEY,
@@ -29,18 +54,18 @@ export const DominionFcModel=async ()=>{
         dribbling INT,
         defending INT,
         physic INT,
-        attacking_skills DECIMAL(10,3),
-        skill_attributes DECIMAL(10,3),
-        movement_skills DECIMAL(10,3),
-        power_attributes DECIMAL(10,3),
-        mental_attributes DECIMAL(10,3),
-        defending_skills DECIMAL(10,3),
-        goalkeeping_ability DECIMAL(10,3),
+        attacking_skills DECIMAL(10,2),
+        skill_attributes DECIMAL(10,2),
+        movement_skills DECIMAL(10,2),
+        power_attributes DECIMAL(10,2),
+        mental_attributes DECIMAL(10,2),
+        defending_skills DECIMAL(10,2),
+        goalkeeping_ability DECIMAL(10,2),
         FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
     );
     `;
 
-    // User Selections Table (Fix: Ensuring only one `user_id` column)
+    // User Selections Table 
     await sql`
     CREATE TABLE IF NOT EXISTS user_selections (
         user_id UUID NOT NULL,
