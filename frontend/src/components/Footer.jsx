@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div id="footer" className="mt-10 w-full bg-slate-50">
+    <div id="footer" className="mt-10 w-full bg-slate-100">
       <div className="xl:max-w-[1300px] mx-auto px-4">
       <div className="py-10 flex flex-col gap-8 items-center  lg:flex-row-reverse lg:justify-between">
         <div className="flex gap-8 lg:gap-4 lg:flex-row-reverse flex-col items-center">

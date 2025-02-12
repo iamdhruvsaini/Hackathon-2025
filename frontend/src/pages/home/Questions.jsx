@@ -10,8 +10,8 @@ const Questions = () => {
       <p className="text-4xl font-bold text-gray-700">FAQ's</p>
       <div className="mt-10 mx-auto flex flex-col gap-5 lg:grid lg:grid-cols-2 px-4"
       >
-        {askedQuestion.map(()=>(
-            <FoldableCard></FoldableCard>
+        {askedQuestion.map((ques,index)=>(
+            <FoldableCard key={index}></FoldableCard>
         ))}
         
       </div>

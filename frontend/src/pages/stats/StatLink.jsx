@@ -1,5 +1,6 @@
 import FootballAd from "@/components/FootballAd";
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 const footballStatsCategories = [
@@ -36,14 +37,14 @@ const footballStatsCategories = [
     "Players with Highest Skill Moves",
     "Best Players by Attacking Attributes",
     "Best Players by Defensive Attributes",
-    "Best All-Round Players",
+    "Best All Round Players",
     "Players with Best Fitness Level"
   ];
   
 
 const StatLink = () => {
   return (
-    <section className="py-8 p-4 ">
+    <section className="py-8 p-4">
       <div className="mx-auto max-w-screen-xl 2xl:px-0">
         <div className="mb-4 flex items-center justify-between gap-4 md:mb-8">
           <h2 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-3xl">
@@ -53,8 +54,8 @@ const StatLink = () => {
 
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {footballStatsCategories.map((category,index) => (
-                 <a key={index}
-                 href="#"
+                 <Link key={index}
+                  to={`/table/${category.toLowerCase().split(" ").join('-')}`}
                  className="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                >
                  <svg
@@ -74,7 +75,7 @@ const StatLink = () => {
                  <span className="text-sm font-medium text-gray-900 dark:text-white">
                    {category}
                  </span>
-               </a>
+               </Link>
 
             ))}
           

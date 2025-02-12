@@ -3,16 +3,21 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import { DominionFcModel } from './database/model.js';
-import { InsertData } from './data/data.js';
+
+import statsRouter from './routes/stats/stats.route.js';
 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
+
+
+app.use('/api/stats/',statsRouter);
 
 
 

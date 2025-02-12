@@ -15,7 +15,6 @@ function App() {
         <Navigation />
         <Outlet></Outlet>
         <Footer/>
-        
       </AuthProvider>
     </>
   );
