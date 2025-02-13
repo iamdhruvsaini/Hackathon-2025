@@ -15,7 +15,7 @@ const Navigation = () => {
   return (
     <div className="w-full shadow-lg">
       <nav className="xl:max-w-[1300px] h-full mx-auto px-4 py-2 flex items-center justify-between">
-        <Link className="font-semibold text-xl" to={'/'} replace={true}>Dominion Fc.</Link>
+        <Link className="text-xl font-semibold" to={'/'} replace={true}>Dominion Fc.</Link>
         <div className="hidden lg:block ml-24">
           <NavItems></NavItems>
         </div>
