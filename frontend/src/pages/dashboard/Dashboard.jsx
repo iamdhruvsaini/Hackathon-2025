@@ -3,6 +3,7 @@ import React from "react";
 import { DashboardCard } from "./DashboardCard";
 import { ChartComponent } from "./BarChart";
 import { PlayersSelected } from "./PlayersSelected";
+import Promo from "./Promo";
 
 const Dashboard = () => {
   return (
@@ -14,21 +15,22 @@ const Dashboard = () => {
         <DatePicker />
       </div>
 
-      <div className="grid lg:grid-cols-4 grid-cols-2 gap-2 place-items-center">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 items-stretch">
         <DashboardCard />
         <DashboardCard />
         <DashboardCard />
         <DashboardCard />
       </div>
 
-      <div className="flex gap-4 md:flex-row flex-col">
-        <div className="md:w-[40%]">
+      <div className="flex flex-col lg:flex-row gap-4 ">
+        <div className="w-full lg:w-[40%] min-h-[200px]">
           <ChartComponent />
         </div>
-        <div className="md:w-[60%] border rounded-xl p-2 overflow-hidden">
+        <div className="w-full lg:w-[60%] border rounded-xl px-2 overflow-hidden min-h-[200px]">
           <PlayersSelected />
         </div>
       </div>
+      <Promo/>
     </div>
   );
 };

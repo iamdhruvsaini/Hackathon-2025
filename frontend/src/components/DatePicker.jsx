@@ -16,10 +16,7 @@ import {
 export function DatePicker({
   className,
 }) {
-  const [date, setDate] = React.useState({
-    from: new Date(2025, 1, 16),
-    to: addDays(new Date(2025, 1, 24), 24),
-  })
+  const [date, setDate] = React.useState(new Date())
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -34,27 +31,10 @@ export function DatePicker({
             )}
           >
             <CalendarIcon />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "LLL dd, y")} 
-                </>
-              ) : ""
-            ) : (
-              <span>Pick a date</span>
-            )}
+            {date ? format(date, "PP") : <span>Pick a date</span>}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={setDate}
-            numberOfMonths={1}
-          />
-        </PopoverContent>
+      
       </Popover>
     </div>
   )

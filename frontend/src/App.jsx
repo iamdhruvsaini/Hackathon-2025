@@ -13,7 +13,9 @@ function App() {
     <>
       <AuthProvider>
         <Navigation />
-        <Outlet></Outlet>
+      
+          <Outlet></Outlet>
+      
         <Footer/>
       </AuthProvider>
     </>
