@@ -8,6 +8,7 @@ import CartPage from "@/pages/cart/CartPage";
 import Dashboard from "@/pages/dashboard/dashboard";
 import Home from "@/pages/home/Home";
 import PlayerCard from "@/pages/players-card/PlayerCard";
+import PlayersName from "@/pages/players/PlayersName";
 import StatLink from "@/pages/stats/StatLink";
 
 import { createBrowserRouter } from "react-router-dom";
@@ -58,6 +59,11 @@ const router=createBrowserRouter([
             {
                 path:'/table/:id',
                 element:<StatsTable/>
+            },
+            {
+                path:'/players',
+                element:<PlayersName/>
+
             }
 
         ]

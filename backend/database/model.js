@@ -1,10 +1,10 @@
 import { sql } from "../neon/connection.js";
 
-export const DominionFcModel=async ()=>{
+export const DominionFcModel = async () => {
     // Users Table
     await sql`
     CREATE TABLE IF NOT EXISTS users (
-        user_id UUID PRIMARY KEY
+        user_id UUID PRIMARY KEY 
     );
     `;
 
@@ -12,37 +12,47 @@ export const DominionFcModel=async ()=>{
     await sql`
     CREATE TABLE IF NOT EXISTS wages (
         wage_id SERIAL PRIMARY KEY,
-        bought smallint DEFAULT 0,
+        bought SMALLINT DEFAULT 0,
         wage_eur DECIMAL(10,2),
         value_eur DECIMAL(10,2)
     );
     `;
 
-    //players table
-
-     await sql `
-     CREATE TABLE IF NOT EXISTS players (
+    // Players Table 
+    await sql`
+    CREATE TABLE IF NOT EXISTS players (
         player_id SERIAL PRIMARY KEY,
         short_name TEXT NOT NULL,
         long_name TEXT,
-        nationality_name TEXT,
+        league_name TEXT,
         club_name TEXT,
         overall INT,
         potential INT,
-        league_name TEXT,
-        league_level INT,
+        age INT,
         wage_id INT,
+        nationality_name TEXT,  
         player_face_url TEXT NOT NULL,
         club_position VARCHAR(100),
         club_jersey_number INT,
-        bmi DECIMAL(10,2),
         trending VARCHAR(5) DEFAULT 'NO',
         timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (wage_id) REFERENCES wages(wage_id) ON DELETE SET NULL
     );
-    `
+    `;
 
-    // Player skills Table
+    // Physical Attributes Table
+    await sql`
+    CREATE TABLE IF NOT EXISTS physical (
+        physical_id SERIAL PRIMARY KEY,
+        player_id INT NOT NULL,
+        height_cm INT,
+        weight_kg INT,
+        bmi DECIMAL(10,2),
+        FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
+    );
+    `;
+
+    // Player Skills Table
     await sql`
     CREATE TABLE IF NOT EXISTS player_skills (
         skill_id SERIAL PRIMARY KEY,
@@ -65,7 +75,7 @@ export const DominionFcModel=async ()=>{
     );
     `;
 
-    // User Selections Table 
+    // User Selections Table
     await sql`
     CREATE TABLE IF NOT EXISTS user_selections (
         user_id UUID NOT NULL,
@@ -75,5 +85,4 @@ export const DominionFcModel=async ()=>{
         FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
     );
     `;
-
-}
+};

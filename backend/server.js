@@ -20,10 +20,10 @@ app.use(morgan('dev'));
 app.use('/api/stats/',statsRouter);
 
 
+DominionFcModel().then(()=>{
+    console.log("Database Connected Successfully");
+    app.listen(PORT,()=>{
+        console.log(`App is Listening on Port ${PORT}`);
+    })
+})
 
-DominionFcModel().then(() => {
-    console.log("Database tables created successfully");
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
-});

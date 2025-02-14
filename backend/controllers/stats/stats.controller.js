@@ -265,11 +265,13 @@ export const getMostPhysicalPlayers=async(req,res)=>{
 export const getBestPlayerInLeague=async(req,res)=>{
     try {
         const response =await sql `
-        SELECT p.player_face_url, p.short_name, w.bought, p.club_name, p.league_name, p.overall
+        SELECT DISTINCT ON (p.club_name) 
+        p.player_face_url, p.short_name, w.bought, p.club_name, p.league_name, p.overall
         FROM players p
         JOIN wages w ON p.wage_id = w.wage_id
-        ORDER BY p.league_name, p.overall DESC
-        LIMIT 10;
+        ORDER BY p.club_name, p.overall DESC
+        LIMIT 20
+        ;
         `
         res.status(200).json({ success: true, data: response });
     } catch (error) {
@@ -283,11 +285,12 @@ export const getBestPlayerInClub=async(req,res)=>{
 
     try {
         const response =await sql `
-        SELECT p.player_face_url, p.short_name, w.bought, p.club_name, p.league_name, p.overall
+        SELECT DISTINCT ON (p.club_name) 
+        p.player_face_url, p.short_name, w.bought, p.club_name, p.league_name, p.overall
         FROM players p
         JOIN wages w ON p.wage_id = w.wage_id
         ORDER BY p.club_name, p.overall DESC
-        LIMIT 10;
+        LIMIT 20;
         `
         res.status(200).json({ success: true, data: response });
     } catch (error) {
@@ -305,6 +308,26 @@ export const getHighlyRatedPlayersLeague=async(req,res)=>{
         WHERE p.overall >= 85
         GROUP BY p.league_name
         ORDER BY top_players DESC
+        LIMIT 10;
+        `
+        res.status(200).json({ success: true, data: response });
+    } catch (error) {
+        console.error("Database Error:", error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}
+
+export const getPlayersWithHighestSkillMoves=async(req,res)=>{
+
+    try {
+        const response =await sql `
+        SELECT p.player_face_url, p.short_name, w.bought, p.club_name, p.league_name, ps.skill_moves
+        FROM players p
+        JOIN player_skills ps ON p.player_id = ps.player_id
+        JOIN wages w ON p.wage_id = w.wage_id
+        WHERE p.club_name !~ '[0-9]' 
+        AND p.league_name !~ '[0-9]'  
+        ORDER BY ps.skill_moves DESC
         LIMIT 10;
         `
         res.status(200).json({ success: true, data: response });

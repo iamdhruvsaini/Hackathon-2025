@@ -1,5 +1,5 @@
 import express from 'express';
-import { biggestRatingDifference, getBestDefenders, getBestDribblers, getBestForwards, getBestGoalkeepers, getBestMidfielders, getBestPassers, getBestPlayerInClub, getBestPlayerInLeague, getFastestPlayers, getHighlyRatedPlayersLeague, getHighPotentialPlayer, getMostPhysicalPlayers, getTopRatedPlayer, highestPaidPlayer, mostValuablePlayer, valueForMoney } from '../../controllers/stats/stats.controller.js';
+import { biggestRatingDifference, getBestDefenders, getBestDribblers, getBestForwards, getBestGoalkeepers, getBestMidfielders, getBestPassers, getBestPlayerInClub, getBestPlayerInLeague, getFastestPlayers, getHighlyRatedPlayersLeague, getHighPotentialPlayer, getMostPhysicalPlayers, getPlayersWithHighestSkillMoves, getTopRatedPlayer, highestPaidPlayer, mostValuablePlayer, valueForMoney } from '../../controllers/stats/stats.controller.js';
 
 const router = express.Router();    
 
@@ -20,6 +20,8 @@ router.get('/most-physical-players',getMostPhysicalPlayers);
 router.get('/best-players-in-each-league',getBestPlayerInLeague);
 router.get('/best-players-in-each-club',getBestPlayerInClub);
 router.get('/leagues-with-highly-rated-players',getHighlyRatedPlayersLeague);
+router.get('/players-with-highest-skill-moves',getPlayersWithHighestSkillMoves);
+
 
 
 
