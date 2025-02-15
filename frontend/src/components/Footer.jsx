@@ -1,6 +1,5 @@
 import React from "react";
-import { FaLinkedin } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+
 
 const Footer = () => {
   return (
@@ -20,7 +19,7 @@ const Footer = () => {
               <div className="flex gap-10 ">
                 <div>
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                    Follow us
+                    Contact us
                   </h2>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
                     <li className="mb-4">
@@ -76,7 +75,7 @@ const Footer = () => {
                     <label
                       className="leading-7 text-sm text-gray-600"
                     >
-                      Placeholder
+                     Enter Email
                     </label>
                     <input
                       type="text"

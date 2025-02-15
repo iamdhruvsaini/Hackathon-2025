@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const overallPotentialRankings = [
+const potentialRankings = [
     "Top-Rated Players",
     "High Potential Players",
     "Biggest Rating Differences"
@@ -19,7 +19,7 @@ const PotentialRanking = () => {
     </div>
 
     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {overallPotentialRankings.map((category, index) => (
+      {potentialRankings.map((category, index) => (
         <Link
           key={index}
           to={`/table/${category.toLowerCase().split(" ").join("-")}`}

@@ -8,27 +8,27 @@ import Loading from "@/components/Loading";
 const positionDetails = {
   Defenders: {
     description: "Players who specialize in preventing the opposition from scoring.",
-    link: "/positions/defenders"
+    link: "/defenders"
   },
   Forwards: {
     description: "Players responsible for attacking and scoring goals.",
-    link: "/positions/forwards"
+    link: "/forwards"
   },
   Goalkeepers: {
     description: "The last line of defense, responsible for saving shots.",
-    link: "/positions/goalkeepers"
+    link: "/goalkeepers"
   },
   Midfielders: {
     description: "Players who link defense and attack, controlling the game.",
-    link: "/positions/midfielders"
+    link: "/midfielders"
   },
   "Substitutes & Reserves": {
     description: "Backup players who can be rotated into matches.",
-    link: "/positions/substitutes"
+    link: "/substitutes"
   },
   Wingers: {
     description: "Players who operate on the flanks to provide crosses and speed.",
-    link: "/positions/wingers"
+    link: "/wingers"
   }
 };
 

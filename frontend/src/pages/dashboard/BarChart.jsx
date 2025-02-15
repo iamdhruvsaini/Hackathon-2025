@@ -1,7 +1,14 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts"
+import { TrendingUp } from "lucide-react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import {
   Card,
@@ -10,35 +17,42 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-import { useGetPlayerPositionCountQuery } from "@/redux/features/dashboard/dashboardApi"
-import BoxLoading from "@/components/BoxLoading"
-
+} from "@/components/ui/chart";
+import { useGetPlayerPositionCountQuery } from "@/redux/features/dashboard/dashboardApi";
+import BoxLoading from "@/components/BoxLoading";
 
 const chartConfig = {
-    desktop: {
-      label: "Desktop",
-      color: "hsl(var(--chart-1))",
-    },
-  };
-  
+  desktop: {
+    label: "Desktop",
+    color: "hsl(var(--chart-1))",
+  },
+};
 
 export function ChartComponent() {
-  const {data:positions,isLoading,isError}=useGetPlayerPositionCountQuery();
-  
-  if(isLoading || isError){
-    return(
-    <Card className="min-h-[300px] flex justify-center items-center">
-      <BoxLoading/>
-    </Card>
-    )
+  const {
+    data: positions,
+    isLoading,
+    isError,
+  } = useGetPlayerPositionCountQuery();
+
+  if(isError){
+    return <p>Start Server</p>
   }
-  const chartData = positions.data;
+
+  if (isLoading) {
+    return (
+      <Card className="min-h-[300px] flex justify-center items-center">
+        <BoxLoading />
+      </Card>
+    );
+  }
+
+  const chartData = positions?.data || [];
 
   return (
     <Card>
@@ -63,7 +77,14 @@ export function ChartComponent() {
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            < YAxis scale="log" domain={[1, 40000]} tick={false} axisLine={false} tickLine={false} hide={true}/>
+            <YAxis
+              scale="log"
+              domain={[1, 40000]}
+              tick={false}
+              axisLine={false}
+              tickLine={false}
+              hide={true}
+            />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
@@ -88,5 +109,5 @@ export function ChartComponent() {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

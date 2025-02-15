@@ -4,8 +4,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { DominionFcModel } from './database/model.js';
 
-import statsRouter from './routes/stats/stats.route.js';
 import dashboardRouter from './routes/dashboard/dashboard.route.js'
+import potentialRankingRouter from './routes/stats/stats.route.js'
 
 
 const app = express();
@@ -22,10 +22,17 @@ app.use(cors({
 }));
 
 
-app.use('/api/stats/',statsRouter);
+//route for stats page
+app.use('/api/stats/',potentialRankingRouter);
+
+//route for dashboard page 
 app.use('/api/dashboard/',dashboardRouter);
 
 
+
+
+
+//Connecting to Db
 DominionFcModel().then(()=>{
     console.log("Database Connected Successfully");
     app.listen(PORT,()=>{

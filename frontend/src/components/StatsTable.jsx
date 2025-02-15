@@ -1,54 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Loading from "./Loading";
+import { replace, useNavigate, useParams } from "react-router-dom";
 import playerNan from '@/assets/Images/player.jpg';
+import { useGetRankingQuery } from "@/redux/features/stats/statsRankingApi";
+import Loading from "./Loading";
+
 
 const StatsTable = () => {
-  const [playerData, setPlayerData] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const navigate=useNavigate();
   const [tableHeader, setTableHeader] = useState([]);
-  const { id } = useParams();
+  const { link } = useParams();
+  const { data: players, isLoading, isError } = useGetRankingQuery(link);
+  
   useEffect(() => {
-    const fetchPlayerData = async () => {
-      try {
-        const res = await fetch(`http://localhost:3000/api/stats/${id}`);
-        const data = await res.json();
-        setPlayerData([... data.data]);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching player data:", error);
-      }
-    };
-
-    fetchPlayerData();
-  }, []);
-
-
-  useEffect(() => {
-    if (playerData && Object.keys(playerData).length > 0) {
-      setTableHeader(Object.keys(playerData[0]));
+    if (players && players.data && Array.isArray(players.data) && players.data.length > 0) {
+      setTableHeader(Object.keys(players.data[0]));
     }
-  }, [playerData]);
+  }, [players]);
 
-  if (loading) {
+
+
+  if (isLoading) {
     return <Loading />;
+  }
+  if(isError){
+    navigate("page-not-found",{replace:true})
+    return null;
   }
 
   return (
     <section className="py-3 sm:py-5">
-      
-      <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
+
+      <div className="px-4 mx-auto max-w-[1300px] lg:px-12">
         
         <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
           <div className="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-          <p className="text-md font-semibold mx-auto ">{id.split('-').join(" ").toUpperCase()}</p>
-            <div className="flex items-center flex-1 space-x-4">
-              <h5>
-                <span className="text-gray-500">Total Players: </span>
-                <span className="dark:text-white">20</span>
-              </h5>
-              
-            </div>
+            <p className="text-md font-semibold ">{link.split('-').join(" ").toUpperCase()}</p>
+  
             <div className="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
               <button
                 type="button"
@@ -71,7 +59,9 @@ const StatsTable = () => {
                 </svg>
                 Export
               </button>
+  
             </div>
+            
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -86,7 +76,7 @@ const StatsTable = () => {
               </thead>
               <tbody>
                 {/* table rows */}
-                {playerData.map((player, index) => (
+                {players.data.map((player, index) => (
                   <tr
                     className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
                     key={index}

@@ -15,7 +15,7 @@ export const PlayerComparison = () => {
     <div>
       <div className="mb-4 flex items-center justify-between gap-4 md:mb-8">
         <h2 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl">
-          Players Comparison
+          Players Skills Comparison
         </h2>
         
       </div>
