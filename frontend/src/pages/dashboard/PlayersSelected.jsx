@@ -10,20 +10,19 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { useGetRecentSoldPlayerQuery } from "@/redux/features/dashboard/dashboardApi"
-import { useEffect, useState } from "react";
+
   
 
   export function PlayersSelected() {
-    const {data:players,isLoading}=useGetRecentSoldPlayerQuery();
+    
+    const {data:players,isLoading,isError}=useGetRecentSoldPlayerQuery();
 
     
-    if(isLoading){
+    if(isLoading || isError){
       return <BoxLoading/>
     }
   
-    
     return (
-     
       <Table>
         <TableCaption> List of the sold players</TableCaption>
         <TableHeader>

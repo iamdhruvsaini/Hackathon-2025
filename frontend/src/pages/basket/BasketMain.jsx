@@ -1,40 +1,57 @@
 import FootballAd from "@/components/FootballAd";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import BasketCard from "./BasketCard";
+import { useGetPlayerPositionCountQuery } from "@/redux/features/dashboard/dashboardApi";
+import Loading from "@/components/Loading";
 
-const formation = [
-  {
-    position: "Goalkeeper (GK)",
-    description:
-      "The last line of defense, responsible for shot-stopping and organizing the backline.",
+
+const positionDetails = {
+  Defenders: {
+    description: "Players who specialize in preventing the opposition from scoring.",
+    link: "/positions/defenders"
   },
-  {
-    position: "Center-backs (CB)",
-    description:
-      "Strong defensive players who protect the goal by blocking attacks and winning aerial duels.",
+  Forwards: {
+    description: "Players responsible for attacking and scoring goals.",
+    link: "/positions/forwards"
   },
-  {
-    position: "Full-backs (FB)",
-    description:
-      "Defensive wide players who support both defense and attack",
+  Goalkeepers: {
+    description: "The last line of defense, responsible for saving shots.",
+    link: "/positions/goalkeepers"
   },
-  {
-    position: "Central Midfielders (CM)",
-    description:
-      "Key playmakers who control the game's tempo, distribute passes, and contribute defensively.",
+  Midfielders: {
+    description: "Players who link defense and attack, controlling the game.",
+    link: "/positions/midfielders"
   },
-  {
-    position: "Wingers (W)",
-    description:
-      "Fast, creative players who provide deliver crosses, and cut inside to create goal-scoring chances.",
+  "Substitutes & Reserves": {
+    description: "Backup players who can be rotated into matches.",
+    link: "/positions/substitutes"
   },
-  {
-    position: "Striker (ST)",
-    description:
-      "The primary goal-scorer for finishing attacks and creating space in the opponent's defense.",
-  },
-];
+  Wingers: {
+    description: "Players who operate on the flanks to provide crosses and speed.",
+    link: "/positions/wingers"
+  }
+};
+
 
 const BasketMain = () => {
+
+  const [positions, setPositions] = useState([]);
+
+  const { data: players, isLoading } = useGetPlayerPositionCountQuery();
+  
+  useEffect(() => {
+    if (!isLoading && players) {
+      const updatedData = players.data.map(player => ({
+        ...player,
+        description: positionDetails[player.position_bucket]?.description || "No description available.",
+        link: positionDetails[player.position_bucket]?.link || "#"
+      }));
+  
+      setPositions(updatedData);
+    }
+  }, [isLoading, players]);
+
+ 
   return (
     <div className="px-4 mx-auto xl:max-w-[1300px] mt-10">
       <div className="max-w-screen-md mb-8 lg:mb-10">
@@ -48,31 +65,8 @@ const BasketMain = () => {
         </p>
       </div>
       <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
-        {formation.map((option, index) => (
-          <div className="p-[1px] bg-gradient-to-r from-gray-400 to-gray-700 transition-all duration-500 hover:from-gray-700 hover:to-gray-400 h-fit rounded-xl" key={index}>
-            <div className="p-4 rounded-xl bg-white" >
-              <div className="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900">
-                <svg
-                  className="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
-                  fill="#6C7A89"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </div>
-              <h3 className="mb-2 text-xl font-bold dark:text-white">
-                {option.position}
-              </h3>
-              <p className="text-gray-500 dark:text-gray-400">
-                {option.description}
-              </p>
-            </div>
-          </div>
+        {positions.map((option, index) => (
+          <BasketCard option={option} key={index}/>
         ))}
       </div>
       <FootballAd />

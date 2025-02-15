@@ -22,10 +22,10 @@ const Navigation = () => {
 
         <div className="flex gap-4 items-center">
           <div className="relative sm:w-60 w-40 space-x-2">
-            <IoIosSearch className="absolute inline-block left-3 inset-y-2" />
+            <IoIosSearch className="absolute inline-block left-4 inset-y-2" />
             <input
               type="text"
-              placeholder="Search Here"
+              placeholder="Search Players"
               className="bg-gray-100 w-full py-1 md:px-8 px-6 rounded-md focus:outline-none"
             />
           </div>

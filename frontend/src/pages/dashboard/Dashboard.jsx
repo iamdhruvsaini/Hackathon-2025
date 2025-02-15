@@ -6,6 +6,7 @@ import { PlayersSelected } from "./PlayersSelected";
 import Promo from "./Promo";
 
 const Dashboard = () => {
+  
   return (
     <div className="xl:max-w-[1300px] px-4 mx-auto mt-10 flex flex-col gap-6">
       <div className="flex justify-between">

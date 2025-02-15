@@ -29,15 +29,14 @@ const chartConfig = {
   
 
 export function ChartComponent() {
-  const {data:positions,isLoading}=useGetPlayerPositionCountQuery();
+  const {data:positions,isLoading,isError}=useGetPlayerPositionCountQuery();
   
-  if(isLoading){
+  if(isLoading || isError){
     return(
     <Card className="min-h-[300px] flex justify-center items-center">
       <BoxLoading/>
     </Card>
     )
-   
   }
   const chartData = positions.data;
 
