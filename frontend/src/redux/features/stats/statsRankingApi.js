@@ -12,8 +12,10 @@ export const statsRankingApi= createApi({
       getRanking: builder.query({
         query: (link) => `/${link}`,
       }),
-
     }),
+
+
+    
 
   })
 

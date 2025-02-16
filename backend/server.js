@@ -6,6 +6,7 @@ import { DominionFcModel } from './database/model.js';
 
 import dashboardRouter from './routes/dashboard/dashboard.route.js'
 import potentialRankingRouter from './routes/stats/stats.route.js'
+import playerPositionRouter from './routes/player-positon/playerPosition.route.js'
 
 
 const app = express();
@@ -27,6 +28,10 @@ app.use('/api/stats/',potentialRankingRouter);
 
 //route for dashboard page 
 app.use('/api/dashboard/',dashboardRouter);
+
+
+//route for getting players by position they play at
+app.use('/api/position/',playerPositionRouter)
 
 
 
