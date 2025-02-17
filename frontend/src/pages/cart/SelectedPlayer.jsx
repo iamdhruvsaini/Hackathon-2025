@@ -6,21 +6,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useSelector } from "react-redux";
 
 const SelectedPlayer = () => {
-  const [players, setplayers] = useState([]);
+  const players = useSelector((state)=>state.cart.cartItems);
+  console.log(players);
   const rowsPerPage = 4;
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(rowsPerPage);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/data.json");
-      const text = await response.json();
-      setplayers(text);
-    };
-    fetchData();
-  }, []);
+
   return (
     <div className="space-y-6">
       {players.slice(startIndex, endIndex).map((player, index) => (

@@ -2,21 +2,24 @@ import { configureStore } from '@reduxjs/toolkit'
 import dashboardApi from '../features/dashboard/dashboardApi'
 import statsRankingApi from '../features/stats/statsRankingApi';
 import playerPositionApi from '../features/position/playerPositionApi';
-
+import cartReducer from '../cart/cartSlice'
+import userSelectionApi from '../features/user-selection/userSelectionApi';
 
 
 const store = configureStore({
   reducer: {
+    cart:cartReducer,
     [dashboardApi.reducerPath]:dashboardApi.reducer,
     [statsRankingApi.reducerPath]:statsRankingApi.reducer,
-    [playerPositionApi.reducerPath]:playerPositionApi.reducer
+    [playerPositionApi.reducerPath]:playerPositionApi.reducer,
+    [userSelectionApi.reducerPath]:userSelectionApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       dashboardApi.middleware,
       statsRankingApi.middleware,
-      playerPositionApi.middleware
-
+      playerPositionApi.middleware,
+      userSelectionApi.middleware
     ),
 })
 

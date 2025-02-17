@@ -9,198 +9,67 @@ import { sql } from "../../neon/connection.js";
 //     Substitutes & Reserves:[SUB, RES]
 // };
 
+
+
 export const fetchDefenderPlayers = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = 10;
         const offset = (page - 1) * limit;
 
-        const players = await sql`
-            SELECT player_id, player_face_url, short_name, nationality_name, overall, age, club_position ,'Defender' AS player_type
-            FROM players 
-            WHERE club_position IN ('CB', 'LCB', 'RCB', 'LB', 'RB', 'LWB', 'RWB')
-            ORDER BY overall DESC
-            LIMIT ${limit} OFFSET ${offset};
-        `;
+        const { player, country, position, age } = req.query;
 
-        // If returned players are less than the limit, it means no more data is present.
-        const hasMore = players.length === limit;
+        // Base query with dynamic conditions
+        let query = `
+            SELECT p.player_id, p.player_face_url, p.short_name, p.nationality_name, 
+                   p.overall, p.age, p.club_position, w.bought
+            FROM players p
+            LEFT JOIN wages w ON p.wage_id = w.wage_id
+            WHERE p.club_position IN ('CB', 'LCB', 'RCB', 'LB', 'RB', 'LWB', 'RWB')
+        `;
+        let values = [];
+        let count = 1;
+
+        if (player) {
+            query += ` AND short_name ILIKE $${count}`;
+            values.push(`%${player}%`);
+            count++;
+        }
+        if (country) {
+            query += ` AND nationality_name ILIKE $${count}`;
+            values.push(`%${country}%`);
+            count++;
+        }
+        if (position) {
+            query += ` AND club_position = $${count}`;
+            values.push(position);
+            count++;
+        }
+        if (age) {
+            query += ` AND age >= $${count}`;
+            values.push(parseInt(age));
+            count++;
+        }
+
+        // Add pagination
+        query += ` LIMIT $${count} OFFSET $${count + 1}`;
+        values.push(limit, offset);
+
+        // Execute the query
+        const players = await sql(query, values);
 
         res.status(200).json({
             success: true,
-            page,
-            limit,
-            hasMore,
-            data: players,
+            data: players
         });
 
     } catch (error) {
-        console.error("Error fetching players:", error);
-        res.status(500).json({ success: false, message: "Internal Server Error" });
+        console.error("Error fetching defender players:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch defender players",
+            error: error.message
+        });
     }
 };
 
-export const fetchMidfieldersPlayers=async (req,res)=>{
-
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = 10;
-        const offset = (page - 1) * limit;
-
-        const players = await sql`
-            SELECT player_id, player_face_url, short_name, nationality_name, overall, age, club_position,'Midfielder' AS player_type
-            FROM players 
-            WHERE club_position IN ('CDM', 'LDM', 'RDM', 'CM', 'LCM', 'RCM', 'CAM', 'LAM', 'RAM')
-            ORDER BY overall DESC
-            LIMIT ${limit} OFFSET ${offset};
-        `;
-
-        // If returned players are less than the limit, it means no more data is present.
-        const hasMore = players.length === limit;
-
-        res.status(200).json({
-            success: true,
-            page,
-            limit,
-            hasMore,
-            data: players,
-        });
-
-    } catch (error) {
-        console.error("Error fetching players:", error);
-        res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-
-}
-
-export const fetchWingersPlayers=async (req,res)=>{
-
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = 10;
-        const offset = (page - 1) * limit;
-
-        const players = await sql`
-            SELECT player_id, player_face_url, short_name, nationality_name, overall, age, club_position,'Winger' AS player_type
-            FROM players 
-            WHERE club_position IN ('LM', 'RM', 'LW', 'RW')
-            ORDER BY overall DESC
-            LIMIT ${limit} OFFSET ${offset};
-        `;
-
-        // If returned players are less than the limit, it means no more data is present.
-        const hasMore = players.length === limit;
-
-        res.status(200).json({
-            success: true,
-            page,
-            limit,
-            hasMore,
-            data: players,
-        });
-
-    } catch (error) {
-        console.error("Error fetching players:", error);
-        res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-
-}
-
-export const fetchforwardsPlayers=async (req,res)=>{
-
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = 10;
-        const offset = (page - 1) * limit;
-
-        const players = await sql`
-            SELECT player_id, player_face_url, short_name, nationality_name, overall, age, club_position,'Forwards' AS player_type
-            FROM players 
-            WHERE club_position IN ('ST', 'LS', 'RS', 'CF', 'RF', 'LF')
-            ORDER BY overall DESC
-            LIMIT ${limit} OFFSET ${offset};
-        `;
-
-        // If returned players are less than the limit, it means no more data is present.
-        const hasMore = players.length === limit;
-
-        res.status(200).json({
-            success: true,
-            page,
-            limit,
-            hasMore,
-            data: players,
-        });
-
-    } catch (error) {
-        console.error("Error fetching players:", error);
-        res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-
-}
-
-export const fetchGoalKeeperPlayers=async (req,res)=>{
-
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = 10;
-        const offset = (page - 1) * limit;
-
-        const players = await sql`
-            SELECT player_id, player_face_url, short_name, nationality_name, overall, age, club_position,'Goalkeeper' AS player_type
-            FROM players 
-            WHERE club_position = 'GK'
-            ORDER BY overall DESC
-            LIMIT ${limit} OFFSET ${offset};
-        `;
-
-        // If returned players are less than the limit, it means no more data is present.
-        const hasMore = players.length === limit;
-
-        res.status(200).json({
-            success: true,
-            page,
-            limit,
-            hasMore,
-            data: players,
-        });
-
-    } catch (error) {
-        console.error("Error fetching players:", error);
-        res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-
-}
-
-export const fetchReservesPlayers=async (req,res)=>{
-
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = 10;
-        const offset = (page - 1) * limit;
-
-        const players = await sql`
-            SELECT player_id, player_face_url, short_name, nationality_name, overall, age, club_position,'Substitute' AS player_type
-            FROM players 
-            WHERE club_position in ('SUB','RES')
-            ORDER BY overall DESC
-            LIMIT ${limit} OFFSET ${offset};
-        `;
-
-        // If returned players are less than the limit, it means no more data is present.
-        const hasMore = players.length === limit;
-
-        res.status(200).json({
-            success: true,
-            page,
-            limit,
-            hasMore,
-            data: players,
-        });
-
-    } catch (error) {
-        console.error("Error fetching players:", error);
-        res.status(500).json({ success: false, message: "Internal Server Error" });
-    }
-
-}

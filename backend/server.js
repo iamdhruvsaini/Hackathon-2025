@@ -7,6 +7,7 @@ import { DominionFcModel } from './database/model.js';
 import dashboardRouter from './routes/dashboard/dashboard.route.js'
 import potentialRankingRouter from './routes/stats/stats.route.js'
 import playerPositionRouter from './routes/player-positon/playerPosition.route.js'
+import userSelectionRouter from './routes/user-selection/selection.route.js'
 
 
 const app = express();
@@ -34,6 +35,8 @@ app.use('/api/dashboard/',dashboardRouter);
 app.use('/api/position/',playerPositionRouter)
 
 
+//route for adding and fetching user selections
+app.use('/api/user-selection/',userSelectionRouter )
 
 
 
