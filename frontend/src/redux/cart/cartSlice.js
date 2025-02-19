@@ -31,7 +31,13 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action) {
       state.cartItems.push(action.payload); 
+    },
+    removeFromCart(state,action){
+      state.cartItems = state.cartItems.filter(
+        (item) =>item.player_id !== action.payload.player_id // Ensure type match
+      );
     }
+
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserSelectedPlayer.pending, (state) => {
@@ -52,5 +58,5 @@ const cartSlice = createSlice({
 });
 
 // Export Actions and Reducer
-export const { addToCart } = cartSlice.actions;
+export const { addToCart,removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;

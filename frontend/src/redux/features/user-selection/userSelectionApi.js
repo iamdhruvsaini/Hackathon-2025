@@ -22,6 +22,17 @@ export const userSelectionApi= createApi({
         invalidatesTags: ['SelectedPlayer'],
       }),
 
+      removeSelectedPlayer:builder.mutation({
+        query: (formData) => {
+          return {
+              url:'/selected-player/remove',
+              method:'DELETE',
+              body:formData,
+          }
+        },
+        invalidatesTags: ['SelectedPlayer'],
+      })
+
     }),
 
 
@@ -29,5 +40,5 @@ export const userSelectionApi= createApi({
 
   })
 
-  export const {useAddSelectedPlayerMutation,useFetchSelectedPlayerQuery} = userSelectionApi;
+  export const {useAddSelectedPlayerMutation,useFetchSelectedPlayerQuery,useRemoveSelectedPlayerMutation} = userSelectionApi;
   export default userSelectionApi;

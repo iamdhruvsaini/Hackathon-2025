@@ -63,3 +63,30 @@ export const getUserSelectedPlayers = async (req, res) => {
   }
 };
 
+export const removePlayerFromUserSelection = async (req, res) => {
+  const { user_id, player_id } = req.body;
+
+  if (!user_id || !player_id) {
+    return res.status(400).json({ message: "User ID and Player ID are required" });
+  }
+
+  try {
+    const existingEntry = await sql`
+      SELECT * FROM user_selections WHERE user_id = ${user_id} AND player_id = ${player_id}
+    `;
+
+    if (existingEntry.length === 0) {
+      return res.status(404).json({ message: "Player not found in user's selection." });
+    }
+
+    await sql`
+      DELETE FROM user_selections WHERE user_id = ${user_id} AND player_id = ${player_id}
+    `;
+
+    res.status(200).json({ message: `Player with ID ${player_id} successfully removed from user ${user_id}'s selection.` });
+
+  } catch (error) {
+    console.error("Error removing player from user selection:", error);
+    res.status(500).json({ message: "An error occurred while removing the player from selection." });
+  }
+};

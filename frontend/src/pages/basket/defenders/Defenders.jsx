@@ -38,9 +38,9 @@ import { Button } from '@/components/ui/button';
 import { useGetDefendersPlayersQuery } from '@/redux/features/position/playerPositionApi';
 import DefenderBottom from './DefenderBottom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, fetchUserSelectedPlayer } from '@/redux/cart/cartSlice';
+import { addToCart, fetchUserSelectedPlayer, removeFromCart } from '@/redux/cart/cartSlice';
 import toast from 'react-hot-toast';
-import { useAddSelectedPlayerMutation, useFetchSelectedPlayerQuery } from '@/redux/features/user-selection/userSelectionApi';
+import { useAddSelectedPlayerMutation, useFetchSelectedPlayerQuery, useRemoveSelectedPlayerMutation } from '@/redux/features/user-selection/userSelectionApi';
 
 
 const userId ="c1b6da17-bdf6-459f-b567-f7db0eb579e1"
@@ -55,20 +55,19 @@ const Defenders = () => {
     age: ''
   });
   
-
   const [addSelectedPlayer] = useAddSelectedPlayerMutation();
+  const [removeSelectedPlayer]=useRemoveSelectedPlayerMutation();
 
   // Fetch players with filters
   const { data: playerData, isLoading, isError } = useGetDefendersPlayersQuery({ page: pageCount, ...filters });
 
-
   const dispatch=useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchUserSelectedPlayer(userId));
-  }, []);
+  const cartItems=useSelector((state)=>state.cart.cartItems);
 
-  const cartItems=useSelector((state)=>state.cart.cartItems);//players selected by user
+  useEffect(() => {
+      dispatch(fetchUserSelectedPlayer(userId));
+  }, []);
 
   const players = useMemo(() => playerData?.data || [], [playerData]);
 
@@ -92,6 +91,24 @@ const Defenders = () => {
   const handleResetFilter=(e)=>{
     e.preventDefault();
     setFilters({player: '',country: '',position: '',age: ''});
+  }
+
+  const handleRemoveClick=async(player)=>{
+    dispatch(removeFromCart(player));
+
+    toast.success("Successfully Removed",{
+      duration: 1000,
+      position: 'bottom-center',
+    })
+    const formData={
+      player_id:player.player_id,
+      user_id:userId
+    }
+    try {
+      await removeSelectedPlayer(formData).unwrap();
+    } catch (error) {
+      console.log("Error in removing selection",error);
+    }
   }
 
   const handleCartAdd=async(player)=>{
@@ -272,33 +289,39 @@ const Defenders = () => {
                               <td className="px-4 py-3 flex items-center justify-center gap-1">
                                   {
                                     cartItems.some(item => item.player_id === player.player_id)?
-                                    <button className="text-xs font-medium text-center text-white w-14 py-2 bg-green-500 rounded-md" type="button" 
-                                    onClick={()=>(toast.error("Already Added !",{
-                                      duration: 1000,
-                                      position: 'bottom-center',
-                                    }))}>
-                                     Added
-                                    </button>:
-                                    <button className="text-xs font-medium text-center text-white w-14 py-2 bg-blue-500 rounded-md" type="button" onClick={()=>handleCartAdd(player)}>
+                                    <div className='flex w-24 justify-between items-center'>
+                                      <button className="text-xs font-medium text-center text-white w-14 py-2 bg-green-500 rounded-md" type="button" 
+                                      onClick={()=>(toast.error("Already Added !",{
+                                        duration: 1000,
+                                        position: 'bottom-center',
+                                      }))}>
+                                      Added
+                                      </button>
+                                      <Drawer>
+                                        <DrawerTrigger asChild>
+                                          <button><X className='text-red-500 size-8' /></button>
+                                        </DrawerTrigger>
+                                        <DrawerContent>
+                                           <DrawerHeader className="flex flex-col items-center">
+                                            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                                            <DrawerDescription>This action will remove player from the cart</DrawerDescription>
+                                          </DrawerHeader>
+                                          <DrawerFooter className="flex flex-col items-center">
+                                            <Button onClick={() => handleRemoveClick(player)}>Remove</Button>
+                                            <DrawerClose asChild>
+                                              <Button variant="outline">Cancel</Button>
+                                            </DrawerClose>
+                                          </DrawerFooter>
+                                        </DrawerContent>
+                                      </Drawer>
+                                  
+                                    </div>:
+                                    <button className="w-24 text-xs font-medium text-center text-white py-2 bg-blue-500 rounded-md" type="button" onClick={()=>handleCartAdd(player)}>
                                       Add
                                     </button>
 
                                   }
-                                  <Drawer >
-                                    <DrawerTrigger><X className='text-red-500 size-8'/></DrawerTrigger>
-                                    <DrawerContent>
-                                      <DrawerHeader className="flex flex-col items-center">
-                                        <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                                        <DrawerDescription>This action will remove player from cart</DrawerDescription>
-                                      </DrawerHeader>
-                                      <DrawerFooter className="flex flex-col items-center">
-                                        <Button>Remove</Button>
-                                        <DrawerClose>
-                                          <Button variant="outline">Cancel</Button>
-                                        </DrawerClose>
-                                      </DrawerFooter>
-                                    </DrawerContent>
-                                  </Drawer>
+                                  
                               </td>
                               </tr>
                             ))}
