@@ -36,11 +36,12 @@ import {
 
 import { Button } from '@/components/ui/button';
 import { useGetDefendersPlayersQuery } from '@/redux/features/position/playerPositionApi';
-import DefenderBottom from './DefenderBottom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, fetchUserSelectedPlayer, removeFromCart } from '@/redux/cart/cartSlice';
 import toast from 'react-hot-toast';
-import { useAddSelectedPlayerMutation, useFetchSelectedPlayerQuery, useRemoveSelectedPlayerMutation } from '@/redux/features/user-selection/userSelectionApi';
+import { useAddSelectedPlayerMutation,useRemoveSelectedPlayerMutation } from '@/redux/features/user-selection/userSelectionApi';
+import PositionBottom from '../PositionBottom';
+import Loading from '@/components/Loading';
 
 
 const userId ="c1b6da17-bdf6-459f-b567-f7db0eb579e1"
@@ -48,6 +49,7 @@ const userId ="c1b6da17-bdf6-459f-b567-f7db0eb579e1"
 const Defenders = () => {
   
   const [pageCount, setPageCount] = useState(1);
+  
   const [filters, setFilters] = useState({
     player: '',
     country: '',
@@ -59,7 +61,7 @@ const Defenders = () => {
   const [removeSelectedPlayer]=useRemoveSelectedPlayerMutation();
 
   // Fetch players with filters
-  const { data: playerData, isLoading, isError } = useGetDefendersPlayersQuery({ page: pageCount, ...filters });
+  const { data: playerData, isLoading } = useGetDefendersPlayersQuery({ page: pageCount, ...filters });
 
   const dispatch=useDispatch();
 
@@ -136,12 +138,17 @@ const Defenders = () => {
     
   }
 
+  if(isLoading){
+    <Loading/>
+  }
+
   return (
     <>
       <section className="bg-gray-50 xl:w-[1300px] mx-auto p-4 mt-10">
         <div className="mx-auto">
             
             <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+                <h1 className='scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700'>Defenders</h1>
                 {/* table header */}
                 <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div className="w-full md:w-1/2">
@@ -359,7 +366,7 @@ const Defenders = () => {
             </div>
         </div>
       </section>
-      <DefenderBottom/>
+      <PositionBottom/>
     </>
   )
 }

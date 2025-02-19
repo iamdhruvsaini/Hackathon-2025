@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -6,94 +6,119 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useSelector } from "react-redux";
 
-const SelectedPlayer = () => {
-  const players = useSelector((state)=>state.cart.cartItems);
-  console.log(players);
-  const rowsPerPage = 4;
+import { IoIosSearch } from "react-icons/io";
+
+
+const SelectedPlayer = ({players}) => {
+ 
+
+  // State for pagination
+  const rowsPerPage = 8;
+
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(rowsPerPage);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredPlayers = players?.filter((player) =>
+    player.short_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const displayedPlayers = filteredPlayers.slice(startIndex, endIndex);
+
 
   return (
-    <div className="space-y-6">
-      {players.slice(startIndex, endIndex).map((player, index) => (
-        <div
-          className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6"
-          key={index}
-        >
-          <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-            <a href="#" className="shrink-0 md:order-1">
-              <img
-                className="h-30 w-30 dark:hidden"
-                src={player.player_face_url}
-                alt="imac image"
+    <section className="bg-slate-50 p-4 rounded-xl">
+     
+      <div className="relative xl:w-[60%]  my-4">
+        <IoIosSearch className="absolute inline-block left-4 inset-y-2" />
+        <input
+          type="text"
+          placeholder="Search Players"
+          className="w-full py-1 md:px-8 px-6 rounded-md border border-gray-300 outline-none"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setStartIndex(0); // Reset pagination when searching
+            setEndIndex(rowsPerPage);
+          }}
+        />
+      </div>
+
+      {/* 🔹 Display Filtered Players */}
+      <div className="grid grid-cols-2 gap-2">
+        {displayedPlayers.length > 0 ? (
+          displayedPlayers.map((player, index) => (
+            <div
+              className="rounded-lg border bg-white border-gray-200 p-4 shadow-sm"
+              key={index}
+            >
+              <div className="md:flex md:items-center md:justify-between md:gap-4 md:space-y-0">
+                <a href="#" className="shrink-0 md:order-1">
+                  <img
+                    className="h-20 w-20 dark:hidden"
+                    src={player.player_face_url}
+                    alt="Player"
+                  />
+                </a>
+
+                <div className="w-full min-w-0 flex-1 space-y-2 md:order-2 md:max-w-md">
+                  <p className="text-lg font-bold text-gray-700">
+                    {player.short_name}
+                  </p>
+                  <p className="text-base font-normal text-gray-900 hover:underline">
+                    Position: {player.club_position}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4 order-3">
+                  <button
+                    type="button"
+                    className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-500">No players found.</p>
+        )}
+      </div>
+
+      {/* 🔹 Pagination */}
+      {filteredPlayers.length > rowsPerPage && (
+        <Pagination>
+          <PaginationContent className="mt-10">
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                className="text-md"
+                onClick={() => {
+                  if (startIndex > 0) {
+                    setStartIndex(startIndex - rowsPerPage);
+                    setEndIndex(endIndex - rowsPerPage);
+                  }
+                }}
               />
-            </a>
-
-            <div className="flex items-center justify-between md:order-3 md:justify-end">
-              <div className="text-end md:order-4 md:w-32">
-                <p className="text-base font-bold text-gray-700 dark:text-white">
-                  {player.wage_eur} Euro
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-              <p className="text-lg font-bold text-gray-700 dark:text-white">
-                {player.short_name}
-              </p>
-              <p className="text-base font-normal text-gray-900 hover:underline">
-                Position: {player.club_position}, Skill Moves:{" "}
-                {player.skill_moves}, Pace: {player.pace}, Shooting:{" "}
-                {player.shooting}, Passing: {player.passing}, Dribbling:{" "}
-                {player.dribbling}
-              </p>
-              <div className="flex items-center gap-4">
-                <button
-                  type="button"
-                  className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white"
-                >
-                  Add to Favorites
-                </button>
-
-                <button
-                  type="button"
-                  className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              className="text-md"
-              onClick={() => {
-                setStartIndex(startIndex - rowsPerPage);
-                setEndIndex(endIndex - rowsPerPage);
-              }}
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              className="text-md"
-              onClick={() => {
-                setStartIndex(startIndex + rowsPerPage);
-                setEndIndex(endIndex + rowsPerPage);
-              }}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </div>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                className="text-md"
+                onClick={() => {
+                  if (endIndex < filteredPlayers.length) {
+                    setStartIndex(startIndex + rowsPerPage);
+                    setEndIndex(endIndex + rowsPerPage);
+                  }
+                }}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
+    </section>
   );
 };
 

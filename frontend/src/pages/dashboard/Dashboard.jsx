@@ -5,6 +5,29 @@ import { ChartComponent } from "./BarChart";
 import { PlayersSelected } from "./PlayersSelected";
 import Promo from "./Promo";
 
+const dashboardContent = [
+  {
+    title: "Player Comparison",
+    description: "Compare player statistics, strengths, and weaknesses to make informed decisions.",
+    link:'player-comparison'
+  },
+  {
+    title: "Squad Optimization",
+    description: "Optimize your squad using AI-driven insights to build the best possible team within budget constraints.",
+    link:'squad-optimization'
+  },
+  {
+    title: "Performance Analysis",
+    description: "Analyze player performances based on real match data to refine your team selection.",
+    link:'match-performance'
+  },
+  {
+    title: "Team Prediction",
+    description: "Predict the best possible starting XI based on player ratings, positions, and team requirements.",
+    link:'best-playing-11'
+  },
+];
+
 const Dashboard = () => {
   
   return (
@@ -17,10 +40,9 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 items-stretch">
-        <DashboardCard />
-        <DashboardCard />
-        <DashboardCard />
-        <DashboardCard />
+        {dashboardContent.map((card,index)=>(
+          <DashboardCard card={card} key={index}/>
+        ))}
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4 ">

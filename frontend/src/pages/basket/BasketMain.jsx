@@ -24,7 +24,7 @@ const positionDetails = {
   },
   "Substitutes & Reserves": {
     description: "Backup players who can be rotated into matches.",
-    link: "/substitutes"
+    link: "/reserves"
   },
   Wingers: {
     description: "Players who operate on the flanks to provide crosses and speed.",
@@ -51,6 +51,9 @@ const BasketMain = () => {
     }
   }, [isLoading, players]);
 
+  if(isLoading){
+    return <Loading/>
+  }
  
   return (
     <div className="px-4 mx-auto xl:max-w-[1300px] mt-10">

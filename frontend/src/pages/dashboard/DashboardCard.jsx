@@ -9,15 +9,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Link } from "react-router-dom";
 
 
 
-export function DashboardCard() {
+export function DashboardCard({card}) {
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create project</CardTitle>
-        <CardDescription>Deploy your new project in one-click.</CardDescription>
+        <CardTitle className="hover:underline text-orange-500 font-bold"><Link to={`/${card.link}`}>{card.title}</Link></CardTitle>
+        <CardDescription className="text-pretty">{card.description.length >= 50 ? card.description.substring(0, 100) + "..." : card.description}
+        </CardDescription>
       </CardHeader>
     </Card>
   )

@@ -9,6 +9,7 @@ export const playerPositionApi = createApi({
     }),
     tagTypes: ['PlayerPosition'],
     endpoints: (builder) => ({
+
         getDefendersPlayers: builder.query({
             query: ({ page = 1, player, country, position, age }) => {
                 let queryString = `/defenders?page=${page}`;
@@ -22,8 +23,83 @@ export const playerPositionApi = createApi({
             },
             providesTags: ['PlayerPosition']
         }),
+        getMidFieldersPlayers: builder.query({
+            query: ({ page = 1, player, country, position, age }) => {
+                let queryString = `/midfielders?page=${page}`;
+                
+                if (player) queryString += `&player=${encodeURIComponent(player)}`;
+                if (country) queryString += `&country=${encodeURIComponent(country)}`;
+                if (position) queryString += `&position=${encodeURIComponent(position)}`;
+                if (age) queryString += `&age=${age}`;
+      
+                return queryString;
+            },
+            providesTags: ['PlayerPosition']
+        }),
+        getWingersPlayers: builder.query({
+            query: ({ page = 1, player, country, position, age }) => {
+                let queryString = `/wingers?page=${page}`;
+                
+                if (player) queryString += `&player=${encodeURIComponent(player)}`;
+                if (country) queryString += `&country=${encodeURIComponent(country)}`;
+                if (position) queryString += `&position=${encodeURIComponent(position)}`;
+                if (age) queryString += `&age=${age}`;
+      
+                return queryString;
+            },
+            providesTags: ['PlayerPosition']
+        }),
+        getForwardsPlayers: builder.query({
+            query: ({ page = 1, player, country, position, age }) => {
+                let queryString = `/forwards?page=${page}`;
+                
+                if (player) queryString += `&player=${encodeURIComponent(player)}`;
+                if (country) queryString += `&country=${encodeURIComponent(country)}`;
+                if (position) queryString += `&position=${encodeURIComponent(position)}`;
+                if (age) queryString += `&age=${age}`;
+      
+                return queryString;
+            },
+            providesTags: ['PlayerPosition']
+        }),
+        getGoalkeepersPlayers: builder.query({
+            query: ({ page = 1, player, country, position, age }) => {
+                let queryString = `/goalkeepers?page=${page}`;
+                
+                if (player) queryString += `&player=${encodeURIComponent(player)}`;
+                if (country) queryString += `&country=${encodeURIComponent(country)}`;
+                if (position) queryString += `&position=${encodeURIComponent(position)}`;
+                if (age) queryString += `&age=${age}`;
+      
+                return queryString;
+            },
+            providesTags: ['PlayerPosition']
+        }),
+        getReservesPlayers: builder.query({
+            query: ({ page = 1, player, country, position, age }) => {
+                let queryString = `/reserves?page=${page}`;
+                
+                if (player) queryString += `&player=${encodeURIComponent(player)}`;
+                if (country) queryString += `&country=${encodeURIComponent(country)}`;
+                if (position) queryString += `&position=${encodeURIComponent(position)}`;
+                if (age) queryString += `&age=${age}`;
+      
+                return queryString;
+            },
+            providesTags: ['PlayerPosition']
+        }),
+
     }),
 });
 
-export const { useGetDefendersPlayersQuery } = playerPositionApi;
+export const {
+    useGetDefendersPlayersQuery,
+    useGetMidFieldersPlayersQuery,
+    useGetWingersPlayersQuery,
+    useGetForwardsPlayersQuery, 
+    useGetGoalkeepersPlayersQuery,
+    useGetReservesPlayersQuery
+} = playerPositionApi;
+
+
 export default playerPositionApi;

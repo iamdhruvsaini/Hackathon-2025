@@ -1,10 +1,74 @@
 import React, { useEffect, useState } from "react";
 import SelectedPlayer from "./SelectedPlayer";
 import Recommended from "./Recommended";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserSelectedPlayer } from "@/redux/cart/cartSlice";
+import Loading from "@/components/Loading";
+
+
+const positionMap = {
+  defenders: ["CB", "LCB", "RCB", "LB", "RB", "LWB", "RWB"],
+  midfielders: ["CDM", "LDM", "RDM", "CM", "LCM", "RCM", "CAM", "LAM", "RAM"],
+  wingers: ["LM", "RM", "LW", "RW"],
+  forwards: ["ST", "LS", "RS", "CF", "RF", "LF"],
+  goalkeepers: ["GK"],
+  substitutes: ["SUB", "RES"],
+};
+
 
 const CartPage = () => {
+ 
+    const [userId, setUserId] = useState("c1b6da17-bdf6-459f-b567-f7db0eb579e1");
+    const [cartSummary, setCartSummary] = useState({
+      totalPlayer: 0,
+      totalPrice: 0,
+      positionCounts: {},
+    });
+  
+    const dispatch = useDispatch();
+  
+    useEffect(() => {
+      dispatch(fetchUserSelectedPlayer(userId));
+    }, [dispatch, userId]);
+  
+    const players = useSelector((state) => state.cart.cartItems);
+  
+    useEffect(() => {
+      if (players.length > 0) {
+        //total price
+        const totalPrice = players.reduce(
+          (sum, player) => sum + Number(player.wage_eur || 0),
+          0
+        );
+  
+        // Count players in each position category
+       
+        const positionCounts = players.reduce((counts, player) => {
+          const position = player.club_position; // Assuming 'club_position' holds the player's position
+  
+          for (const category in positionMap) {
+            if (positionMap[category].includes(position)) {
+              counts[category] = (counts[category] || 0) + 1;
+            }
+          }
+  
+          return counts;
+        }, {});
+  
+        
+        setCartSummary({
+          totalPlayer: players.length,
+          totalPrice,
+          positionCounts,
+        });
+      }
+    }, [players]);
 
+    if(!players){
+      return <Loading/>
+    }
 
+    console.log(cartSummary);
 
   return (
     <section className="xl:max-w-[1300px] mx-auto mt-10 px-4">
@@ -16,7 +80,7 @@ const CartPage = () => {
         <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
           <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
             {/* selected player */}
-            <SelectedPlayer/>
+            <SelectedPlayer players={players}/>
             {/* Recommended section */}
             <Recommended/>
           </div>
@@ -31,30 +95,23 @@ const CartPage = () => {
                 <div className="space-y-2">
                   <dl className="flex items-center justify-between gap-4">
                     <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Original price
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $7,592.00
-                    </dd>
-                  </dl>
-
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
                       Total Players
                     </dt>
                     <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $99
+                      {cartSummary.totalPlayer}
                     </dd>
+                  </dl>
+                  {Object.entries(cartSummary.positionCounts).map(([category,count])=>(
+                    <dl className="flex items-center justify-between gap-4" key={category}>
+                      <dt className="text-base font-normal text-gray-500 capitalize">
+                        {category}
+                      </dt>
+                      <dd className="text-base font-medium text-gray-900 dark:text-white">
+                        {count}
+                      </dd>
                   </dl>
 
-                  <dl className="flex items-center justify-between gap-4">
-                    <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Tax
-                    </dt>
-                    <dd className="text-base font-medium text-gray-900 dark:text-white">
-                      $799
-                    </dd>
-                  </dl>
+                  ))}
                 </div>
 
                 <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
@@ -62,7 +119,7 @@ const CartPage = () => {
                     Total
                   </dt>
                   <dd className="text-base font-bold text-gray-900 dark:text-white">
-                    $8,191.00
+                    $ {cartSummary.totalPrice}
                   </dd>
                 </dl>
               </div>

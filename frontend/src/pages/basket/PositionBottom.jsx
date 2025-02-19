@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DefenderBottom = () => {
+const PositionBottom = () => {
   return (
     <section className="mt-12 py-8 antialiased">
         <div className="mx-auto grid max-w-screen-xl px-4 pb-8 md:grid-cols-12 lg:gap-12 xl:gap-0">
@@ -17,4 +17,4 @@ const DefenderBottom = () => {
   )
 }
 
-export default DefenderBottom
+export default PositionBottom;

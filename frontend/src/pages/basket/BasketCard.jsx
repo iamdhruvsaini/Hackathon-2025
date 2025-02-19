@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const BasketCard = ({ option }) => {
   return (
-    <div className="p-[1px] bg-gray-300 rounded-xl">
+    <div className="p-[1px] bg-cyan-500 rounded-xl">
       <div className="p-4 rounded-xl bg-gray-50 h-full">
         <div>
           <BasketRadialChart option={option}/>

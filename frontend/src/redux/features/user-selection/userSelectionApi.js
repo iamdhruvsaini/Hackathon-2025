@@ -40,5 +40,5 @@ export const userSelectionApi= createApi({
 
   })
 
-  export const {useAddSelectedPlayerMutation,useFetchSelectedPlayerQuery,useRemoveSelectedPlayerMutation} = userSelectionApi;
+  export const {useAddSelectedPlayerMutation,useRemoveSelectedPlayerMutation} = userSelectionApi;
   export default userSelectionApi;

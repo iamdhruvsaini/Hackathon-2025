@@ -28,9 +28,8 @@ export const addPlayerToUserSelection = async (req, res) => {
   }
 };
 
-
 export const getUserSelectedPlayers = async (req, res) => {
-  const { userId } = req.params; 
+  const { userId } = req.params;
   console.log(userId);
 
   if (!userId) {
@@ -38,17 +37,20 @@ export const getUserSelectedPlayers = async (req, res) => {
   }
 
   try {
-   
+    // Check if the user exists
     const existingUser = await sql`SELECT user_id FROM users WHERE user_id = ${userId}`;
 
     if (existingUser.length === 0) {
       return res.status(404).json({ message: "User not found. Please register first." });
     }
 
+    // Fetch selected players with 'bought' status
     const selectedPlayers = await sql`
-      SELECT p.player_id, p.short_name, p.long_name, p.club_name, p.overall, p.potential, p.age, p.player_face_url, p.club_position
+      SELECT p.player_id, p.short_name, p.long_name, p.club_name, p.overall, 
+             p.potential, p.age, p.player_face_url, p.club_position, w.bought,w.wage_eur
       FROM user_selections us
       JOIN players p ON us.player_id = p.player_id
+      LEFT JOIN wages w ON p.wage_id = w.wage_id
       WHERE us.user_id = ${userId};
     `;
 
