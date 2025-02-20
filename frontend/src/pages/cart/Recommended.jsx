@@ -1,56 +1,79 @@
+import BoxLoading from "@/components/BoxLoading";
+import { useGetTrendingPlayersQuery } from "@/redux/features/position/playerPositionApi";
 import React, { useEffect, useState } from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
 
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+// import required modules
+import { Pagination, Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const Recommended = () => {
-  const [recommendation, setRecommendation] = useState([]);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("/data.json");
-      const data = await res.json();
-      setRecommendation(data.slice(0, 3));
-    };
-    fetchData();
-  }, []);
+  const { data: trendingPlayer, isLoading } = useGetTrendingPlayersQuery();
 
   return (
     <div className="hidden xl:mt-8 xl:block">
       <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-3xl">
         Recommended
       </h1>
-      <div className="mt-6 grid grid-cols-3 gap-4 sm:mt-8">
-        {recommendation.map((item, index) => (
-          <div
-            className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-            key={index}
-          >
-            <a href="#" className="overflow-hidden rounded">
-              <img
-                className="mx-auto h-44 w-44 dark:hidden"
-                src={item.player_face_url}
-                alt="imac image"
-              />
-            </a>
-            <div>
-              <a
-                href="#"
-                className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-              >
-                iMac 27”
-              </a>
-              <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">
-                This generation has some improvements, including a longer
-                continuous battery life.
-              </p>
-            </div>
 
-            <p className="text-lg font-bold leading-tight text-red-600 dark:text-red-500">
-              $299
-            </p>
-          </div>
-        ))}
-      </div>
+      {isLoading ? (
+        <BoxLoading />
+      ) : (
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={20}
+          breakpoints={{
+            640: {
+              slidesPerView: 3,
+              spaceBetween: 10,
+            },
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {trendingPlayer.data.map((player, index) => (
+            <SwiperSlide  key={index}>
+              <div
+                className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm mt-10"
+                key={index}
+              >
+                <Link className="overflow-hidden rounded">
+                  <img
+                    className="mx-auto h-30 w-30 dark:hidden"
+                    src={player.player_face_url}
+                    alt="player image"
+                  />
+                </Link>
+                <div>
+                  <Link>
+                    <p className="text-lg font-semibold leading-tight text-blue-500 hover:underline text-center">{player.short_name}</p>
+                    
+                  </Link>
+                  <p className="mt-2 text-base font-medium text-gray-500 text">
+                    Position: {player.club_position}
+                   
+                  </p>
+                  <p className="text-base font-medium text-gray-500 text">
+               
+                    Nationality : {player.nationality_name}
+                  </p>
+                </div>
+
+                <p className="text-lg font-bold leading-tight text-red-600 text-center">
+                  Wage : $ {200}
+                </p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   );
 };

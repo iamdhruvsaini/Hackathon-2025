@@ -384,6 +384,40 @@ export const fetchReservesPlayers = async (req, res) => {
     }
 };
 
+export const fetchTrendingPlayers = async (req, res) => {
+    try {
+      
+
+
+        // Base query with dynamic conditions
+        let query = `
+            SELECT p.player_id, p.player_face_url, p.short_name, p.nationality_name, 
+                   p.overall, p.age, p.club_position, w.bought
+            FROM players p
+            LEFT JOIN wages w ON p.wage_id = w.wage_id
+            WHERE p.trending ='YES'
+            `;
+  
+
+        // Execute the query
+        const players = await sql(query);
+
+        res.status(200).json({
+            success: true,
+            data: players
+        });
+
+    } catch (error) {
+        console.error("Error fetching trending players:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch trending players",
+            error: error.message
+        });
+    }
+};
+
+
 
 
 

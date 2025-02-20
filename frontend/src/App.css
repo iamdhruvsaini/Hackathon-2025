@@ -1,3 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 
+
+.html{
+    scroll-behavior: smooth;
+ }
+
+ .swiper-slide {
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.swiper-slide img:hover {
+    transform: scale(1.04);
+    transition-duration: 400ms;
+    
+}
+.swiper-button-next,.swiper-button-prev{
+   @apply bg-white p-5 rounded-full z-50 shadow-md
+}
+
+.swiper-button-prev:after, .swiper-button-next:after{
+    font-size: 20px !important;
+    font-weight: 600;
+}

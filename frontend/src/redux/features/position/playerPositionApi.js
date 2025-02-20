@@ -88,6 +88,13 @@ export const playerPositionApi = createApi({
             },
             providesTags: ['PlayerPosition']
         }),
+        getTrendingPlayers: builder.query({
+            query: () => {
+                let queryString = `/trending`;
+                return queryString;
+            },
+            providesTags: ['PlayerPosition']
+        }),
 
     }),
 });
@@ -98,7 +105,8 @@ export const {
     useGetWingersPlayersQuery,
     useGetForwardsPlayersQuery, 
     useGetGoalkeepersPlayersQuery,
-    useGetReservesPlayersQuery
+    useGetReservesPlayersQuery,
+    useGetTrendingPlayersQuery
 } = playerPositionApi;
 
 

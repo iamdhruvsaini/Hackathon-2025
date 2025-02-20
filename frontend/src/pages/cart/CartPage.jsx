@@ -34,14 +34,12 @@ const CartPage = () => {
     const players = useSelector((state) => state.cart.cartItems);
   
     useEffect(() => {
-      if (players.length > 0) {
+      if (players.length >= 0) {
         //total price
         const totalPrice = players.reduce(
           (sum, player) => sum + Number(player.wage_eur || 0),
           0
         );
-  
-        // Count players in each position category
        
         const positionCounts = players.reduce((counts, player) => {
           const position = player.club_position; // Assuming 'club_position' holds the player's position
@@ -55,7 +53,6 @@ const CartPage = () => {
           return counts;
         }, {});
   
-        
         setCartSummary({
           totalPlayer: players.length,
           totalPrice,
@@ -68,7 +65,6 @@ const CartPage = () => {
       return <Loading/>
     }
 
-    console.log(cartSummary);
 
   return (
     <section className="xl:max-w-[1300px] mx-auto mt-10 px-4">

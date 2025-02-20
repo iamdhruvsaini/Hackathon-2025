@@ -1,5 +1,5 @@
 import express from "express";
-import { fetchDefenderPlayers, fetchForwardsPlayers, fetchGoalKeeperPlayers, fetchMidfieldersPlayers, fetchReservesPlayers, fetchWingersPlayers} from "../../controllers/player-position/playerPostion.controller.js";
+import { fetchDefenderPlayers, fetchForwardsPlayers, fetchGoalKeeperPlayers, fetchMidfieldersPlayers, fetchReservesPlayers, fetchTrendingPlayers, fetchWingersPlayers} from "../../controllers/player-position/playerPostion.controller.js";
 
 
 const router=express();
@@ -10,6 +10,7 @@ router.get("/wingers",fetchWingersPlayers);
 router.get("/forwards",fetchForwardsPlayers);
 router.get("/goalkeepers",fetchGoalKeeperPlayers);
 router.get("/reserves",fetchReservesPlayers);
+router.get("/trending",fetchTrendingPlayers);
 
 
 export default router;

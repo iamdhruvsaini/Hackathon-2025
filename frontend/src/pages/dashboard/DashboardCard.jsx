@@ -18,7 +18,7 @@ export function DashboardCard({card}) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="hover:underline text-orange-500 font-bold"><Link to={`/${card.link}`}>{card.title}</Link></CardTitle>
+        <CardTitle className="hover:underline font-bold"><Link to={`/${card.link}`}>{card.title}</Link></CardTitle>
         <CardDescription className="text-pretty">{card.description.length >= 50 ? card.description.substring(0, 100) + "..." : card.description}
         </CardDescription>
       </CardHeader>

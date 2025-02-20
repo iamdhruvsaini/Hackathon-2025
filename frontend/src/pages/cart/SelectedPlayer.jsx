@@ -8,10 +8,16 @@ import {
 } from "@/components/ui/pagination";
 
 import { IoIosSearch } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { removeFromCart } from "@/redux/cart/cartSlice";
+import { useRemoveSelectedPlayerMutation } from "@/redux/features/user-selection/userSelectionApi";
+import toast from "react-hot-toast";
 
 
 const SelectedPlayer = ({players}) => {
- 
+  const [removeSelectedPlayer]=useRemoveSelectedPlayerMutation();
+  const dispatch=useDispatch();
+ const [userId,setUserId]=useState("c1b6da17-bdf6-459f-b567-f7db0eb579e1")
 
   // State for pagination
   const rowsPerPage = 8;
@@ -26,6 +32,26 @@ const SelectedPlayer = ({players}) => {
   );
 
   const displayedPlayers = filteredPlayers.slice(startIndex, endIndex);
+
+
+  const handleRemove=async(player)=>{
+      dispatch(removeFromCart(player));
+
+      toast.success("Successfully Removed",{
+        duration: 1000,
+        position: 'bottom-center',
+      })
+      const formData={
+        player_id:player.player_id,
+        user_id:userId,
+      }
+      try {
+        await removeSelectedPlayer(formData).unwrap;
+      } catch (error) {
+        console.log("Error in removal ",error);
+      }
+
+  }
 
 
   return (
@@ -75,6 +101,7 @@ const SelectedPlayer = ({players}) => {
                   <button
                     type="button"
                     className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
+                    onClick={()=>handleRemove(player)}
                   >
                     Remove
                   </button>
