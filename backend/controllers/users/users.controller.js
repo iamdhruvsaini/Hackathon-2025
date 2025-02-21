@@ -1,14 +1,13 @@
 
 //admin controller
-
-
+import crypto from "crypto";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv'
 import { sql } from "../../neon/connection.js";
 
-
 dotenv.config();
+
 const JWT_SECRET = process.env.JWT_SECRET; 
 
 export const verifyAdmin = async (req, res) => {

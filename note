@@ -1,0 +1,10 @@
+{
+    "message": "Admin created successfully",
+    "admin": {
+        "admin_id": 1,
+        "name": "Dhruv Saini",
+        "email": "admin@gmail.com",
+        "role": "owner",
+        "password": "7cd42a15"
+    }
+}

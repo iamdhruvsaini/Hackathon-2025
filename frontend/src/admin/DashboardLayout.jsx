@@ -24,10 +24,19 @@ import {
   Users,
 } from "lucide-react";
 import React from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 
 
 const DashboardLayout = () => {
+
+  const navigate=useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    toast.success("Logged out successfully!", { position: "top-center", autoClose: 3000 });
+    navigate("/admin", { replace: true });
+  };
 
   return (
   <section className="h-screen bg-muted/4">
@@ -186,7 +195,7 @@ const DashboardLayout = () => {
                 </div>
               </form>
             </div>
-            <Button variant="secondary">
+            <Button variant="secondary" onClick={handleLogout} className="hover:bg-gray-700 hover:text-white duration-300">
                   <CircleUser className="h-5 w-5" />
                   <span>Logout</span>
               </Button>
@@ -202,6 +211,7 @@ const DashboardLayout = () => {
   </section>
     
   );
+
 };
 
 export default DashboardLayout;

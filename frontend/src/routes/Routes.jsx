@@ -30,110 +30,93 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Home />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <LoginPage />,
       },
       {
-        path: "/register",
+        path: "register",
         element: <SignUpPage />,
       },
       {
-        path: "/card",
+        path: "card",
         element: <PlayerCard />,
       },
       {
-        path: "/dashboard",
-        element:<PrivateRoute><Dashboard /></PrivateRoute> ,
+        path: "dashboard",
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
       },
       {
-        path: "/basket",
+        path: "basket",
         element: <PrivateRoute><BasketMain /></PrivateRoute>,
       },
       {
-        path: "/cart",
+        path: "cart",
         element: <PrivateRoute><CartPage /></PrivateRoute>,
       },
       {
-        path: "/basket",
-        element: <PrivateRoute><BasketMain /></PrivateRoute>,
+        path: "stat",
+        element: <PrivateRoute><StatLink /></PrivateRoute>,
       },
       {
-        path: "/stat",
-        element:<PrivateRoute><StatLink /></PrivateRoute> ,
-      },
-      {
-        path: "/table/:link",
+        path: "table/:link",
         element: <PrivateRoute><StatsTable /></PrivateRoute>,
       },
       {
-        path: "/forwards",
+        path: "forwards",
         element: <PrivateRoute><Forwards /></PrivateRoute>,
       },
       {
-        path: "/defenders",
-        element:<PrivateRoute><Defenders /></PrivateRoute> ,
+        path: "defenders",
+        element: <PrivateRoute><Defenders /></PrivateRoute>,
       },
       {
-        path: "/goalkeepers",
+        path: "goalkeepers",
         element: <PrivateRoute><Goalkeepers /></PrivateRoute>,
       },
       {
-        path: "/midfielders",
+        path: "midfielders",
         element: <PrivateRoute><Midfielders /></PrivateRoute>,
       },
       {
-        path: "/reserves",
+        path: "reserves",
         element: <PrivateRoute><Reserves /></PrivateRoute>,
       },
       {
-        path: "/wingers",
+        path: "wingers",
         element: <PrivateRoute><Wingers /></PrivateRoute>,
       },
       {
-        path:"/player-comparison",
-        element:<PlayerComparison/>
-      }
+        path: "player-comparison",
+        element: <PlayerComparison />,
+      },
     ],
   },
-
-
+  
   {
     path: "/admin",
-    element: <AdminHome/>,
-    children:[
+    element: <AdminHome />,
+    children: [
       {
-        path: "/admin",
+        index: true,
         element: <AdminLogin />,
       },
       {
-        path: "/admin/dashboard",
-        element:<DashboardLayout/>,
-        children:[
+        path: "portal",
+        element: <DashboardLayout />,
+        children: [
           {
-            path: "/admin/dashboard",
-            element:<AdminDashboardHome/>
+            index: true,
+            element: <AdminDashboardHome />,
           },
-          {
-            path: "/admin/dashboard/players",
-            element:<AdminDashboardHome/>
-          },
-          {
-            path: "/admin/dashboard/configure-players",
-            element:<AdminDashboardHome/>
-          },
-          {
-            path: "/admin/dashboard/stats-update",
-            element:<AdminDashboardHome/>
-          },
-        ]
+          
+        ],
       },
-    ]
+    ],
   },
-
 
   {
     path: "*",

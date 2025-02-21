@@ -4,7 +4,7 @@ const router=express();
 
 
 //admin route
-router.post('/admin',verifyAdmin);
+router.post('/verify-admin',verifyAdmin);
 router.post('/create-admin',addAdmin);
 
 

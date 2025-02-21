@@ -38,7 +38,7 @@ app.use('/api/position/',playerPositionRouter)
 app.use('/api/user-selection/',userSelectionRouter )
 
 //route for users
-app.use('/users',usersRouter)
+app.use('/api/users',usersRouter)
 
 
 //Connecting to Db
