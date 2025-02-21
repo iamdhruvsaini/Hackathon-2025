@@ -8,24 +8,35 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/context/AuthContext";
+import { Link } from "react-router-dom";
+
+
 
 const DropDownItems = () => {
+  const {logout,currentUser}=useAuth();
+  console.log(currentUser.photo);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className="flex justify-center items-center">
-          <AvatarImage src="https://github.com/shadcn.png" />
+          {currentUser?.photo?
+          <AvatarImage src={currentUser.photo} />:
+          <AvatarImage src={"https://github.com/shadcn.png"} />
+          }
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>Dashboard</DropdownMenuItem>
+        <Link to={'/dashboard'}><DropdownMenuItem className="cursor-pointer">Dashboard</DropdownMenuItem></Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Players</DropdownMenuItem>
+        <Link to={'/stat'}><DropdownMenuItem className="cursor-pointer">Stats</DropdownMenuItem></Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Basket</DropdownMenuItem>
+        <Link to={'/basket'}><DropdownMenuItem className="cursor-pointer">Basket</DropdownMenuItem></Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <Link to={'/login'}>
+          <DropdownMenuItem onClick={()=>logout()} className="cursor-pointer" >Logout</DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

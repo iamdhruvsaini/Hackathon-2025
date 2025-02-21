@@ -4,17 +4,62 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import loginBoxImage from "../assets/Images/soccer-player.webp"
-import { Link } from "react-router-dom"
- 
+import { Link, replace, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useAuth } from "@/context/AuthContext"
+
+import { useState } from "react"
+import toast from "react-hot-toast"
+
+
 export function LoginForm({
   className,
   ...props
 }) {
+
+const navigate=useNavigate()
+const {register,handleSubmit,formState:{errors}}=useForm();
+const {emailSignIn,googleSignIn}=useAuth();
+const [loading,setLoading]=useState(false);
+
+
+const onSubmit = async (data) => {
+  setLoading(true); // Start loading
+  try {
+    const userCredential = await emailSignIn(data.email, data.password);
+    console.log("User ID:", userCredential.user.uid);
+    toast.success("Login Successful! Redirecting...");
+    navigate("/", { replace: true }); // Redirect after success
+  } catch (error) {
+    console.error("Login Error:", error.message);
+    toast.error(`Login failed! ${error.message}`);
+  } finally {
+    setLoading(false); // Stop loading
+  }
+};
+
+const handleGoogleSignIn = async () => {
+  setLoading(true);
+  try {
+    await googleSignIn();
+    toast.success("Login Successful! Redirecting...");
+    navigate("/", { replace: true });
+  } catch (error) {
+    console.error("Google Sign-in Error:", error.message);
+    toast.error(`Google Login failed! ${error.message}`);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+
+
   return (
     (<div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <div className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
@@ -24,7 +69,7 @@ export function LoginForm({
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required  autoComplete="off"/>
+                <Input id="email" type="email" placeholder="m@example.com" required  autoComplete="off" {...register('email')}/>
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -33,17 +78,22 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required autoComplete="off" />
+                <Input id="password" type="password" required autoComplete="off" {...register('password',{
+                  minLength:{value:4,message: "Password must be at least 4 characters long"},
+                  maxLength:{value:200,message: "Password cannot exceed 200 characters"}})} />
+                {errors.password && <span className="text-sm">{errors.password.message}</span>}
               </div>
-              <Button type="submit" className="w-full">
-                Login
+              <Button type="submit" className="w-full" onClick={handleSubmit(onSubmit)}>
+                {loading ? "Loging in..." : "Login"}
               </Button>
+
               <div
                 className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">
                   Or continue with
                 </span>
               </div>
+
               <div className="grid grid-cols-3 gap-4">
                 <Button variant="outline" className="w-full">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -53,7 +103,7 @@ export function LoginForm({
                   </svg>
                   <span className="sr-only">Login with Apple</span>
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
                       d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
@@ -77,13 +127,16 @@ export function LoginForm({
                 </Link>
               </div>
             </div>
-          </form>
+          </div>
+
+
           <div className="relative hidden bg-muted md:block">
             <img
               src={loginBoxImage}
               alt="Image"
               className="absolute inset-0 h-full w-full object-contain dark:brightness-[0.2] dark:grayscale" />
           </div>
+
         </CardContent>
       </Card>
       <div

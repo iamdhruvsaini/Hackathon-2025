@@ -10,7 +10,6 @@ export const userSelectionApi= createApi({
     tagTypes:['SelectedPlayer'],
     endpoints: (builder) => ({
 
-
       addSelectedPlayer: builder.mutation({
         query: (formData) => {
             return {

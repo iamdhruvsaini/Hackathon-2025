@@ -58,7 +58,7 @@ const SelectedPlayer = ({players}) => {
     <section className="bg-slate-50 p-4 rounded-xl">
      
       <div className="relative xl:w-[60%]  my-4">
-        <IoIosSearch className="absolute inline-block left-4 inset-y-2" />
+        <IoIosSearch className="absolute inline-block left-2 inset-y-2" />
         <input
           type="text"
           placeholder="Search Players"

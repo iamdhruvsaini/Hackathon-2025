@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 const Footer = () => {
@@ -17,8 +18,10 @@ const Footer = () => {
 
             <div className="lg:w-[60%] md:flex md:justify-between space-y-6 mt-8 lg:mt-0">
               <div className="flex gap-10 ">
+                
+
                 <div>
-                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                  <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                     Contact us
                   </h2>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
@@ -40,29 +43,13 @@ const Footer = () => {
                     </li>
                   </ul>
                 </div>
-
+                {/* Admin  */}
                 <div>
-                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                    Follow us
-                  </h2>
-                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                    <li className="mb-4">
-                      <a
-                        href="https://github.com/themesberg/flowbite"
-                        className="hover:underline "
-                      >
-                        Github
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://discord.gg/4eeurUVvTy"
-                        className="hover:underline"
-                      >
-                        Discord
-                      </a>
-                    </li>
-                  </ul>
+                  <Link to={'/admin'}>
+                    <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                      Admin
+                    </h2>
+                  </Link>
                 </div>
               </div>
 
@@ -92,10 +79,6 @@ const Footer = () => {
               </div>
             </div>
           </div>
-
-
-
-
 
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex sm:items-center sm:justify-between">

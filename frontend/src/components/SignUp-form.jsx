@@ -4,39 +4,52 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import signUpBoxImage from "../assets/Images/soccer-player.webp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/context/AuthContext";
-import AlertBox from "./AlertBox";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
 
 export function SignUpForm({ className, ...props }) {
   const {
     register,
-    watch,
     handleSubmit,
-    formState: { errors },
+    formState:{errors},
   } = useForm();
 
-  const { emailSignup, googleSignIn } = useAuth();
+  const navigate=useNavigate();
+  const { emailSignup, googleSignIn} = useAuth();
+  const [loading,setLoading]=useState(false);
 
-  const dialogBoxContent = {
-    title: "You are successfully registered",
-  };
 
-  const onSubmit =async (formData) => {
-    try{
+  const onSubmit = async (formData) => {
+    setLoading(true); // Start loading
+    try {
       await emailSignup(formData.email, formData.password);
-      
+      toast.success("Signup successful! Redirecting...");
+      navigate('/');
+    } catch (error) {
+      toast.error("Signup failed!");
+    } finally {
+      setLoading(false); // Stop loading
     }
-    catch(error){
-      alert("Error Occured")
+  };
+  
+  const handleGoogleSignIn = async () => {
+    setLoading(true); // Start loading
+    try {
+      await googleSignIn();
+      toast.success("Login successful! Redirecting...");
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+      toast.error("Google Sign-in failed!");
+    } finally {
+      setLoading(false); // Stop loading
     }
-   
   };
-
-  const handleGoogleSignIn = () => {
-    googleSignIn();
-  };
+  
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -49,7 +62,7 @@ export function SignUpForm({ className, ...props }) {
               className="absolute inset-0 h-full w-full object-contain dark:brightness-[0.2] dark:grayscale"
             />
           </div>
-          <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
+          <form className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Register Now</h1>
@@ -84,11 +97,17 @@ export function SignUpForm({ className, ...props }) {
                   type="password"
                   required
                   autoComplete="off"
-                  {...register("password")}
+                  {...register('password',{
+                    minLength:{value:4,message: "Password must be at least 4 characters long"},
+                    maxLength:{value:200,message: "Password cannot exceed 200 characters"}})
+                  } 
                 />
+                {errors.password && <span className="text-sm">{errors.password.message}</span>}
               </div>
              
-                <Button type="submit" className="w-full">Signup</Button>
+                <Button type="submit" className="w-full" onClick={handleSubmit(onSubmit)}>
+                  {loading?"Wait ...":"Register Me"}
+                </Button>
             
 
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

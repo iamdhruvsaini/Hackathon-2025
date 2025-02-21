@@ -67,7 +67,7 @@ const Recommended = () => {
                 </div>
 
                 <p className="text-lg font-bold leading-tight text-red-600 text-center">
-                  Wage : $ {200}
+                  Wage : $ {player.wage_eur}
                 </p>
               </div>
             </SwiperSlide>

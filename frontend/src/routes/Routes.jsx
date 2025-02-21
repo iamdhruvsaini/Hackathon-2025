@@ -1,3 +1,7 @@
+import AdminDashboardHome from "@/admin/admin-dashboard/AdminDashboardHome";
+import AdminHome from "@/admin/AdminHome";
+import AdminLogin from "@/admin/AdminLogin";
+import DashboardLayout from "@/admin/DashboardLayout";
 import App from "@/App";
 import LoginPage from "@/components/LoginPage";
 import PageNotFound from "@/components/PageNotFound";
@@ -13,11 +17,12 @@ import Wingers from "@/pages/basket/wingers/Wingers";
 import CartPage from "@/pages/cart/CartPage";
 import Dashboard from "@/pages/dashboard/dashboard";
 import Home from "@/pages/home/Home";
+import PlayerComparison from "@/pages/player-comparison/PlayerComparison";
 import PlayerCard from "@/pages/players-card/PlayerCard";
-import PlayersName from "@/pages/players/PlayersName";
 import StatLink from "@/pages/stats/StatLink";
 
 import { createBrowserRouter } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -42,59 +47,94 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element:<PrivateRoute><Dashboard /></PrivateRoute> ,
       },
       {
         path: "/basket",
-        element: <BasketMain />,
+        element: <PrivateRoute><BasketMain /></PrivateRoute>,
       },
       {
         path: "/cart",
-        element: <CartPage />,
+        element: <PrivateRoute><CartPage /></PrivateRoute>,
       },
       {
         path: "/basket",
-        element: <BasketMain />,
+        element: <PrivateRoute><BasketMain /></PrivateRoute>,
       },
       {
         path: "/stat",
-        element: <StatLink />,
+        element:<PrivateRoute><StatLink /></PrivateRoute> ,
       },
       {
         path: "/table/:link",
-        element: <StatsTable />,
+        element: <PrivateRoute><StatsTable /></PrivateRoute>,
       },
-      {
-        path: "/players",
-        element: <PlayersName />,
-      },
-
       {
         path: "/forwards",
-        element: <Forwards />,
+        element: <PrivateRoute><Forwards /></PrivateRoute>,
       },
       {
         path: "/defenders",
-        element: <Defenders />,
+        element:<PrivateRoute><Defenders /></PrivateRoute> ,
       },
       {
         path: "/goalkeepers",
-        element: <Goalkeepers />,
+        element: <PrivateRoute><Goalkeepers /></PrivateRoute>,
       },
       {
         path: "/midfielders",
-        element: <Midfielders />,
+        element: <PrivateRoute><Midfielders /></PrivateRoute>,
       },
       {
         path: "/reserves",
-        element: <Reserves />,
+        element: <PrivateRoute><Reserves /></PrivateRoute>,
       },
       {
         path: "/wingers",
-        element: <Wingers />,
+        element: <PrivateRoute><Wingers /></PrivateRoute>,
       },
+      {
+        path:"/player-comparison",
+        element:<PlayerComparison/>
+      }
     ],
   },
+
+
+  {
+    path: "/admin",
+    element: <AdminHome/>,
+    children:[
+      {
+        path: "/admin",
+        element: <AdminLogin />,
+      },
+      {
+        path: "/admin/dashboard",
+        element:<DashboardLayout/>,
+        children:[
+          {
+            path: "/admin/dashboard",
+            element:<AdminDashboardHome/>
+          },
+          {
+            path: "/admin/dashboard/players",
+            element:<AdminDashboardHome/>
+          },
+          {
+            path: "/admin/dashboard/configure-players",
+            element:<AdminDashboardHome/>
+          },
+          {
+            path: "/admin/dashboard/stats-update",
+            element:<AdminDashboardHome/>
+          },
+        ]
+      },
+    ]
+  },
+
+
   {
     path: "*",
     element: <PageNotFound />,

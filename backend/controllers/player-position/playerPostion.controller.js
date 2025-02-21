@@ -392,7 +392,7 @@ export const fetchTrendingPlayers = async (req, res) => {
         // Base query with dynamic conditions
         let query = `
             SELECT p.player_id, p.player_face_url, p.short_name, p.nationality_name, 
-                   p.overall, p.age, p.club_position, w.bought
+                   p.overall, p.age, p.club_position, w.bought,w.wage_eur
             FROM players p
             LEFT JOIN wages w ON p.wage_id = w.wage_id
             WHERE p.trending ='YES'
