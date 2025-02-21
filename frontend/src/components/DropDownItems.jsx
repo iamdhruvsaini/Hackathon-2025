@@ -16,12 +16,12 @@ import { Link } from "react-router-dom";
 
 const DropDownItems = () => {
   const {logout,currentUser}=useAuth();
-  console.log(currentUser.photo);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className="flex justify-center items-center">
-          {currentUser?.photo?
+          {currentUser?.photo!=null?
           <AvatarImage src={currentUser.photo} />:
           <AvatarImage src={"https://github.com/shadcn.png"} />
           }

@@ -85,4 +85,14 @@ export const DominionFcModel = async () => {
         FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
     );
     `;
+
+    await sql`
+    CREATE TABLE IF NOT EXISTS admin(
+        admin_id SERIAL NOT NULL, 
+        name TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        role VARCHAR(255)
+    );
+    `
 };
