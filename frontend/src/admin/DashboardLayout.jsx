@@ -45,16 +45,16 @@ const DashboardLayout = () => {
       <div className="hidden border-r md:block">
           <div className="flex max-h-[100vh] flex-col gap-2 ">
             <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-              <Link to="/" className="flex items-center gap-2 font-semibold">
+              <Link to="/admin/portal" className="flex items-center gap-2 font-semibold">
                 <Package2 className="h-6 w-6" />
-                <span className="">Dominon Fc.</span>
+                <span className="">Dominion Fc.</span>
               </Link>
               
             </div>
             <div className="flex-1">
               <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
                 <NavLink
-                  to="/admin/dashboard"
+                  to="/admin/portal"
                   className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 >
                   <Home className="h-4 w-4" />
@@ -62,11 +62,11 @@ const DashboardLayout = () => {
                 </NavLink>
 
                 <NavLink
-                  to="/admin/dashboard/players"
+                  to="/admin/portal/users"
                   className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 >
                   <Package className="h-4 w-4" />
-                  Players
+                  Users
                 </NavLink>
 
                 <NavLink
@@ -121,7 +121,7 @@ const DashboardLayout = () => {
               <SheetContent side="left" className="flex flex-col">
                 <nav className="grid gap-2 text-lg font-medium">
                   <Link
-                    to="#"
+                    to="/admin/portal"
                     className="flex items-center gap-2 text-lg font-semibold"
                   >
                     <Package2 className="h-6 w-6" />
@@ -129,7 +129,7 @@ const DashboardLayout = () => {
                   </Link>
 
                   <Link
-                    to="#"
+                    to="/admin/portal/users"
                     className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                   >
                     <Home className="h-5 w-5" />
@@ -141,7 +141,7 @@ const DashboardLayout = () => {
                     className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
                   >
                     <ShoppingCart className="h-5 w-5" />
-                    Players
+                    Users
                   </Link>
                   <Link
                     to="#"
@@ -186,12 +186,7 @@ const DashboardLayout = () => {
             <div className="w-full flex-1">
               <form>
                 <div className="relative">
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="search"
-                    placeholder="Search players..."
-                    className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-                  />
+                  <h1 className="text-md font-semibold text-gray-700">Welcome Back Dhruv Saini</h1>
                 </div>
               </form>
             </div>

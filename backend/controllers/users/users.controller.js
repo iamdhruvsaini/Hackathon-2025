@@ -50,6 +50,7 @@ export const verifyAdmin = async (req, res) => {
     }
 };
 
+//add new employee
 export const addAdmin = async (req, res) => {
     const { email, name, role } = req.body; 
 
@@ -91,6 +92,48 @@ export const addAdmin = async (req, res) => {
 
     } catch (error) {
         console.error("Error creating admin:", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+};
+
+
+export const removeAdmin = async (req, res) => {
+    const { email } = req.body; // Admin email to remove
+
+    if (!email) {
+        return res.status(400).json({ message: "Email is required to remove an admin" });
+    }
+
+    try {
+        const existingAdmin = await sql`
+            SELECT * FROM admin WHERE email = ${email};
+        `;
+
+        if (existingAdmin.length === 0) {
+            return res.status(404).json({ message: "Admin not found" });
+        }
+
+        // Optional: Prevent deletion of a super admin
+        if (existingAdmin[0].role === "superadmin") {
+            return res.status(403).json({ message: "Cannot remove a super admin" });
+        }
+
+        await sql`
+            DELETE FROM admin WHERE email = ${email};
+        `;
+
+        res.status(200).json({
+            message: "Admin removed successfully",
+            removedAdmin: {
+                admin_id: existingAdmin[0].admin_id,
+                name: existingAdmin[0].name,
+                email: existingAdmin[0].email,
+                role: existingAdmin[0].role,
+            },
+        });
+
+    } catch (error) {
+        console.error("Error removing admin:", error);
         res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };

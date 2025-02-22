@@ -9,7 +9,7 @@ import potentialRankingRouter from './routes/stats/stats.route.js'
 import playerPositionRouter from './routes/player-positon/playerPosition.route.js'
 import userSelectionRouter from './routes/user-selection/selection.route.js'
 import usersRouter from './routes/users/users.route.js'
-
+import adminPortalRouter from './routes/admin/admin.route.js'
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -39,6 +39,9 @@ app.use('/api/user-selection/',userSelectionRouter )
 
 //route for users
 app.use('/api/users',usersRouter)
+
+//route for admin-portal
+app.use('/api/admin',adminPortalRouter);
 
 
 //Connecting to Db

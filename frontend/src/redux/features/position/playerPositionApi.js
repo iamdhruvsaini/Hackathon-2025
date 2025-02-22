@@ -95,7 +95,6 @@ export const playerPositionApi = createApi({
             },
             providesTags: ['PlayerPosition']
         }),
-
     }),
 });
 

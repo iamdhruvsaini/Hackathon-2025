@@ -4,6 +4,7 @@ import statsRankingApi from '../features/stats/statsRankingApi';
 import playerPositionApi from '../features/position/playerPositionApi';
 import cartReducer from '../cart/cartSlice'
 import userSelectionApi from '../features/user-selection/userSelectionApi';
+import adminApi from '../features/admin/adminApi';
 
 
 const store = configureStore({
@@ -13,13 +14,15 @@ const store = configureStore({
     [statsRankingApi.reducerPath]:statsRankingApi.reducer,
     [playerPositionApi.reducerPath]:playerPositionApi.reducer,
     [userSelectionApi.reducerPath]:userSelectionApi.reducer,
+    [adminApi.reducerPath]:adminApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       dashboardApi.middleware,
       statsRankingApi.middleware,
       playerPositionApi.middleware,
-      userSelectionApi.middleware
+      userSelectionApi.middleware,
+      adminApi.middleware,
     ),
 })
 

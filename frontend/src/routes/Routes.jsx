@@ -23,6 +23,10 @@ import StatLink from "@/pages/stats/StatLink";
 
 import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import TrendingPlayers from "@/admin/admin-dashboard/TrendingPlayers";
+import UsersPage from "@/admin/admin-dashboard/users/UsersPage";
+import Employees from "@/admin/admin-dashboard/users/Employees";
+
 
 const router = createBrowserRouter([
   {
@@ -112,7 +116,19 @@ const router = createBrowserRouter([
             index: true,
             element: <AdminDashboardHome />,
           },
-          
+          {
+            path:'trending-players',
+            element:<TrendingPlayers/>
+          },
+          {
+            path:'users',
+            element:<UsersPage/>,
+          },
+          {
+            path:'employees-details',
+            element:<Employees/>
+          }
+
         ],
       },
     ],

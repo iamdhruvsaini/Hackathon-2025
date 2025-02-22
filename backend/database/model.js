@@ -88,11 +88,12 @@ export const DominionFcModel = async () => {
 
     await sql`
     CREATE TABLE IF NOT EXISTS admin(
-        admin_id SERIAL NOT NULL, 
+        admin_id SERIAL NOT NULL PRIMARY KEY, 
         name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
-        role VARCHAR(255)
+        role VARCHAR(255),
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     `
 };
