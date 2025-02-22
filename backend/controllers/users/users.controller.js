@@ -137,3 +137,40 @@ export const removeAdmin = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };
+
+
+export const updateAdmin = async (req, res) => {
+    const { employeeId, name, email, role } = req.body;
+
+    if (!employeeId || !name || !email || !role) {
+        return res.status(400).json({ message: "All fields (employeeId, name, email, role) are required" });
+    }
+
+    try {
+        const existingEmployee = await sql`
+            SELECT * FROM admin WHERE admin_id = ${employeeId};
+        `;
+
+        if (existingEmployee.length === 0) {
+            return res.status(404).json({ message: "Employee not found" });
+        }
+
+        const updatedEmployee = await sql`
+            UPDATE admin 
+            SET name = ${name}, email = ${email}, role = ${role}
+            WHERE admin_id = ${employeeId}
+            RETURNING *;
+        `;
+
+        res.status(200).json({ 
+            message: "Employee updated successfully", 
+            updatedEmployee: updatedEmployee[0] 
+        });
+
+    } catch (error) {
+        console.error("Error updating employee:", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+};
+
+

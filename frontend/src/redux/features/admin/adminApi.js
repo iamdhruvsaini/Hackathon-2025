@@ -49,6 +49,16 @@ export const adminApi= createApi({
         },
         invalidatesTags: ['EMPLOYEE'],
       }),
+      updateEmployee:builder.mutation({
+        query: (formData) => {
+            return {
+                url:'/users/update-admin',
+                method:'POST',
+                body:formData,
+            }
+        },
+        invalidatesTags: ['EMPLOYEE'],
+      }),
     }),
 
   })
@@ -59,7 +69,8 @@ export const adminApi= createApi({
     useGetSoldPlayersQuery,
     useGetEmployeeDetailsQuery,
     useAddNewEmpoyeeMutation,
-    useRemoveEmployeeMutation
+    useRemoveEmployeeMutation,
+    useUpdateEmployeeMutation
 
   } = adminApi;
   export default adminApi;
