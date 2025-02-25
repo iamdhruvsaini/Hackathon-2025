@@ -7,16 +7,14 @@ export const statsRankingApi= createApi({
         baseUrl: `${getBaseURL()}/api/stats`,
         credentials:'include',
     }),
-
+    tagTypes:['STATS'],
     endpoints: (builder) => ({
       getRanking: builder.query({
         query: (link) => `/${link}`,
+        providesTags:['STATS']
       }),
+
     }),
-
-
-    
-
   })
 
   export const { useGetRankingQuery} = statsRankingApi;

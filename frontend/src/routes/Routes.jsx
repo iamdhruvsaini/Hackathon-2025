@@ -26,6 +26,8 @@ import PrivateRoute from "./PrivateRoute";
 import TrendingPlayers from "@/admin/admin-dashboard/TrendingPlayers";
 import UsersPage from "@/admin/admin-dashboard/users/UsersPage";
 import Employees from "@/admin/admin-dashboard/users/Employees";
+import RemovePlayers from "@/admin/admin-dashboard/remove-players/RemovePlayers";
+
 
 
 const router = createBrowserRouter([
@@ -127,6 +129,10 @@ const router = createBrowserRouter([
           {
             path:'employees-details',
             element:<Employees/>
+          },
+          {
+            path:'remove-players',
+            element:<RemovePlayers/>
           }
 
         ],

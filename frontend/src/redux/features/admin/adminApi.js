@@ -1,5 +1,8 @@
 import getBaseURL from '@/utils/baseURL'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import playerPositionApi from '../position/playerPositionApi'
+import statsRankingApi from '../stats/statsRankingApi'
+import dashboardApi from '../dashboard/dashboardApi'
 
 export const adminApi= createApi({
     reducerPath: 'adminApi',
@@ -38,7 +41,6 @@ export const adminApi= createApi({
         },
         invalidatesTags: ['EMPLOYEE'],
       }),
-
       removeEmployee:builder.mutation({
         query: (formData) => {
             return {
@@ -59,6 +61,26 @@ export const adminApi= createApi({
         },
         invalidatesTags: ['EMPLOYEE'],
       }),
+      removePlayers:builder.mutation({
+        query: (formData) => {
+            return {
+                url:'/admin/remove-players',
+                method:'POST',
+                body:formData,
+            }
+        },
+        invalidatesTags: ['ADMIN'],
+        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+          try {
+              await queryFulfilled;
+              dispatch(dashboardApi.util.invalidateTags(['Dashboard']));
+              dispatch(playerPositionApi.util.invalidateTags(['PlayerPosition']));
+              dispatch(statsRankingApi.util.invalidateTags(['STATS']));
+          } catch (error) {
+              console.error("Error removing player:", error);
+          }
+      }
+      })
     }),
 
   })
@@ -70,7 +92,8 @@ export const adminApi= createApi({
     useGetEmployeeDetailsQuery,
     useAddNewEmpoyeeMutation,
     useRemoveEmployeeMutation,
-    useUpdateEmployeeMutation
+    useUpdateEmployeeMutation,
+    useRemovePlayersMutation
 
   } = adminApi;
   export default adminApi;

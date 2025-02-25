@@ -37,7 +37,6 @@ const cartSlice = createSlice({
         (item) =>item.player_id !== action.payload.player_id // Ensure type match
       );
     }
-
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserSelectedPlayer.pending, (state) => {

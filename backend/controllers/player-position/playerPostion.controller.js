@@ -321,7 +321,6 @@ export const fetchGoalKeeperPlayers = async (req, res) => {
     }
 };
 
-
 export const fetchReservesPlayers = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -387,8 +386,6 @@ export const fetchReservesPlayers = async (req, res) => {
 export const fetchTrendingPlayers = async (req, res) => {
     try {
       
-
-
         // Base query with dynamic conditions
         let query = `
             SELECT p.player_id, p.player_face_url, p.short_name, p.nationality_name, 
@@ -412,6 +409,66 @@ export const fetchTrendingPlayers = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Failed to fetch trending players",
+            error: error.message
+        });
+    }
+};
+
+export const fetchAllPlayers = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10;
+        const offset = (page - 1) * limit;
+
+        const { player, country, age } = req.query;
+
+        // Base query
+        let query = `
+            SELECT p.player_id, p.player_face_url, p.short_name, 
+                   p.nationality_name, p.overall, p.age
+            FROM players p
+            JOIN wages w ON p.wage_id = w.wage_id
+        `;
+
+        let values = [];
+        let conditions = [];
+
+        // Dynamic conditions
+        if (player) {
+            conditions.push(`short_name ILIKE $${values.length + 1}`);
+            values.push(`%${player}%`);
+        }
+        if (country) {
+            conditions.push(`nationality_name ILIKE $${values.length + 1}`);
+            values.push(`%${country}%`);
+        }
+        if (age) {
+            conditions.push(`age >= $${values.length + 1}`);
+            values.push(parseInt(age));
+        }
+
+        // Append WHERE clause if any filters exist
+        if (conditions.length > 0) {
+            query += ` WHERE ` + conditions.join(" AND ");
+        }
+
+        // Add pagination
+        query += ` LIMIT $${values.length + 1} OFFSET $${values.length + 2}`;
+        values.push(limit, offset);
+
+        // Execute the query
+        const players = await sql(query, values);
+
+        res.status(200).json({
+            success: true,
+            data: players
+        });
+
+    } catch (error) {
+        console.error("Error fetching players:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch players",
             error: error.message
         });
     }

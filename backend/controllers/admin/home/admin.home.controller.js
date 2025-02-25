@@ -108,3 +108,43 @@ export const getAllAdmins = async (req, res) => {
     }
 };
 
+export const removePlayers = async (req, res) => {
+    try {
+        const { player_id } = req.body;
+
+        if (!player_id) {
+            return res.status(400).json({
+                success: false,
+                message: "Player ID is required",
+            });
+        }
+
+        const deletedPlayer = await sql`
+            DELETE FROM players
+            WHERE player_id = ${player_id}
+            RETURNING *;
+        `;
+
+        if (deletedPlayer.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Player not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Player removed successfully",
+            data: deletedPlayer[0],
+        });
+    } catch (error) {
+        console.error("Error removing player:", error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message,
+        });
+    }
+};
+
+

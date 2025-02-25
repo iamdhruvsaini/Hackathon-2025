@@ -95,6 +95,20 @@ export const playerPositionApi = createApi({
             },
             providesTags: ['PlayerPosition']
         }),
+        getAllPlayers:builder.query({
+            query: ({ page = 1, player, country, position, age }) => {
+                let queryString = `/all-players?page=${page}`;
+                
+                if (player) queryString += `&player=${encodeURIComponent(player)}`;
+                if (country) queryString += `&country=${encodeURIComponent(country)}`;
+                if (position) queryString += `&position=${encodeURIComponent(position)}`;
+                if (age) queryString += `&age=${age}`;
+      
+                return queryString;
+            },
+            providesTags: ['PlayerPosition']
+
+        })
     }),
 });
 
@@ -105,7 +119,8 @@ export const {
     useGetForwardsPlayersQuery, 
     useGetGoalkeepersPlayersQuery,
     useGetReservesPlayersQuery,
-    useGetTrendingPlayersQuery
+    useGetTrendingPlayersQuery,
+    useGetAllPlayersQuery,
 } = playerPositionApi;
 
 

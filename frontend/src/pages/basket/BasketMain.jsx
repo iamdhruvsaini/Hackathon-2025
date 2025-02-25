@@ -1,8 +1,8 @@
 import FootballAd from "@/components/FootballAd";
 import React, { useEffect, useState } from "react";
 import BasketCard from "./BasketCard";
-import { useGetPlayerPositionCountQuery } from "@/redux/features/dashboard/dashboardApi";
 import Loading from "@/components/Loading";
+import { useGetPlayerPositionCountQuery } from "@/redux/features/dashboard/dashboardApi";
 
 
 const positionDetails = {
