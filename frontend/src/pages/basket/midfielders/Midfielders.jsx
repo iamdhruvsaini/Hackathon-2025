@@ -43,9 +43,13 @@ import toast from 'react-hot-toast';
 import { useAddSelectedPlayerMutation, useRemoveSelectedPlayerMutation } from '@/redux/features/user-selection/userSelectionApi';
 import Loading from '@/components/Loading';
 import PositionBottom from '../PositionBottom';
+import { io } from "socket.io-client";
+import getBaseURL from "@/utils/baseURL";
 
+const socket = io(getBaseURL(), { autoConnect: true });
 
-const userId ="c1b6da17-bdf6-459f-b567-f7db0eb579e1"
+const userId = "c1b6da17-bdf6-459f-b567-f7db0eb579e1";
+
 
 const Midfielders = () => {
   
@@ -61,7 +65,7 @@ const Midfielders = () => {
   const [removeSelectedPlayer]=useRemoveSelectedPlayerMutation();
 
   // Fetch players with filters
-  const { data: playerData, isLoading, isError } = useGetMidFieldersPlayersQuery({ page: pageCount, ...filters });
+  const { data: playerData, isLoading, isError,refetch} = useGetMidFieldersPlayersQuery({ page: pageCount, ...filters });
 
   if(isLoading){
     <Loading/>
@@ -70,9 +74,23 @@ const Midfielders = () => {
 
   const cartItems=useSelector((state)=>state.cart.cartItems);
 
+  
+
   useEffect(() => {
       dispatch(fetchUserSelectedPlayer(userId));
-  }, []);
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    const handlePlayerUpdate = async () => {
+      await refetch();
+    };
+
+    socket.on("playerUpdated", handlePlayerUpdate);
+
+    return () => {
+      socket.off("playerUpdated", handlePlayerUpdate);
+    };
+  },[refetch]);
 
   const players = useMemo(() => playerData?.data || [], [playerData]);
 

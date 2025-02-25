@@ -76,11 +76,11 @@ const DashboardLayout = () => {
                 </NavLink>
 
                 <NavLink
-                  to="/admin/dashboard/stats-update"
+                  to="/admin/portal/mark-sold"
                   className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 >
                   <Package className="h-4 w-4" />
-                  Update Stats
+                  Mark Sold
                 </NavLink>
               </nav>
             </div>
@@ -151,11 +151,11 @@ const DashboardLayout = () => {
                     Remove Player
                   </Link>
                   <Link
-                    to="#"
+                    to="/admin/portal/mark-sold"
                     className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                   >
                     <Users className="h-5 w-5" />
-                    Update Stats
+                    Mark Sold
                   </Link>
                   <Link
                     to="#"

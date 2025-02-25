@@ -14,7 +14,8 @@ export const DominionFcModel = async () => {
         wage_id SERIAL PRIMARY KEY,
         bought SMALLINT DEFAULT 0,
         wage_eur DECIMAL(10,2),
-        value_eur DECIMAL(10,2)
+        value_eur DECIMAL(10,2),
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     `;
 

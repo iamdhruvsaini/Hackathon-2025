@@ -25,7 +25,7 @@ export const adminApi= createApi({
       }),
       getSoldPlayers:builder.query({
         query: () => `/admin/recently-sold`,
-        providesTags:['ADMIN']
+        providesTags:['ADMIN'],
       }),
       getEmployeeDetails:builder.query({
         query:()=>'/admin/employee-details',

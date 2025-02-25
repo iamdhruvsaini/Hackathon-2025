@@ -27,6 +27,7 @@ import TrendingPlayers from "@/admin/admin-dashboard/TrendingPlayers";
 import UsersPage from "@/admin/admin-dashboard/users/UsersPage";
 import Employees from "@/admin/admin-dashboard/users/Employees";
 import RemovePlayers from "@/admin/admin-dashboard/remove-players/RemovePlayers";
+import MarkSold from "@/admin/admin-dashboard/mark-sold/MarkSold";
 
 
 
@@ -133,6 +134,10 @@ const router = createBrowserRouter([
           {
             path:'remove-players',
             element:<RemovePlayers/>
+          },
+          {
+            path:'mark-sold',
+            element:<MarkSold/>
           }
 
         ],

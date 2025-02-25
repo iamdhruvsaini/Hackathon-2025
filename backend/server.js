@@ -2,6 +2,8 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
+import http from "http";
+import { Server } from "socket.io";
 import { DominionFcModel } from './database/model.js';
 
 import dashboardRouter from './routes/dashboard/dashboard.route.js'
@@ -10,6 +12,7 @@ import playerPositionRouter from './routes/player-positon/playerPosition.route.j
 import userSelectionRouter from './routes/user-selection/selection.route.js'
 import usersRouter from './routes/users/users.route.js'
 import adminPortalRouter from './routes/admin/admin.route.js'
+import { markPlayerAsSold } from './controllers/admin/home/admin.home.controller.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,11 +21,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(helmet());
 app.use(morgan('dev'));
-
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,  
-}));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 
 //route for stats page
@@ -43,12 +42,41 @@ app.use('/api/users',usersRouter)
 //route for admin-portal
 app.use('/api/admin',adminPortalRouter);
 
+//creating a server
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: "http://localhost:5173", methods: ["GET", "POST"], credentials: true },
+});
+
 
 //Connecting to Db
-DominionFcModel().then(()=>{
+io.on("connection", (socket) => {
+    console.log("New client connected:", socket.id);
+  
+    // Expecting payload: { playerId, sold, wage }
+    socket.on("updateSoldStatus", async (data) => {
+      try {
+        const { playerId, sold, wage } = data;
+        const result = await markPlayerAsSold(playerId, sold, wage);
+        console.log("Player sold status updated:", result);
+  
+        io.emit("playerUpdated", { playerId, updatedRecord: result[0] });
+      } catch (error) {
+        console.error("Error updating sold status:", error);
+        socket.emit("error", "Could not update sold status");
+      }
+    });
+  
+    socket.on("disconnect", () => {
+      console.log("Client disconnected:", socket.id);
+    });
+  });
+  
+  // Connect to database, then start the server
+  DominionFcModel().then(() => {
     console.log("Database Connected Successfully");
-    app.listen(PORT,()=>{
-        console.log(`App is Listening on Port ${PORT}`);
-    })
-})
-
+    server.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  });
+  

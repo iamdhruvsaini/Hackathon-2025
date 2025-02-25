@@ -43,8 +43,14 @@ import { useAddSelectedPlayerMutation, useRemoveSelectedPlayerMutation } from '@
 import PositionBottom from '../PositionBottom';
 import Loading from '@/components/Loading';
 
+import { io } from "socket.io-client";
+import getBaseURL from "@/utils/baseURL";
 
-const userId ="c1b6da17-bdf6-459f-b567-f7db0eb579e1"
+const socket = io(getBaseURL(), { autoConnect: true });
+
+const userId = "c1b6da17-bdf6-459f-b567-f7db0eb579e1";
+
+
 
 const Wingers = () => {
   
@@ -60,7 +66,7 @@ const Wingers = () => {
   const [removeSelectedPlayer]=useRemoveSelectedPlayerMutation();
 
   // Fetch players with filters
-  const { data: playerData, isLoading, isError } = useGetWingersPlayersQuery({ page: pageCount, ...filters });
+  const { data: playerData, isLoading, isError ,refetch} = useGetWingersPlayersQuery({ page: pageCount, ...filters });
 
   const dispatch=useDispatch();
 
@@ -68,7 +74,19 @@ const Wingers = () => {
 
   useEffect(() => {
       dispatch(fetchUserSelectedPlayer(userId));
-  }, []);
+  }, [dispatch,userId]);
+
+  useEffect(() => {
+    const handlePlayerUpdate = async () => {
+      await refetch();
+    };
+
+    socket.on("playerUpdated", handlePlayerUpdate);
+
+    return () => {
+      socket.off("playerUpdated", handlePlayerUpdate);
+    };
+  },[refetch]);
 
   const players = useMemo(() => playerData?.data || [], [playerData]);
 

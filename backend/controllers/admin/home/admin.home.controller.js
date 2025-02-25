@@ -72,7 +72,7 @@ export const getSoldPlayers = async (req, res) => {
             FROM players p
             JOIN wages w ON p.wage_id = w.wage_id
             WHERE w.bought = 1
-            ORDER BY p.timestamp DESC; 
+            ORDER BY w.timestamp DESC; 
         `;
 
         // Send response
@@ -147,4 +147,23 @@ export const removePlayers = async (req, res) => {
     }
 };
 
-
+// mark player as sold and used by the websocket 
+export const markPlayerAsSold = async (playerId, bought, wage) => {
+    // Get the wage_id for the given player
+    const [player] = await sql`
+      SELECT wage_id FROM players WHERE player_id = ${playerId}
+    `;
+    if (!player) {
+      throw new Error("Player not found");
+    }
+  
+    // Update the wages table: set bought to 0 or 1.
+    const updatedWage = await sql`
+      UPDATE wages
+      SET bought = ${bought}, wage_eur = ${wage},timestamp = NOW()
+      WHERE wage_id = ${player.wage_id}
+      RETURNING *;
+    `;
+    return updatedWage;
+};
+  

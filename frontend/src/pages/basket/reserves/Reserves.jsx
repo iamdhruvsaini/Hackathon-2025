@@ -44,8 +44,13 @@ import Loading from '@/components/Loading';
 import PositionBottom from '../PositionBottom';
 
 
+import { io } from "socket.io-client";
+import getBaseURL from "@/utils/baseURL";
 
-const userId ="c1b6da17-bdf6-459f-b567-f7db0eb579e1"
+const socket = io(getBaseURL(), { autoConnect: true });
+
+const userId = "c1b6da17-bdf6-459f-b567-f7db0eb579e1";
+
 
 const Reserves = () => {
   
@@ -61,7 +66,7 @@ const Reserves = () => {
   const [removeSelectedPlayer]=useRemoveSelectedPlayerMutation();
 
   // Fetch players with filters
-  const { data: playerData, isLoading, isError } = useGetReservesPlayersQuery({ page: pageCount, ...filters });
+  const { data: playerData, isLoading, isError,refetch } = useGetReservesPlayersQuery({ page: pageCount, ...filters });
   
   const dispatch=useDispatch();
 
@@ -69,7 +74,19 @@ const Reserves = () => {
 
   useEffect(() => {
       dispatch(fetchUserSelectedPlayer(userId));
-  }, []);
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    const handlePlayerUpdate = async () => {
+      await refetch();
+    };
+
+    socket.on("playerUpdated", handlePlayerUpdate);
+
+    return () => {
+      socket.off("playerUpdated", handlePlayerUpdate);
+    };
+  },[refetch]);
 
   const players = useMemo(() => playerData?.data || [], [playerData]);
 
