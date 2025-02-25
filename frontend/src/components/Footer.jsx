@@ -1,8 +1,76 @@
+import getBaseURL from "@/utils/baseURL";
+import axios from "axios";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 const Footer = () => {
+
+  const {handleSubmit,register,formState:{errors}}=useForm();
+
+  const handleSubscribe = async (formData) => {
+    try {
+      if (!formData.email) {
+        Swal.fire({
+          title: "Error!",
+          text: "Please enter a valid email address.",
+          icon: "error",
+          confirmButtonColor: "#d33",
+        });
+        return;
+      }
+  
+      const response = await axios.post(
+        `${getBaseURL()}/api/users/subscribe`,
+        { email: formData.email }
+      );
+  
+      if (response.status === 200) {
+        Swal.fire({
+          title: "Subscribed!",
+          text: "Marked as subscribed successfully",
+          icon: "success",
+          confirmButtonColor: "#4CAF50",
+        });
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          Swal.fire({
+            title: "warning!",
+            text: error.response.data.message,
+            icon: "warning",
+            confirmButtonColor: "#d33",
+          });
+        } else if (error.response.status === 404) {
+          Swal.fire({
+            title: "User Not Found!",
+            text: "Please register first !", // "User not found"
+            icon: "warning",
+            confirmButtonColor: "#FFC107",
+          });
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: "Something went wrong. Please try again later.",
+            icon: "error",
+            confirmButtonColor: "#d33",
+          });
+        }
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Network error. Please check your connection.",
+          icon: "error",
+          confirmButtonColor: "#d33",
+        });
+      }
+    }
+  };
+  
+
   return (
     <div id="footer" className="mt-10 w-full bg-slate-50">
       <div className="xl:max-w-[1300px] mx-auto px-4">
@@ -57,7 +125,7 @@ const Footer = () => {
                 <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-2">
                   SUBSCRIBE
                 </h2>
-                <div className="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap md:justify-start items-end">
+                <form className="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap md:justify-start items-end" onSubmit={handleSubmit(handleSubscribe)}>
                   <div className="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
                     <label
                       className="leading-7 text-sm text-gray-600"
@@ -67,14 +135,27 @@ const Footer = () => {
                     <input
                       type="text"
                       id="footer-field"
-                      name="footer-field"
+                      {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                          value: /\S+@\S+\.\S+/,
+                          message: "Invalid email address",
+                        },
+                        maxLength: {
+                          value: 100,
+                          message: "Email cannot exceed 100 characters",
+                        },
+                      })}
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
+                   
+
                   </div>
                   <button className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                    Button
+                    Subscribe
                   </button>
-                </div>
+                </form>
+                  {errors.email && <span className="text-red-500 text-sm mt-1">{errors.email.message}</span> }
                
               </div>
             </div>

@@ -174,3 +174,36 @@ export const updateAdmin = async (req, res) => {
 };
 
 
+
+export const markUserSubscribed = async (req, res) => {
+    const { email } = req.body; 
+
+    if (!email) {
+        return res.status(400).json({ message: "Email is required to mark user as subscribed" });
+    }
+
+    try {
+        const existingUser = await sql`
+            SELECT * FROM users WHERE email = ${email};
+        `;
+
+        if (existingUser.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        if (existingUser.length !== 0 && existingUser[0].subscribed === true) {
+            return res.status(400).json({ message: "User already subscribed" });
+        }
+
+        await sql`
+            UPDATE users SET subscribed = true WHERE email = ${email};
+        `;
+
+        res.status(200).json({ message: "User marked as subscribed successfully" });
+
+    } catch (error) {
+        console.error("Error marking user as subscribed:", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+}
+
+
