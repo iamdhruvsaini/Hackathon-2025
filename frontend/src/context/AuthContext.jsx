@@ -10,6 +10,8 @@ import {
 } from "firebase/auth";
 
 import Loading from "@/components/Loading";
+import getBaseURL from "@/utils/baseURL";
+import axios from "axios";
 
 
 const AuthContext = createContext();
@@ -23,10 +25,23 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  //add user to database
+  const addUserToDB = async (userId, email) => {
+    try {
+      const res = await axios.post(`${getBaseURL()}/api/users/add-customer`, { userId, email });
+    } catch (error) {
+      console.log("Error adding user to database:", error);
+      throw error;
+    }
+  };
+
   // Email/Password Sign-Up
   const emailSignup = async (email, password) => {
     try {
-      return await createUserWithEmailAndPassword(auth, email, password);
+      const userCredentials= await createUserWithEmailAndPassword(auth, email, password);
+      await addUserToDB(userCredentials.user.uid, email);
+      return ;
+
     } catch (error) {
       console.error("Email sign-up error:", error);
       throw error;
@@ -47,7 +62,9 @@ export const AuthProvider = ({ children }) => {
   const googleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      return await signInWithPopup(auth, provider);
+      const res= await signInWithPopup(auth, provider);
+      await addUserToDB(res.user.uid, res.user.email);
+      return ;
     } catch (error) {
       console.error("Google sign-in error:", error);
       throw error;

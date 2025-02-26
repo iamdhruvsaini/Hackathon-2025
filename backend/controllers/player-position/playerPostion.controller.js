@@ -424,7 +424,7 @@ export const fetchAllPlayers = async (req, res) => {
 
         // Base query
         let query = `
-            SELECT p.player_id, p.player_face_url, p.short_name, 
+            SELECT p.player_id, p.player_face_url, p.short_name, p.club_position,
                    p.nationality_name, p.overall, p.age,w.bought
             FROM players p
             JOIN wages w ON p.wage_id = w.wage_id

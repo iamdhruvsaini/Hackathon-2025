@@ -4,6 +4,7 @@ import Recommended from "./Recommended";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserSelectedPlayer } from "@/redux/cart/cartSlice";
 import Loading from "@/components/Loading";
+import { useAuth } from "@/context/AuthContext";
 
 
 const positionMap = {
@@ -17,8 +18,8 @@ const positionMap = {
 
 
 const CartPage = () => {
- 
-    const [userId, setUserId] = useState("c1b6da17-bdf6-459f-b567-f7db0eb579e1");
+    const {currentUser} = useAuth();
+    const [userId, setUserId] = useState(currentUser?.uid);
     const [cartSummary, setCartSummary] = useState({
       totalPlayer: 0,
       totalPrice: 0,

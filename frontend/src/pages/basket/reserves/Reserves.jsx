@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Check } from 'lucide-react';
+
 import { X } from 'lucide-react';
 import { Filter } from 'lucide-react';
 
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -17,7 +16,6 @@ import {
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
@@ -46,13 +44,15 @@ import PositionBottom from '../PositionBottom';
 
 import { io } from "socket.io-client";
 import getBaseURL from "@/utils/baseURL";
+import { useAuth } from '@/context/AuthContext';
 
 const socket = io(getBaseURL(), { autoConnect: true });
 
-const userId = "c1b6da17-bdf6-459f-b567-f7db0eb579e1";
 
 
 const Reserves = () => {
+  const {currentUser}=useAuth();
+  const userId=currentUser.uid;
   
   const [pageCount, setPageCount] = useState(1);
   const [filters, setFilters] = useState({

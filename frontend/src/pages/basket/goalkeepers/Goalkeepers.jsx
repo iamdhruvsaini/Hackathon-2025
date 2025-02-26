@@ -45,13 +45,15 @@ import PositionBottom from '../PositionBottom';
 
 import { io } from "socket.io-client";
 import getBaseURL from "@/utils/baseURL";
+import { useAuth } from '@/context/AuthContext';
 
 const socket = io(getBaseURL(), { autoConnect: true });
 
 
-const userId ="c1b6da17-bdf6-459f-b567-f7db0eb579e1"
 
 const GoalKeepers = () => {
+  const {currentUser}=useAuth();
+  const userId=currentUser?.uid;
   
   const [pageCount, setPageCount] = useState(1);
   const [filters, setFilters] = useState({

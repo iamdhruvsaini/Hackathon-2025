@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Filter, X } from "lucide-react";
+import { Filter } from "lucide-react";
 
 import {
   Sheet,
@@ -18,42 +18,15 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+import { useGetAllPlayersQuery } from "@/redux/features/position/playerPositionApi";
 
-import { Button } from "@/components/ui/button";
-import { useGetDefendersPlayersQuery } from "@/redux/features/position/playerPositionApi";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addToCart,
-  fetchUserSelectedPlayer,
-  removeFromCart,
-} from "@/redux/cart/cartSlice";
-import toast from "react-hot-toast";
-import {
-  useAddSelectedPlayerMutation,
-  useRemoveSelectedPlayerMutation,
-} from "@/redux/features/user-selection/userSelectionApi";
-import PositionBottom from "../PositionBottom";
 import Loading from "@/components/Loading";
 import { io } from "socket.io-client";
 import getBaseURL from "@/utils/baseURL";
-import { useAuth } from "@/context/AuthContext";
 
 const socket = io(getBaseURL(), { autoConnect: true });
 
-
-const Defenders = () => {
-  const {currentUser} = useAuth();
-  const userId = currentUser?.uid;
+const AllPlayers = () => {
 
   const [pageCount, setPageCount] = useState(1);
 
@@ -64,23 +37,12 @@ const Defenders = () => {
     age: "",
   });
 
-  const [addSelectedPlayer] = useAddSelectedPlayerMutation();
-  const [removeSelectedPlayer] = useRemoveSelectedPlayerMutation();
-
   // Fetch players with filters
   const {
     data: playerData,
     isLoading,
     refetch,
-  } = useGetDefendersPlayersQuery({ page: pageCount, ...filters });
-
-  const dispatch = useDispatch();
-
-  const cartItems = useSelector((state) => state.cart.cartItems);
-
-  useEffect(() => {
-    dispatch(fetchUserSelectedPlayer(userId));
-  }, [dispatch, userId]);
+  } = useGetAllPlayersQuery({ page: pageCount, ...filters });
 
   useEffect(() => {
     const handlePlayerUpdate = async () => {
@@ -92,7 +54,7 @@ const Defenders = () => {
     return () => {
       socket.off("playerUpdated", handlePlayerUpdate);
     };
-  },[refetch]);
+  }, [refetch]);
 
   const players = useMemo(() => playerData?.data || [], [playerData]);
 
@@ -117,45 +79,6 @@ const Defenders = () => {
     setFilters({ player: "", country: "", position: "", age: "" });
   };
 
-  const handleRemoveClick = async (player) => {
-    dispatch(removeFromCart(player));
-
-    toast.success("Successfully Removed", {
-      duration: 1000,
-      position: "bottom-center",
-    });
-    const formData = {
-      player_id: player.player_id,
-      user_id: userId,
-    };
-    try {
-      await removeSelectedPlayer(formData).unwrap();
-    } catch (error) {
-      console.log("Error in removing selection", error);
-    }
-  };
-
-  const handleCartAdd = async (player) => {
-    dispatch(addToCart(player));
-
-    toast.success("Successfully Added to Cart", {
-      duration: 1000,
-      position: "bottom-center",
-    });
-    const formData = {
-      user_id: userId,
-      player_id: player.player_id,
-    };
-    try {
-      await addSelectedPlayer(formData).unwrap();
-    } catch {
-      toast.error("Failed To Add !", {
-        duration: 1000,
-        position: "bottom-center",
-      });
-    }
-  };
-
   if (isLoading) {
     <Loading />;
   }
@@ -166,7 +89,7 @@ const Defenders = () => {
         <div className="mx-auto">
           <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
-              Defenders
+              Players List
             </h1>
             {/* table header */}
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
@@ -342,18 +265,21 @@ const Defenders = () => {
                       Position
                     </th>
                     <th scope="col" className="px-4 py-3 flex justify-center">
-                      <span className="">Actions</span>
+                      Player ID
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {players.map((player, index) => (
-                    <tr className="border-b dark:border-gray-700" key={index}>
+                    <tr
+                      className="border-b dark:border-gray-700 hover:bg-gray-50"
+                      key={index}
+                    >
                       <th
                         scope="row"
                         className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-2 cursor-pointer"
                       >
-                        <img src={player.player_face_url} className="size-8" />
+                        <img src={player.player_face_url} className="size-8 hover:scale-105" />
                         <p className="pt-3">{player.short_name}</p>
                       </th>
                       <td className="px-4 py-3">
@@ -367,60 +293,8 @@ const Defenders = () => {
                       <td className="px-4 py-3">{player.age}</td>
                       <td className="px-4 py-3">{player.overall}</td>
                       <td className="px-4 py-3">{player.club_position}</td>
-                      <td className="px-4 py-3 flex items-center justify-center gap-1">
-                        {cartItems.some(
-                          (item) => item.player_id === player.player_id
-                        ) ? (
-                          <div className="flex w-24 justify-between items-center">
-                            <button
-                              className="text-xs font-medium text-center text-white w-14 py-2 bg-green-500 rounded-md"
-                              type="button"
-                              onClick={() =>
-                                toast.error("Already Added !", {
-                                  duration: 1000,
-                                  position: "bottom-center",
-                                })
-                              }
-                            >
-                              Added
-                            </button>
-                            <Drawer>
-                              <DrawerTrigger asChild>
-                                <button>
-                                  <X className="text-red-500 size-8" />
-                                </button>
-                              </DrawerTrigger>
-                              <DrawerContent>
-                                <DrawerHeader className="flex flex-col items-center">
-                                  <DrawerTitle>
-                                    Are you absolutely sure?
-                                  </DrawerTitle>
-                                  <DrawerDescription>
-                                    This action will remove player from the cart
-                                  </DrawerDescription>
-                                </DrawerHeader>
-                                <DrawerFooter className="flex flex-col items-center">
-                                  <Button
-                                    onClick={() => handleRemoveClick(player)}
-                                  >
-                                    Remove
-                                  </Button>
-                                  <DrawerClose asChild>
-                                    <Button variant="outline">Cancel</Button>
-                                  </DrawerClose>
-                                </DrawerFooter>
-                              </DrawerContent>
-                            </Drawer>
-                          </div>
-                        ) : (
-                          <button
-                            className="w-24 text-xs font-medium text-center text-white py-2 bg-blue-500 rounded-md"
-                            type="button"
-                            onClick={() => handleCartAdd(player)}
-                          >
-                            Add
-                          </button>
-                        )}
+                      <td className="px-4 py-3 text-center">
+                        {player.player_id}
                       </td>
                     </tr>
                   ))}
@@ -464,9 +338,8 @@ const Defenders = () => {
           </div>
         </div>
       </section>
-      <PositionBottom />
     </>
   );
 };
 
-export default Defenders;
+export default AllPlayers;

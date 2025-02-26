@@ -28,6 +28,7 @@ import UsersPage from "@/admin/admin-dashboard/users/UsersPage";
 import Employees from "@/admin/admin-dashboard/users/Employees";
 import RemovePlayers from "@/admin/admin-dashboard/remove-players/RemovePlayers";
 import MarkSold from "@/admin/admin-dashboard/mark-sold/MarkSold";
+import AllPlayers from "@/pages/players/AllPlayers";
 
 
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "card",
         element: <PlayerCard />,
+      },
+      {
+        path:"players",
+        element:<PrivateRoute><AllPlayers/></PrivateRoute>
       },
       {
         path: "dashboard",

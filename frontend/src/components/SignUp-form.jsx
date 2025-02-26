@@ -10,38 +10,36 @@ import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-
 export function SignUpForm({ className, ...props }) {
   const {
     register,
     handleSubmit,
-    formState:{errors},
+    formState: { errors },
   } = useForm();
 
-  const navigate=useNavigate();
-  const { emailSignup, googleSignIn} = useAuth();
-  const [loading,setLoading]=useState(false);
-
+  const navigate = useNavigate();
+  const { emailSignup, googleSignIn } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (formData) => {
     setLoading(true); // Start loading
     try {
       await emailSignup(formData.email, formData.password);
-      toast.success("Signup successful! Redirecting...");
-      navigate('/');
+      toast.success("Signup successful!");
+      navigate("/");
     } catch (error) {
       toast.error("Signup failed!");
     } finally {
       setLoading(false); // Stop loading
     }
   };
-  
+
   const handleGoogleSignIn = async () => {
     setLoading(true); // Start loading
     try {
       await googleSignIn();
-      toast.success("Login successful! Redirecting...");
-      navigate('/');
+      toast.success("Login successful!");
+      navigate("/");
     } catch (error) {
       console.error(error);
       toast.error("Google Sign-in failed!");
@@ -49,7 +47,6 @@ export function SignUpForm({ className, ...props }) {
       setLoading(false); // Stop loading
     }
   };
-  
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -77,10 +74,25 @@ export function SignUpForm({ className, ...props }) {
                   type="email"
                   placeholder="m@example.com"
                   name="email"
-                  {...register("email")}
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Please enter a valid email address",
+                    },
+                    maxLength: {
+                      value: 100,
+                      message: "Email cannot exceed 100 characters",
+                    },
+                  })}
                   required
                   autoComplete="off"
                 />
+                {errors.email && (
+                  <span className="text-sm text-red-600">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -97,18 +109,29 @@ export function SignUpForm({ className, ...props }) {
                   type="password"
                   required
                   autoComplete="off"
-                  {...register('password',{
-                    minLength:{value:4,message: "Password must be at least 4 characters long"},
-                    maxLength:{value:200,message: "Password cannot exceed 200 characters"}})
-                  } 
+                  {...register("password", {
+                    minLength: {
+                      value: 4,
+                      message: "Password must be at least 4 characters long",
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: "Password cannot exceed 50 characters",
+                    },
+                  })}
                 />
-                {errors.password && <span className="text-sm">{errors.password.message}</span>}
+                {errors.password && (
+                  <span className="text-sm">{errors.password.message}</span>
+                )}
               </div>
-             
-                <Button type="submit" className="w-full" onClick={handleSubmit(onSubmit)}>
-                  {loading?"Wait ...":"Register Me"}
-                </Button>
-            
+
+              <Button
+                type="submit"
+                className="w-full"
+                onClick={handleSubmit(onSubmit)}
+              >
+                {loading ? "Wait ..." : "Register Me"}
+              </Button>
 
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">

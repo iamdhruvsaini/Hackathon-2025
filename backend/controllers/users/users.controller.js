@@ -173,8 +173,6 @@ export const updateAdmin = async (req, res) => {
     }
 };
 
-
-
 export const markUserSubscribed = async (req, res) => {
     const { email } = req.body; 
 
@@ -207,3 +205,29 @@ export const markUserSubscribed = async (req, res) => {
 }
 
 
+export const addCustomer = async (req, res) => {
+    try {
+        const { userId, email } = req.body;
+        console.log(userId, email);
+      
+        if (!userId || !email) {
+          return res.status(400).json({ error: "userId and email are required" });
+        }
+      
+        // Attempt to insert the user, ignoring duplicates
+        await sql`
+          INSERT INTO users (user_id, email, subscribed)
+          VALUES (${userId}, ${email}, false)
+          ON CONFLICT (user_id) DO NOTHING;
+        `;
+        
+        return res.status(200).json({
+          message: "User processed successfully",
+        });
+      } catch (error) {
+        console.error("Error inserting user:", error);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      
+  };
+  

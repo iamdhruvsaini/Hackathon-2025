@@ -4,7 +4,9 @@ export const DominionFcModel = async () => {
     // Users Table
     await sql`
     CREATE TABLE IF NOT EXISTS users (
-        user_id UUID PRIMARY KEY 
+        user_id TEXT PRIMARY KEY ,
+        email TEXT NOT NULL,
+        subscribed BOOLEAN DEFAULT FALSE
     );
     `;
 
@@ -79,10 +81,8 @@ export const DominionFcModel = async () => {
     // User Selections Table
     await sql`
     CREATE TABLE IF NOT EXISTS user_selections (
-        user_id UUID NOT NULL,
+        user_id TEXT NOT NULL,
         player_id INT NOT NULL,
-        email TEXT NOT NULL,
-        subscribed BOOLEAN DEFAULT FALSE,
         PRIMARY KEY (user_id, player_id),
         FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
         FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
