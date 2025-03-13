@@ -28,6 +28,7 @@ const DashboardLayout = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     toast.success("Logged out successfully!", {
       position: "top-center",
       autoClose: 3000,

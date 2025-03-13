@@ -23,6 +23,7 @@ import { useGetAllPlayersQuery } from "@/redux/features/position/playerPositionA
 import Loading from "@/components/Loading";
 import { io } from "socket.io-client";
 import getBaseURL from "@/utils/baseURL";
+import { Link } from "react-router-dom";
 
 const socket = io(getBaseURL(), { autoConnect: true });
 
@@ -272,7 +273,7 @@ const AllPlayers = () => {
                 <tbody>
                   {players.map((player, index) => (
                     <tr
-                      className="border-b dark:border-gray-700 hover:bg-gray-50"
+                      className={`border-b dark:border-gray-700  ${player.bought===1?"bg-red-50":"bg-white hover:bg-gray-50"}`}
                       key={index}
                     >
                       <th
@@ -280,13 +281,13 @@ const AllPlayers = () => {
                         className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-2 cursor-pointer"
                       >
                         <img src={player.player_face_url} className="size-8 hover:scale-105" />
-                        <p className="pt-3">{player.short_name}</p>
+                        <Link to={`/card/${player.player_id}`}><p className="pt-3">{player.short_name}</p></Link>
                       </th>
                       <td className="px-4 py-3">
                         {player.bought === 0 ? (
-                          <div className="size-3 bg-red-500 rounded-full"></div>
-                        ) : (
                           <div className="size-3 bg-green-500 rounded-full"></div>
+                        ) : (
+                          <div className="size-3 bg-red-500 rounded-full"></div>
                         )}
                       </td>
                       <td className="px-4 py-3">{player.nationality_name}</td>
@@ -308,15 +309,15 @@ const AllPlayers = () => {
             >
               <div className="text-sm font-normal text-gray-500 flex gap-4">
                 <ul className="flex items-center gap-2">
-                  <li className="size-3 rounded-full bg-red-500"></li>
+                  <li className="size-3 rounded-full bg-green-500"></li>
                   <li className="font-semibold">Unsold</li>
                 </ul>
                 <ul className="flex items-center gap-2">
-                  <li className="size-3 rounded-full bg-green-500"></li>
+                  <li className="size-3 rounded-full bg-red-500"></li>
                   <li className="font-semibold">Sold</li>
                 </ul>
               </div>
-              <ul className="inline-flex items-stretch -space-x-px">
+              <ul className="inline-flex items-center">
                 <Pagination>
                   <PaginationContent>
                     <PaginationItem onClick={handlePaginationPrev}>
@@ -333,6 +334,8 @@ const AllPlayers = () => {
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
+
+                <div className="font-semibold border-2 rounded-full size-8 text-center">{pageCount}</div>
               </ul>
             </nav>
           </div>

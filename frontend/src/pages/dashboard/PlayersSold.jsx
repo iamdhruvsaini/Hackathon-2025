@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { useGetRecentSoldPlayerQuery } from "@/redux/features/dashboard/dashboardApi";
 
-export function PlayersSelected() {
+export function PlayersSold() {
 
   const {data: players = { data: [] },isLoading,isError} = useGetRecentSoldPlayerQuery();
 
@@ -37,7 +37,7 @@ export function PlayersSelected() {
       <TableBody>
         {players?.data?.length > 0 ? (
           players.data.map((item, index) => (
-            <TableRow key={index}>
+            <TableRow key={index} className="font-semibold italic text-gray-700">
               <TableCell>{item.position}</TableCell>
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.country}</TableCell>

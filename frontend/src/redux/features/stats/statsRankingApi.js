@@ -9,13 +9,19 @@ export const statsRankingApi= createApi({
     }),
     tagTypes:['STATS'],
     endpoints: (builder) => ({
+
       getRanking: builder.query({
         query: (link) => `/${link}`,
         providesTags:['STATS']
-      }),
+        }),
 
-    }),
+      getComparisonPlayers:builder.query({
+        query:({overall,position})=>`/comparison/similar-player/${overall}/${position}`,
+      })
+
+
+      }),
   })
 
-  export const { useGetRankingQuery} = statsRankingApi;
+  export const { useGetRankingQuery,useLazyGetComparisonPlayersQuery} = statsRankingApi;
   export default statsRankingApi;

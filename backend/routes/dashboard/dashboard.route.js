@@ -1,10 +1,11 @@
 import express from "express"
-import { getPlayerPositionCount, getRecentSoldPlayer } from "../../controllers/dashboard/dashboard.controller.js";
+import { getPlayerDetailsByID, getPlayerPositionCount, getRecentSoldPlayer } from "../../controllers/dashboard/dashboard.controller.js";
 
 const router=express.Router();
 
 router.get('/player-position-count',getPlayerPositionCount)
 router.get('/recent-sold-player',getRecentSoldPlayer);
+router.get('/player-detail/:playerId',getPlayerDetailsByID);
 
 export default router;
 

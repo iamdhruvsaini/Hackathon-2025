@@ -12,15 +12,19 @@ import { useDispatch } from "react-redux";
 import { removeFromCart } from "@/redux/cart/cartSlice";
 import { useRemoveSelectedPlayerMutation } from "@/redux/features/user-selection/userSelectionApi";
 import toast from "react-hot-toast";
+import { useAuth } from "@/context/AuthContext";
 
+
+const rowsPerPage = 8;
 
 const SelectedPlayer = ({players}) => {
+  
+  const {currentUser} = useAuth();
   const [removeSelectedPlayer]=useRemoveSelectedPlayerMutation();
   const dispatch=useDispatch();
- const [userId,setUserId]=useState("c1b6da17-bdf6-459f-b567-f7db0eb579e1")
+  const [userId, setUserId] = useState(currentUser?.uid);
 
   // State for pagination
-  const rowsPerPage = 8;
 
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(rowsPerPage);
@@ -46,7 +50,7 @@ const SelectedPlayer = ({players}) => {
         user_id:userId,
       }
       try {
-        await removeSelectedPlayer(formData).unwrap;
+        await removeSelectedPlayer(formData).unwrap();
       } catch (error) {
         console.log("Error in removal ",error);
       }

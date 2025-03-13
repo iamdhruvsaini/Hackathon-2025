@@ -1,6 +1,6 @@
 import BoxLoading from "@/components/BoxLoading";
 import { useGetTrendingPlayersQuery } from "@/redux/features/position/playerPositionApi";
-import React, { useEffect, useState } from "react";
+import React from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 
 const Recommended = () => {
   const { data: trendingPlayer, isLoading } = useGetTrendingPlayersQuery();
+  console.log(trendingPlayer);
 
   return (
     <div className="hidden xl:mt-8 xl:block">
@@ -52,7 +53,7 @@ const Recommended = () => {
                   />
                 </Link>
                 <div>
-                  <Link>
+                  <Link to={`/card/${player.player_id}`}>
                     <p className="text-lg font-semibold leading-tight text-blue-500 hover:underline text-center">{player.short_name}</p>
                     
                   </Link>

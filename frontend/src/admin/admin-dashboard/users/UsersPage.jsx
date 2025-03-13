@@ -13,7 +13,8 @@ import {
 import userBackground from "@/assets/Images/admin-users.svg";
 import { Link } from "react-router-dom";
 import {
-  useAddNewEmpoyeeMutation,
+ 
+  useAddNewEmployeeMutation,
   useGetEmployeeDetailsQuery,
   useRemoveEmployeeMutation,
 } from "@/redux/features/admin/adminApi";
@@ -22,7 +23,7 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 
 const UsersPage = () => {
-  const { data: employees, isLoading } = useGetEmployeeDetailsQuery();
+  const { data: employees} = useGetEmployeeDetailsQuery();
   const {
     handleSubmit,
     register,
@@ -33,7 +34,7 @@ const UsersPage = () => {
     register: registerRemove,
     formState: { errors: errorsRemove },
   } = useForm();
-  const [addEmployee] = useAddNewEmpoyeeMutation();
+  const [addEmployee] = useAddNewEmployeeMutation();
   const [removeEmployee]=useRemoveEmployeeMutation();
 
   const [addEmployeeLoading, setaddEmployeeLoading] = useState(false);
@@ -43,7 +44,6 @@ const UsersPage = () => {
     setaddEmployeeLoading(true);
     try {
       const response = await addEmployee(formData).unwrap();
-      console.log("Employee added successfully:", response);
       Swal.fire({
         title: "<strong>Employee Added Successfully</strong>",
         icon: "success",

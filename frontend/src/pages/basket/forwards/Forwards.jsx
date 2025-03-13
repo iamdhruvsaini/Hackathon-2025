@@ -49,6 +49,7 @@ import PositionBottom from "../PositionBottom";
 import { io } from "socket.io-client";
 import getBaseURL from "@/utils/baseURL";
 import { useAuth } from "@/context/AuthContext";
+import { Link } from "react-router-dom";
 
 const socket = io(getBaseURL(), { autoConnect: true });
 
@@ -350,19 +351,19 @@ const Forwards = () => {
                 </thead>
                 <tbody>
                   {players.map((player, index) => (
-                    <tr className="border-b dark:border-gray-700" key={index}>
+                    <tr className={`border-b ${player.bought===1 ? "bg-red-50":"bg-white"}`} key={index}>
                       <th
                         scope="row"
                         className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-2 cursor-pointer"
                       >
                         <img src={player.player_face_url} className="size-8" />
-                        <p className="pt-3">{player.short_name}</p>
+                        <Link to={`/card/${player.player_id}`}><p className="pt-3">{player.short_name}</p></Link>
                       </th>
                       <td className="px-4 py-3">
                         {player.bought === 0 ? (
-                          <div className="size-3 bg-red-500 rounded-full"></div>
-                        ) : (
                           <div className="size-3 bg-green-500 rounded-full"></div>
+                        ) : (
+                          <div className="size-3 bg-red-500 rounded-full"></div>
                         )}
                       </td>
                       <td className="px-4 py-3">{player.nationality_name}</td>
@@ -416,11 +417,12 @@ const Forwards = () => {
                           </div>
                         ) : (
                           <button
-                            className="w-24 text-xs font-medium text-center text-white py-2 bg-blue-500 rounded-md"
+                            className={`w-24 text-xs font-medium text-center text-white py-2 rounded-md ${player.bought === 1 ? "bg-red-500" : "bg-blue-500"}`}
                             type="button"
+                            disabled={player.bought === 1}
                             onClick={() => handleCartAdd(player)}
                           >
-                            Add
+                            {player.bought === 1 ? "Sold" : "Add"}
                           </button>
                         )}
                       </td>
@@ -436,15 +438,15 @@ const Forwards = () => {
             >
               <div className="text-sm font-normal text-gray-500 flex gap-4">
                 <ul className="flex items-center gap-2">
-                  <li className="size-3 rounded-full bg-red-500"></li>
+                  <li className="size-3 rounded-full bg-green-500"></li>
                   <li className="font-semibold">Unsold</li>
                 </ul>
                 <ul className="flex items-center gap-2">
-                  <li className="size-3 rounded-full bg-green-500"></li>
+                  <li className="size-3 rounded-full bg-red-500"></li>
                   <li className="font-semibold">Sold</li>
                 </ul>
               </div>
-              <ul className="inline-flex items-stretch -space-x-px">
+              <ul className="inline-flex items-center gap-2">
                 <Pagination>
                   <PaginationContent>
                     <PaginationItem onClick={handlePaginationPrev}>
@@ -461,6 +463,7 @@ const Forwards = () => {
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
+                <div className="font-semibold border-2 rounded-full size-8 text-center">{pageCount}</div>
               </ul>
             </nav>
           </div>

@@ -117,3 +117,5 @@ export const getPlayersWithBestFitnessLevel = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch players with best fitness level" });
     }
 };
+
+

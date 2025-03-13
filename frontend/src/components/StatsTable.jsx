@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { replace, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import playerNan from '@/assets/Images/player.jpg';
 import { useGetRankingQuery } from "@/redux/features/stats/statsRankingApi";
 import Loading from "./Loading";

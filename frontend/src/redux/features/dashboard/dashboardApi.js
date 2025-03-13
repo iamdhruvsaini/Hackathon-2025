@@ -20,11 +20,15 @@ export const dashboardApi= createApi({
       getRecentSoldPlayer:builder.query({
         query:()=>"/recent-sold-player",
         providesTags:['Dashboard']
-      })
+      }),
 
+      getPlayerDetailsByID:builder.query({
+        query:(id)=>`/player-detail/${id}`,
+        providesTags:['Dashboard']
     }),
 
+    }),
   })
 
-  export const { useGetPlayerPositionCountQuery ,useGetRecentSoldPlayerQuery} = dashboardApi;
+  export const { useGetPlayerPositionCountQuery ,useGetRecentSoldPlayerQuery,useGetPlayerDetailsByIDQuery} = dashboardApi;
   export default dashboardApi;

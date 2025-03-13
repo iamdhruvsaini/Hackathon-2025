@@ -385,7 +385,7 @@ export const fetchReservesPlayers = async (req, res) => {
 
 export const fetchTrendingPlayers = async (req, res) => {
     try {
-      
+
         // Base query with dynamic conditions
         let query = `
             SELECT p.player_id, p.player_face_url, p.short_name, p.nationality_name, 
@@ -394,7 +394,7 @@ export const fetchTrendingPlayers = async (req, res) => {
             LEFT JOIN wages w ON p.wage_id = w.wage_id
             WHERE p.trending ='YES'
             `;
-  
+
 
         // Execute the query
         const players = await sql(query);
@@ -424,11 +424,30 @@ export const fetchAllPlayers = async (req, res) => {
 
         // Base query
         let query = `
-            SELECT p.player_id, p.player_face_url, p.short_name, p.club_position,
-                   p.nationality_name, p.overall, p.age,w.bought
-            FROM players p
-            JOIN wages w ON p.wage_id = w.wage_id
-        `;
+    SELECT 
+        p.player_id,
+        p.player_face_url,
+        p.short_name,
+        p.club_position,
+        p.nationality_name,
+        p.overall,
+        p.age,
+        w.bought,
+        ps.skill_moves,
+        ps.pace,
+        ps.shooting,
+        ps.passing,
+        ps.dribbling,
+        ps.defending,
+        ps.physic
+    FROM 
+        players p
+    JOIN 
+        wages w ON p.wage_id = w.wage_id
+    LEFT JOIN 
+        player_skills ps ON p.player_id = ps.player_id
+`;
+
 
         let values = [];
         let conditions = [];

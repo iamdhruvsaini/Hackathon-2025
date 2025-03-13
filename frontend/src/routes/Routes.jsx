@@ -29,8 +29,8 @@ import Employees from "@/admin/admin-dashboard/users/Employees";
 import RemovePlayers from "@/admin/admin-dashboard/remove-players/RemovePlayers";
 import MarkSold from "@/admin/admin-dashboard/mark-sold/MarkSold";
 import AllPlayers from "@/pages/players/AllPlayers";
-
-
+import AdminRoute from "./AdminRoute";
+import SuperAdminRoute from "./SuperAdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -50,56 +50,104 @@ const router = createBrowserRouter([
         element: <SignUpPage />,
       },
       {
-        path: "card",
+        path: "card/:playerId",
         element: <PlayerCard />,
       },
       {
-        path:"players",
-        element:<PrivateRoute><AllPlayers/></PrivateRoute>
+        path: "players",
+        element: (
+          <PrivateRoute>
+            <AllPlayers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "dashboard",
-        element: <PrivateRoute><Dashboard /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
       {
         path: "basket",
-        element: <PrivateRoute><BasketMain /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <BasketMain />
+          </PrivateRoute>
+        ),
       },
       {
         path: "cart",
-        element: <PrivateRoute><CartPage /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <CartPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "stat",
-        element: <PrivateRoute><StatLink /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <StatLink />
+          </PrivateRoute>
+        ),
       },
       {
         path: "table/:link",
-        element: <PrivateRoute><StatsTable /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <StatsTable />
+          </PrivateRoute>
+        ),
       },
       {
         path: "forwards",
-        element: <PrivateRoute><Forwards /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Forwards />
+          </PrivateRoute>
+        ),
       },
       {
         path: "defenders",
-        element: <PrivateRoute><Defenders /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Defenders />
+          </PrivateRoute>
+        ),
       },
       {
         path: "goalkeepers",
-        element: <PrivateRoute><Goalkeepers /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Goalkeepers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "midfielders",
-        element: <PrivateRoute><Midfielders /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Midfielders />
+          </PrivateRoute>
+        ),
       },
       {
         path: "reserves",
-        element: <PrivateRoute><Reserves /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Reserves />
+          </PrivateRoute>
+        ),
       },
       {
         path: "wingers",
-        element: <PrivateRoute><Wingers /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Wingers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "player-comparison",
@@ -107,7 +155,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  
+
   {
     path: "/admin",
     element: <AdminHome />,
@@ -118,33 +166,60 @@ const router = createBrowserRouter([
       },
       {
         path: "portal",
-        element: <DashboardLayout />,
+        element: (
+          <AdminRoute>
+            <DashboardLayout />
+          </AdminRoute>
+        ),
         children: [
           {
             index: true,
-            element: <AdminDashboardHome />,
+            element: (
+              <AdminRoute>
+                <AdminDashboardHome />
+              </AdminRoute>
+            ),
           },
           {
-            path:'trending-players',
-            element:<TrendingPlayers/>
+            path: "trending-players",
+            element: (
+              <AdminRoute>
+                <TrendingPlayers />
+              </AdminRoute>
+            ),
           },
           {
-            path:'users',
-            element:<UsersPage/>,
+            path: "users",
+            element: (
+              <SuperAdminRoute>
+                <UsersPage />
+              </SuperAdminRoute>
+            ),
           },
           {
-            path:'employees-details',
-            element:<Employees/>
+            path: "employees-details",
+            element: (
+              <AdminRoute>
+                <Employees />
+              </AdminRoute>
+            ),
           },
           {
-            path:'remove-players',
-            element:<RemovePlayers/>
+            path: "remove-players",
+            element: (
+              <AdminRoute>
+                <RemovePlayers />
+              </AdminRoute>
+            ),
           },
           {
-            path:'mark-sold',
-            element:<MarkSold/>
-          }
-
+            path: "mark-sold",
+            element: (
+              <AdminRoute>
+                <MarkSold />
+              </AdminRoute>
+            ),
+          },
         ],
       },
     ],

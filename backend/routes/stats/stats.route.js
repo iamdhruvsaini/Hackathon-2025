@@ -3,6 +3,7 @@ import { getBiggestRatingDifferences, getHighPotentialPlayers, getTopRatedPlayer
 import { getBestValueForMoneyPlayers, getHighestPaidPlayers, getMostValuablePlayers } from '../../controllers/stats/financial-ranking/financialRanking.controller..js';
 import { getBestDefenders, getBestForwards, getBestGoalkeepers, getBestMidfielders } from '../../controllers/stats/position-ranking/positionRanking.controller.js';
 import { getBestAllRoundPlayers, getBestAttackingPlayers, getBestDefensivePlayers, getPlayersWithBestFitnessLevel, getPlayersWithHighestSkillMoves } from '../../controllers/stats/players-skills-comparison/playersSkillsComp.controller.js';
+import { fetchSimilarPlayer } from '../../controllers/stats/player-compariosn/playerComparison.controller.js';
 
 
 const router = express.Router();    
@@ -36,6 +37,11 @@ router.get("/best-players-by-attacking-attributes", getBestAttackingPlayers);
 router.get("/best-players-by-defensive-attributes", getBestDefensivePlayers);
 router.get("/best-all-round-players", getBestAllRoundPlayers);
 router.get("/players-with-best-fitness-level", getPlayersWithBestFitnessLevel);
+
+
+
+// comparison routes
+router.get("/comparison/similar-player/:overall/:position",fetchSimilarPlayer);
 
 
 export default router;

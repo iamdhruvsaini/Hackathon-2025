@@ -29,8 +29,12 @@ const AdminLogin = () => {
           "Content-Type": "application/json",
         },
       });
-      localStorage.setItem('token',JSON.stringify(response.data.token))
+      
+      localStorage.setItem('role',JSON.stringify(response.data.role));
+      localStorage.setItem('token',JSON.stringify(response.data.token));
+
       toast.success("Login successful!");
+      
       navigate("/admin/portal", { replace: true });
       
     } catch (error) {

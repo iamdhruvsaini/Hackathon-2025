@@ -121,12 +121,12 @@ const CartPage = () => {
                 </dl>
               </div>
 
-              <a
-                href="#"
-                className="flex w-full items-center justify-center rounded-lg bg-blue-500 p-2 font-semibold text-white"
+              <button
+                className={`flex w-full items-center justify-center rounded-lg p-2 font-semibold text-white ${cartSummary.totalPlayer === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-600"}`}
+                disabled={cartSummary.totalPlayer === 0}
               >
                 Proceed to Prediction
-              </a>
+              </button>
             </div>
           </div>
         </div>

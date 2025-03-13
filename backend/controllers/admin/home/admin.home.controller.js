@@ -1,5 +1,4 @@
 import { sql } from "../../../neon/connection.js"
-import crypto from "crypto"
 
 //fetch portal stats
 export const portalHomeStats = async (req, res) => {

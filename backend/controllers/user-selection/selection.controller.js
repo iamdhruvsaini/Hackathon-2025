@@ -67,7 +67,7 @@ export const getUserSelectedPlayers = async (req, res) => {
 
 export const removePlayerFromUserSelection = async (req, res) => {
   const { user_id, player_id } = req.body;
-
+  console.log(user_id, player_id);
   if (!user_id || !player_id) {
     return res.status(400).json({ message: "User ID and Player ID are required" });
   }

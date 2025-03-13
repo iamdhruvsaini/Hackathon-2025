@@ -4,9 +4,9 @@ import promoPlayer from '@/assets/Images/promo-player.jpg'
 
 const Promo = () => {
   return (
-    <section className="bg-white px-4 py-6 antialiased dark:bg-gray-900">
-  <div className="mx-auto grid max-w-screen-xl rounded-xl p-4 dark:bg-gray-800 md:p-8 lg:grid-cols-12 lg:gap-8 lg:p-16 xl:gap-16">
-    <div className="lg:col-span-5 lg:mt-0">
+    <section className="bg-white py-6 antialiased dark:bg-gray-900">
+  <div className="mx-auto grid max-w-screen-xl rounded-xl dark:bg-gray-800 md:p-8 lg:grid-cols-12 lg:gap-8 lg:p-16 xl:gap-16">
+    <div className="lg:col-span-5 ">
       <a href="#">
         <img className="mb-4 h-56 w-56 dark:hidden sm:h-96 sm:w-96 rounded-lg xl:w-full" src={promoPlayer} alt="peripherals" />
       </a>

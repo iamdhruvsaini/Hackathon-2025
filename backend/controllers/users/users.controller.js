@@ -11,7 +11,8 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET; 
 
 export const verifyAdmin = async (req, res) => {
-    const { email, password } = req.body; // ✅ Plain text password comes from request
+    
+    const { email, password } = req.body; // Plain text password comes from request
 
     if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required" });
@@ -41,8 +42,7 @@ export const verifyAdmin = async (req, res) => {
             { expiresIn: "2h" }
         );
 
-        // ✅ Send token in response
-        res.status(200).json({ message: "Admin verified successfully", token });
+        res.status(200).json({ message: "Admin verified successfully", token ,role:admin.role});
 
     } catch (error) {
         console.error("Error verifying admin:", error);
@@ -96,7 +96,6 @@ export const addAdmin = async (req, res) => {
     }
 };
 
-
 export const removeAdmin = async (req, res) => {
     const { email } = req.body; // Admin email to remove
 
@@ -137,7 +136,6 @@ export const removeAdmin = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };
-
 
 export const updateAdmin = async (req, res) => {
     const { employeeId, name, email, role } = req.body;
@@ -203,7 +201,6 @@ export const markUserSubscribed = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 }
-
 
 export const addCustomer = async (req, res) => {
     try {

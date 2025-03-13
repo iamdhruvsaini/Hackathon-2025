@@ -2,8 +2,8 @@ import { DatePicker } from "@/components/DatePicker";
 import React from "react";
 import { DashboardCard } from "./DashboardCard";
 import { ChartComponent } from "./BarChart";
-import { PlayersSelected } from "./PlayersSelected";
 import Promo from "./Promo";
+import { PlayersSold } from "./PlayersSold";
 
 const dashboardContent = [
   {
@@ -50,7 +50,7 @@ const Dashboard = () => {
           <ChartComponent />
         </div>
         <div className="w-full lg:w-[60%] border rounded-xl px-2 overflow-hidden min-h-[200px]">
-          <PlayersSelected />
+          <PlayersSold />
         </div>
       </div>
       <Promo/>

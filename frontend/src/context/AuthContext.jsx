@@ -9,9 +9,10 @@ import {
   signOut,
 } from "firebase/auth";
 
-import Loading from "@/components/Loading";
+
 import getBaseURL from "@/utils/baseURL";
 import axios from "axios";
+import Loading from "@/components/Loading";
 
 
 const AuthContext = createContext();
@@ -79,6 +80,7 @@ export const AuthProvider = ({ children }) => {
   // Monitor Auth State
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setLoading(false);
       if (user) {
         const { email, displayName, photoURL, uid } = user;
         // Store only what you need
@@ -91,7 +93,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setCurrentUser(null);
       }
-      setLoading(false);
+      
     });
     return () => unsubscribe();
   }, []);
@@ -106,7 +108,7 @@ export const AuthProvider = ({ children }) => {
     loading,
   };
 
-  // If still loading, you can render a spinner or fallback
+
   if (loading) {
     return <Loading></Loading>;
   }
