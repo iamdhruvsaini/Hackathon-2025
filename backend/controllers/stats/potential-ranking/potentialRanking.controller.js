@@ -1,74 +1,37 @@
-import { sql } from "../../../neon/connection.js";
+// controllers/playerController.js
 
+import {
+    getTopRatedPlayers,
+    getHighPotentialPlayers,
+    getBiggestRatingDifferences,
+} from "../../../services/stats/potential-ranking-service.js";
 
 // Get Top-Rated Players
-export const getTopRatedPlayers = async (req, res) => {
+export const getTopRatedPlayersHandler = async (req, res) => {
     try {
-        const topRatedPlayers = await sql`
-            SELECT 
-                p.player_id,
-                p.player_face_url, 
-                p.short_name, 
-                w.bought, 
-                p.club_name, 
-                p.league_name, 
-                p.overall
-            FROM players p
-            JOIN wages w ON p.wage_id = w.wage_id
-            ORDER BY p.overall DESC
-            LIMIT 10;
-        `;
-
-        res.status(200).json({ success: true, data: topRatedPlayers });
+        const players = await getTopRatedPlayers();
+        res.status(200).json({ success: true, data: players });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Server Error", error: error.message });
+        res.status(500).json({ success: false, message: "Failed to fetch top-rated players", error: error.message });
     }
 };
 
 // Get High Potential Players
-export const getHighPotentialPlayers = async (req, res) => {
+export const getHighPotentialPlayersHandler = async (req, res) => {
     try {
-        const highPotentialPlayers = await sql`
-            SELECT 
-                p.player_id,
-                p.player_face_url, 
-                p.short_name, 
-                w.bought, 
-                p.club_name, 
-                p.league_name, 
-                p.potential
-            FROM players p
-            JOIN wages w ON p.wage_id = w.wage_id
-            ORDER BY p.potential DESC
-            LIMIT 10;
-        `;
-
-        res.status(200).json({ success: true, data: highPotentialPlayers });
+        const players = await getHighPotentialPlayers();
+        res.status(200).json({ success: true, data: players });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Server Error", error: error.message });
+        res.status(500).json({ success: false, message: "Failed to fetch high-potential players", error: error.message });
     }
 };
 
 // Get Players with Biggest Rating Differences
-export const getBiggestRatingDifferences = async (req, res) => {
+export const getBiggestRatingDifferencesHandler = async (req, res) => {
     try {
-        const ratingDifferences = await sql`
-            SELECT 
-                p.player_id,
-                p.player_face_url, 
-                p.short_name, 
-                w.bought, 
-                p.club_name, 
-                p.league_name, 
-                (p.potential - p.overall) AS rating_difference
-            FROM players p
-            JOIN wages w ON p.wage_id = w.wage_id
-            ORDER BY rating_difference DESC
-            LIMIT 10;
-        `;
-
-        res.status(200).json({ success: true, data: ratingDifferences });
+        const players = await getBiggestRatingDifferences();
+        res.status(200).json({ success: true, data: players });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Server Error", error: error.message });
+        res.status(500).json({ success: false, message: "Failed to fetch players with biggest rating differences", error: error.message });
     }
 };
