@@ -23,7 +23,6 @@ const DropDownItems = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className="flex justify-center items-center ">
-          <img src={photoURL} alt="" className="bg-cover" />
           <AvatarImage
             src={photoURL}
             alt="User Avatar"

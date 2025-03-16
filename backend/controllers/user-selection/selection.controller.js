@@ -47,7 +47,7 @@ export const getUserSelectedPlayers = async (req, res) => {
     // Fetch selected players with 'bought' status
     const selectedPlayers = await sql`
       SELECT p.player_id, p.short_name, p.long_name, p.club_name, p.overall, 
-             p.potential, p.age, p.player_face_url, p.club_position, w.bought,w.wage_eur
+             p.potential, p.age, p.player_face_url, p.club_position, w.bought, w.value_eur
       FROM user_selections us
       JOIN players p ON us.player_id = p.player_id
       LEFT JOIN wages w ON p.wage_id = w.wage_id

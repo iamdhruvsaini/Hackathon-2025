@@ -9,14 +9,11 @@ import { useNavigate } from "react-router-dom";
 
 
 const positionMap = {
-  defenders: ["CB", "LCB", "RCB", "LB", "RB", "LWB", "RWB"],
-  midfielders: ["CDM", "LDM", "RDM", "CM", "LCM", "RCM", "CAM", "LAM", "RAM"],
-  wingers: ["LM", "RM", "LW", "RW"],
-  forwards: ["ST", "LS", "RS", "CF", "RF", "LF"],
-  goalkeepers: ["GK"],
-  substitutes: ["SUB", "RES"],
+   forwards:['LW', 'ST', 'RW'], // Forwards
+   midfielders :['CDM', 'CAM', 'CM'], // Midfielders
+   defenders:['RB', 'CB', 'LB'], // Defenders
+   goalkeepers: ["GK"]
 };
-
 
 const CartPage = () => {
     const {currentUser} = useAuth();
@@ -40,7 +37,7 @@ const CartPage = () => {
       if (players.length >= 0) {
         //total price
         const totalPrice = players.reduce(
-          (sum, player) => sum + Number(player.wage_eur || 0),
+          (sum, player) => sum + Number(player.value_eur),
           0
         );
        

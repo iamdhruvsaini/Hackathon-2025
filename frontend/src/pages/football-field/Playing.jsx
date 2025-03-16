@@ -174,8 +174,8 @@ const Playing = () => {
                 </svg>
               </div>
               <div>
-                <p class="text-xs font-medium text-gray-500">Weekly Wage</p>
-                <p class="text-lg font-bold text-red-700">€${playerData.wage_eur}</p>
+                <p class="text-xs font-medium text-gray-500">Value Eur</p>
+                <p class="text-lg font-bold text-red-700">€${playerData.value_eur}</p>
               </div>
             </div>
           </div>

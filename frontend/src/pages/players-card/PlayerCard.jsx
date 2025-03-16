@@ -44,13 +44,13 @@ const PlayerCard = () => {
         passing: player.passing || 0,
         dribbling: player.dribbling || 0,
         defending: player.defending || 0,
-        physic: player.physic || 0, // Fixed key name
+        physic: player.physic || 0,
         attacking: player.attacking_skills || 0,
         skill: player.skill_attributes || 0,
         movement: player.movement_skills || 0,
         power: player.power_attributes || 0,
         mentals: player.mental_attributes || 0,
-        goalkeeping: player.goalkeeping_ability || 0, // Removed duplicate `defending`
+        goalkeeping: player.goalkeeping_ability || 0,
       });
 
       // Separate physical attributes
@@ -67,39 +67,61 @@ const PlayerCard = () => {
   }
 
   return (
-    <section className={`xl:w-[1300px] mx-auto px-4 mt-4 space-y-4 bg-gray-100 py-4 rounded-xl`}>
-      <div className="sm:flex  justify-between items-stretch sm:gap-2 space-y-2 sm:space-y-0">
-        {/* playerDetails */}
-        <div className="flex items-center justify-between p-2 rounded-xl border-2 bg-white">
-          <img
-            src={playerDetails.player_face_url}
-            alt=""
-            className="h-[120px]"
-          />
-          <div className="p-2 rounded-xl ">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-              {playerDetails.short_name}{" "}
-              <span className="text-gray-500 text-lg">
+    <section className="xl:w-[1300px] mx-auto px-4 mt-4 space-y-6 py-4 rounded-xl">
+      <div className="sm:flex justify-between items-stretch sm:gap-4 space-y-4 sm:space-y-0">
+        {/* Player Details Card */}
+        <div className="bg-gray-50 flex flex-col lg:flex-row items-center rounded-xl shadow-md overflow-hidden sm:w-1/2 h-auto sm:h-[160px] dark:bg-gray-900 dark:bg-opacity-20">
+          <div className="p-3 flex items-center justify-center h-full dark:bg-gray-800">
+            <img
+              src={playerDetails.player_face_url}
+              alt={playerDetails.short_name}
+              className="h-[120px] w-[120px] object-cover rounded-lg shadow-md"
+            />
+          </div>
+
+          <div className="p-4 flex-1 h-full flex flex-col justify-center">
+            <div className="flex items-baseline mb-2 flex-wrap">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                {playerDetails.short_name}
+              </h2>
+              <span className="ml-2 text-gray-500 text-sm">
                 ({playerDetails.club_name})
               </span>
-            </h2>
-            <div className="grid grid-cols-1 gap-4 text-gray-700">
-              <p>
-                <span className="font-medium">League:</span>{" "}
-                {playerDetails.league_name}
-              </p>
-              <p>
-                <span className="font-medium">Position:</span>{" "}
-                {playerDetails.club_position}
-              </p>
-              <p>
-                <span className="font-medium">Age:</span> {playerDetails.age}
-              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-800 dark:text-gray-200">
+              <div className="flex items-center gap-2">
+                <span className="font-medium">League:</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  {playerDetails.league_name}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="font-medium">Position:</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  {playerDetails.club_position}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="font-medium">Age:</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  {playerDetails.age} years
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="font-medium">Nationality:</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  {playerDetails.nationality_name || "N/A"}
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* swipers */}
+        {/* Stats Swiper */}
         <PlayerStatSwiper
           playerPhysical={playerPhysical}
           playerDetails={playerDetails}
