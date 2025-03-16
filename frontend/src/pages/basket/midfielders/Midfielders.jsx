@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { X } from "lucide-react";
-import { Filter } from "lucide-react";
+import { X, Filter, Award, Users, ShieldCheck, BarChart2 } from "lucide-react";
 
 import {
   Sheet,
@@ -53,13 +52,16 @@ import { Link } from "react-router-dom";
 
 const socket = io(getBaseURL(), { autoConnect: true });
 
-
-
 // forwrds[3]='LW','ST','RW'
 // Midfielders[3]='CDM','CAM','CM'
 // Defenders[3]='RB','CB','LB'
 // goalkeeper[3]='GK'
-
+const Pagelinks = [
+  { title: "Forwards", path: "/forwards", icon: <Award size={18} /> },
+  { title: "Midfielders", path: "/midfielders", icon: <Users size={16} /> },
+  { title: "Defenders", path: "/defenders", icon: <ShieldCheck size={16} /> },
+  { title: "Goalkeepers", path: "/goalkeepers", icon: <BarChart2 size={16} /> },
+];
 
 const Midfielders = () => {
   const { currentUser } = useAuth();
@@ -176,9 +178,29 @@ const Midfielders = () => {
   return (
     <>
       <section className="bg-gray-50 xl:w-[1300px] mx-auto p-4 mt-10">
+        <ul className="flex flex-wrap gap-3 mb-4">
+          {Pagelinks.map((link, index) => (
+            <li key={index}>
+              <Link
+                to={link.path}
+                className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-md border transition-all
+                ${
+                  link.active
+                    ? "bg-gray-100 border-gray-300 shadow-sm"
+                    : "bg-white border-gray-200 hover:bg-gray-50 hover:border-gray-400"
+                }`}
+              >
+                <span className="flex items-center justify-center w-6 h-6 bg-gray-50 rounded-full">
+                  {link.icon}
+                </span>
+                <span>{link.title}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
         <div className="mx-auto">
           <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
-          <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
+            <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
               Mid Fielders
             </h1>
             {/* table header */}
@@ -368,7 +390,9 @@ const Midfielders = () => {
                         className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-2 cursor-pointer"
                       >
                         <img src={player.player_face_url} className="size-8" />
-                        <Link to={`/card/${player.player_id}`}><p className="pt-3">{player.short_name}</p></Link>
+                        <Link to={`/card/${player.player_id}`}>
+                          <p className="pt-3">{player.short_name}</p>
+                        </Link>
                       </th>
                       <td className="px-4 py-3">
                         {player.bought === 0 ? (
@@ -428,8 +452,9 @@ const Midfielders = () => {
                           </div>
                         ) : (
                           <button
-                          className={`w-24 text-xs font-medium text-center text-white py-2 rounded-md ${
-                            player.bought === 1? "bg-red-500" : "bg-blue-500"}`}
+                            className={`w-24 text-xs font-medium text-center text-white py-2 rounded-md ${
+                              player.bought === 1 ? "bg-red-500" : "bg-blue-500"
+                            }`}
                             type="button"
                             disabled={player.bought === 1}
                             onClick={() => handleCartAdd(player)}
@@ -476,9 +501,9 @@ const Midfielders = () => {
                   </PaginationContent>
                 </Pagination>
 
-                <div className="font-semibold border-2 rounded-full size-8 text-center">{pageCount}</div>
-
-
+                <div className="font-semibold border-2 rounded-full size-8 text-center">
+                  {pageCount}
+                </div>
               </ul>
             </nav>
           </div>

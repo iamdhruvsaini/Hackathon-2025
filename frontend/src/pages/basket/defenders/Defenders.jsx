@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Filter, X } from "lucide-react";
+import { Filter, X ,Award ,Users,ShieldCheck,BarChart2} from "lucide-react";
+
 
 import {
   Sheet,
@@ -59,6 +60,12 @@ const socket = io(getBaseURL(), { autoConnect: true });
 //   'GK' // Goalkeeper
 // ];
 
+const Pagelinks = [
+  { title: "Forwards", path: "/forwards", icon: <Award size={18} /> },
+  { title: "Midfielders", path: "/midfielders", icon: <Users size={16} /> },
+  { title: "Defenders", path: "/defenders", icon: <ShieldCheck size={16} /> },
+  { title: "Goalkeepers", path: "/goalkeepers", icon: <BarChart2 size={16} /> },
+];
 
 
 const Defenders = () => {
@@ -173,6 +180,26 @@ const Defenders = () => {
   return (
     <>
       <section className="bg-gray-50 xl:w-[1300px] mx-auto p-4 mt-10">
+      <ul className="flex flex-wrap gap-3 mb-4">
+          {Pagelinks.map((link, index) => (
+            <li key={index}>
+              <Link
+                to={link.path}
+                className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-md border transition-all
+                ${
+                  link.active
+                    ? "bg-gray-100 border-gray-300 shadow-sm"
+                    : "bg-white border-gray-200 hover:bg-gray-50 hover:border-gray-400"
+                }`}
+              >
+                <span className="flex items-center justify-center w-6 h-6 bg-gray-50 rounded-full">
+                  {link.icon}
+                </span>
+                <span>{link.title}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
         <div className="mx-auto">
           <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
