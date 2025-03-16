@@ -72,9 +72,9 @@ const StatLink = () => {
   const [expandedGroups, setExpandedGroups] = useState(categoryGroups.map(group => group.title)); // All groups expanded by default
 
   const toggleGroup = (title) => {
-    setExpandedGroups(prev => 
-      prev.includes(title) 
-        ? prev.filter(item => item !== title) 
+    setExpandedGroups(prev =>
+      prev.includes(title)
+        ? prev.filter(item => item !== title)
         : [...prev, title]
     );
   };
@@ -86,26 +86,24 @@ const StatLink = () => {
         <div className="mb-8 border-b border-gray-200">
           <ul className="flex flex-wrap -mb-px text-sm font-medium text-center">
             <li className="mr-2">
-              <button 
+              <button
                 onClick={() => setActiveTab('main')}
-                className={`inline-flex items-center p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'main' 
-                    ? 'text-blue-600 border-blue-600 active' 
+                className={`inline-flex items-center p-4 border-b-2 rounded-t-lg ${activeTab === 'main'
+                    ? 'text-blue-600 border-blue-600 active'
                     : 'border-transparent hover:text-gray-600 hover:border-gray-300'
-                }`}
+                  }`}
               >
                 <TrendingUp className="w-4 h-4 mr-2" />
                 Main Rankings
               </button>
             </li>
             <li className="mr-2">
-              <button 
+              <button
                 onClick={() => setActiveTab('categories')}
-                className={`inline-flex items-center p-4 border-b-2 rounded-t-lg ${
-                  activeTab === 'categories' 
-                    ? 'text-blue-600 border-blue-600 active' 
+                className={`inline-flex items-center p-4 border-b-2 rounded-t-lg ${activeTab === 'categories'
+                    ? 'text-blue-600 border-blue-600 active'
                     : 'border-transparent hover:text-gray-600 hover:border-gray-300'
-                }`}
+                  }`}
               >
                 <Users className="w-4 h-4 mr-2" />
                 Categories
@@ -125,37 +123,37 @@ const StatLink = () => {
               <p className="text-gray-600 mb-4">
                 Explore football player stats across positions, leagues, and attributes.
               </p>
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-8">
-                <button 
+                <button
                   onClick={() => setActiveTab('categories')}
                   className="flex items-center justify-between p-4 bg-blue-50 hover:bg-blue-100 transition-all rounded-lg border border-blue-100"
                 >
                   <span className="font-medium">Browse All Categories</span>
                   <ChevronRight className="w-5 h-5" />
                 </button>
-                
+
                 <button className="flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-all rounded-lg border border-gray-100">
                   <span className="font-medium">Popular Rankings</span>
                   <Zap className="w-5 h-5" />
                 </button>
-                
+
                 <button className="flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-all rounded-lg border border-gray-100">
                   <span className="font-medium">Custom Comparison</span>
                   <Users className="w-5 h-5" />
                 </button>
               </div>
             </div>
-            
+
           </div>
         ) : (
           <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
             <h2 className="text-2xl font-bold mb-6 text-gray-800">Football Stats Categories</h2>
-            
+
             <div className="grid gap-6">
               {categoryGroups.map((group) => (
                 <div key={group.title} className="border border-gray-100 rounded-lg overflow-hidden">
-                  <button 
+                  <button
                     onClick={() => toggleGroup(group.title)}
                     className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-all"
                   >
@@ -167,13 +165,13 @@ const StatLink = () => {
                     </div>
                     <ChevronRight className={`w-5 h-5 transition-transform ${expandedGroups.includes(group.title) ? 'rotate-90' : ''}`} />
                   </button>
-                  
+
                   {expandedGroups.includes(group.title) && (
                     <div className="p-4 bg-white">
                       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                         {group.categories.map((category) => (
                           <li key={category}>
-                            <Link 
+                            <Link
                               to={`/table/${category.toLowerCase().replace(/\s+/g, '-')}`}
                               className="flex items-center p-3 hover:bg-blue-50 rounded-md transition-all"
                             >
@@ -188,9 +186,9 @@ const StatLink = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="mt-8">
-              <button 
+              <button
                 onClick={() => setActiveTab('main')}
                 className="flex items-center justify-center p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all w-full md:w-auto px-6"
               >
@@ -201,7 +199,7 @@ const StatLink = () => {
         )}
       </div>
 
-      <FootballAd/>
+      <FootballAd />
     </section>
   );
 };
