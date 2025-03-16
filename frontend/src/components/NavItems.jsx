@@ -1,42 +1,33 @@
 import React from "react";
 import {
   Menubar,
-  MenubarCheckboxItem,
-  MenubarContent,
-  MenubarItem,
   MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Link } from "react-router-dom";
+import { ChartBarBig, LayoutDashboard, ShoppingBasket, SwatchBookIcon } from "lucide-react";
 
 const NavItems = () => {
   return (
     <Menubar>
       <MenubarMenu>
         <Link to={"/dashboard"}>
-          <MenubarTrigger>Dashboard</MenubarTrigger>
+          <MenubarTrigger><LayoutDashboard className="pr-2" />Dashboard</MenubarTrigger>
         </Link>
       </MenubarMenu>
       <MenubarMenu>
         <Link to={"/stat"}>
-          <MenubarTrigger>Stats</MenubarTrigger>
+          <MenubarTrigger><ChartBarBig className="pr-2" />Stats</MenubarTrigger>
         </Link>
       </MenubarMenu>
       <MenubarMenu>
         <Link to={"/basket"}>
-          <MenubarTrigger>Basket</MenubarTrigger>
+          <MenubarTrigger><SwatchBookIcon className="pr-2" />Bucket</MenubarTrigger>
         </Link>
       </MenubarMenu>
       <MenubarMenu>
         <Link to={"/cart"}>
-          <MenubarTrigger>Cart</MenubarTrigger>
+          <MenubarTrigger><ShoppingBasket className="pr-2" />Cart</MenubarTrigger>
         </Link>
       </MenubarMenu>
     </Menubar>
