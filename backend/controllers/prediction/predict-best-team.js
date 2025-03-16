@@ -101,7 +101,7 @@ export const predict_best_teams = async (req, res) => {
         await Injury();
 
         // Call Python script and pass data directly
-        const pythonProcess = spawn("python", ["C:\\Users\\Om\\CODE\\Deloitte\\Hacksplosion25\\backend\\controllers\\prediction\\player_optimizer.py"]);
+        const pythonProcess = spawn("python", ["controllers\\prediction\\player_optimizer.py"]);
         let dataBuffer = "";
 
         // Send players data to Python script
