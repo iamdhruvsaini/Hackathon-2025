@@ -12,7 +12,7 @@ import userSelectionRouter from './routes/user-selection/selection.route.js'
 import usersRouter from './routes/users/users.route.js'
 import adminPortalRouter from './routes/admin/admin.route.js'
 import { markPlayerAsSold } from './controllers/admin/home/admin.home.controller.js';
-import predictionRoutes from "./routes/prediction/index.js"
+import predictionRoutes from "./routes/prediction/predictPlaying11.js"
 
 const app = express();
 const PORT = process.env.PORT || 3000;
