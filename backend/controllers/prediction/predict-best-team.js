@@ -150,7 +150,6 @@ export const predict_best_teams = async (req, res) => {
             if (code === 0) {
                 // Parse the JSON output from Python
                 const teams = JSON.parse(dataBuffer);
-                console.log(JSON.stringify(teams, null, 2));
                 res.status(200).json({ success: true, data: teams });
             } else {
                 console.log(`Python process exited with code ${code}`);
