@@ -49,7 +49,7 @@ def find_best_team(players, budget, excluded_teams=None):
     }
 
 # Budget constraint
-budget = 150000000
+budget = 850000000
 
 # Store top 5 teams
 top_teams = []

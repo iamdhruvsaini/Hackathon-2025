@@ -12,7 +12,7 @@ import userSelectionRouter from './routes/user-selection/selection.route.js'
 import usersRouter from './routes/users/users.route.js'
 import adminPortalRouter from './routes/admin/admin.route.js'
 import { markPlayerAsSold } from './controllers/admin/home/admin.home.controller.js';
-import predictionRoutes from "./routes/prediction/index.js"
+import predictionRoutes from "./routes/prediction/predictPlaying11.js"
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -77,12 +77,12 @@ io.on("connection", (socket) => {
 
 // Connect to database, then start the server
 
-// DominionFcModel().then(() => {
-// console.log("Database Connected Successfully");
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+DominionFcModel().then(() => {
+  console.log("Database Connected Successfully");
+  server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 });
-// });
 
 // InsertData().then(()=>{
 //   console.log("Inserted the values successfully");

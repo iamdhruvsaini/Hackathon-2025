@@ -1,14 +1,44 @@
 import Groq from 'groq-sdk';
 import dotenv from 'dotenv';
 import { spawn } from 'child_process';
+import { sql } from '../../neon/connection.js';
 dotenv.config();
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY_2 });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 export const predict_best_teams = async (req, res) => {
     try {
-        let players = req.body;
+        const { userId } = req.body;
+        let players = await sql`
+        SELECT 
+        p.player_face_url AS image,
+        p.player_id AS id,
+        p.short_name AS name,
+        p.potential,
+        p.age,
+        w.value_eur AS price,
+        CASE 
+          WHEN p.club_position IN ('LW', 'ST', 'RW') THEN 'Forward'
+          WHEN p.club_position IN ('CDM', 'CAM', 'CM') THEN 'Midfield'
+          WHEN p.club_position IN ('RB', 'CB', 'LB') THEN 'Defence'
+          WHEN p.club_position = 'GK' THEN 'Goal Keeper'
+          ELSE 'Other'
+        END AS position
+      FROM players p
+      JOIN user_selections us ON p.player_id = us.player_id
+      JOIN wages w ON p.wage_id = w.wage_id
+      WHERE us.user_id = ${userId}
+    `;
+
+        if (!players || players.length === 0) {
+            return res.status(200).json({
+                success: false,
+                message: "No players selected for this user"
+            });
+        }
+
         const playerNames = players.map(player => player.name);
+
 
         function calculateAgeFactor(age) {
             if (age < 25) {
@@ -101,7 +131,7 @@ export const predict_best_teams = async (req, res) => {
         await Injury();
 
         // Call Python script and pass data directly
-        const pythonProcess = spawn("python", ["C:\\Users\\Om\\CODE\\Deloitte\\Hacksplosion25\\backend\\controllers\\prediction\\player_optimizer.py"]);
+        const pythonProcess = spawn("python", ["controllers\\prediction\\player_optimizer.py"]);
         let dataBuffer = "";
 
         // Send players data to Python script
