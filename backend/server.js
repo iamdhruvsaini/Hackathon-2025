@@ -77,12 +77,12 @@ io.on("connection", (socket) => {
 
 // Connect to database, then start the server
 
-// DominionFcModel().then(() => {
-// console.log("Database Connected Successfully");
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+DominionFcModel().then(() => {
+  console.log("Database Connected Successfully");
+  server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 });
-// });
 
 // InsertData().then(()=>{
 //   console.log("Inserted the values successfully");

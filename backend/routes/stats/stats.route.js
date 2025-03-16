@@ -1,25 +1,25 @@
 import express from 'express';
-import { getBiggestRatingDifferences, getHighPotentialPlayers, getTopRatedPlayers } from '../../controllers/stats/potential-ranking/potentialRanking.controller.js';
-import { getBestValueForMoneyPlayers, getHighestPaidPlayers, getMostValuablePlayers } from '../../controllers/stats/financial-ranking/financialRanking.controller..js';
+import { getTopRatedPlayersHandler, getHighPotentialPlayersHandler, getBiggestRatingDifferencesHandler } from '../../controllers/stats/potential-ranking/potentialRanking.controller.js';
+import { getMostValuablePlayersHandler, getHighestPaidPlayersHandler, getBestValueForMoneyPlayersHandler } from '../../controllers/stats/financial-ranking/financialRanking.controller..js';
 import { getBestDefenders, getBestForwards, getBestGoalkeepers, getBestMidfielders } from '../../controllers/stats/position-ranking/positionRanking.controller.js';
 import { getBestAllRoundPlayers, getBestAttackingPlayers, getBestDefensivePlayers, getPlayersWithBestFitnessLevel, getPlayersWithHighestSkillMoves } from '../../controllers/stats/players-skills-comparison/playersSkillsComp.controller.js';
 import { fetchSimilarPlayer } from '../../controllers/stats/player-compariosn/playerComparison.controller.js';
 
 
-const router = express.Router();    
+const router = express.Router();
 
 //Based on Potential Ranking
 
-router.get('/top-rated-players',getTopRatedPlayers);
-router.get('/high-potential-players',getHighPotentialPlayers);
-router.get('/biggest-rating-differences',getBiggestRatingDifferences);
+router.get('/top-rated-players', getTopRatedPlayersHandler);
+router.get('/high-potential-players', getHighPotentialPlayersHandler);
+router.get('/biggest-rating-differences', getBiggestRatingDifferencesHandler);
 
 
 //based on financial ranking
 
-router.get("/most-valuable-players", getMostValuablePlayers);
-router.get("/highest-paid-players", getHighestPaidPlayers);
-router.get("/best-value-for-money", getBestValueForMoneyPlayers);
+router.get("/most-valuable-players", getMostValuablePlayersHandler);
+router.get("/highest-paid-players", getHighestPaidPlayersHandler);
+router.get("/best-value-for-money", getBestValueForMoneyPlayersHandler);
 
 
 //based on position ranking
@@ -41,7 +41,7 @@ router.get("/players-with-best-fitness-level", getPlayersWithBestFitnessLevel);
 
 
 // comparison routes
-router.get("/comparison/similar-player/:overall/:position",fetchSimilarPlayer);
+router.get("/comparison/similar-player/:overall/:position", fetchSimilarPlayer);
 
 
 export default router;
