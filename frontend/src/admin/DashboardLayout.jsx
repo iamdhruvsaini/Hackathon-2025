@@ -232,7 +232,7 @@ const DashboardLayout = () => {
           </header>
 
           {/* Main Content - With improved overflow handling */}
-          <main className="flex flex-1 flex-col gap-4 p-2 sm:p-4 overflow-auto">
+          <main className="flex flex-1 flex-col gap-4 p-2 sm:p-4 overflow-auto min-h-screen">
             <Outlet />
           </main>
         </div>
