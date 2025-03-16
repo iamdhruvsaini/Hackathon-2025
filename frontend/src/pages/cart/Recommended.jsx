@@ -15,8 +15,7 @@ import { Link } from "react-router-dom";
 
 const Recommended = () => {
   const { data: trendingPlayer, isLoading } = useGetTrendingPlayersQuery();
-  console.log(trendingPlayer);
-
+  
   return (
     <div className="hidden xl:mt-8 xl:block">
       <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-3xl">

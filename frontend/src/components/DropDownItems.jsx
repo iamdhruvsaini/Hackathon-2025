@@ -19,16 +19,15 @@ const DropDownItems = () => {
     navigate("/login");
   };
 
-  console.log("Firebase Image URL:", currentUser?.photo);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className="flex justify-center items-center ">
           <img src={photoURL} alt="" className="bg-cover" />
-          {/* <AvatarImage
+          <AvatarImage
             src={photoURL}
             alt="User Avatar"
-          /> */}
+          />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

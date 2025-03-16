@@ -43,7 +43,7 @@ const PlayerComparison = () => {
     }
   }, [selectPlayer]);
 
-  console.log(comparisonPlayer);
+
   const handleRemoveSelectedPlayer=()=>{
     setTrigger(false);
     setSelectedPlayer(null);
