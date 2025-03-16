@@ -4,7 +4,7 @@ import {
     getMostValuablePlayers,
     getHighestPaidPlayers,
     getBestValueForMoneyPlayers,
-} from "../../../services/stats/financial-ranking.js";
+} from "../../../services/stats/financial-ranking-service.js";
 
 export const getMostValuablePlayersHandler = async (req, res) => {
     try {

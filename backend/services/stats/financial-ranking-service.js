@@ -2,7 +2,7 @@ import {
     getMostValuablePlayersFromDB,
     getHighestPaidPlayersFromDB,
     getBestValueForMoneyPlayersFromDB,
-} from "../../repositories/stats/financial-ranking.js";
+} from "../../repositories/stats/financial-ranking-repository.js";
 
 export const getMostValuablePlayers = async () => {
     try {
