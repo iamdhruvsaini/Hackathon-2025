@@ -33,7 +33,7 @@ export const fetchSimilarPlayer = async (req, res) => {
                 p.overall BETWEEN $1 AND $2
         `;
 
-        let queryParams = [overallValue - 3, overallValue + 3];
+        let queryParams = [overallValue + 1, overallValue - 1];
 
         if (position) {
             querySimilar += ` AND p.club_position = $3`;

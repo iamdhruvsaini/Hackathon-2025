@@ -13,7 +13,7 @@ const Navigation = () => {
     navigate("/login");
   };
   return (
-    <div className="sticky z-10 top-0 bg-white w-full shadow-lg">
+    <div className="sticky z-30 top-0 bg-white w-full shadow-lg">
       <nav className="xl:max-w-[1300px] h-full mx-auto px-4 py-2 flex items-center justify-between">
         <Link className="text-xl font-semibold" to={"/"} replace={true}>
           Dominion Fc.

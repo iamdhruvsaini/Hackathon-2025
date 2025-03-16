@@ -1,10 +1,15 @@
 import { sql } from "../../../neon/connection.js";
 
+// forwrds[3]='LW','ST','RW'
+// Midfielders[3]='CDM','CAM','CM'
+// Defenders[3]='RB','CB','LB'
+// goalkeeper[3]='GK'
 
 export const getBestForwards = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -13,7 +18,7 @@ export const getBestForwards = async (req, res) => {
             p.nationality_name
         FROM players p
         JOIN wages w ON p.wage_id = w.wage_id
-        WHERE p.club_position IN ('ST', 'LS', 'RS', 'CF', 'RF', 'LF')
+        WHERE p.club_position IN ('LW','ST','RW')
         ORDER BY p.overall DESC
         LIMIT 10;
         `;
@@ -28,6 +33,7 @@ export const getBestMidfielders = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -36,7 +42,7 @@ export const getBestMidfielders = async (req, res) => {
             p.nationality_name
         FROM players p
         JOIN wages w ON p.wage_id = w.wage_id
-        WHERE p.club_position IN ('CDM', 'LDM', 'RDM', 'CM', 'LCM', 'RCM', 'CAM', 'LAM', 'RAM')
+        WHERE p.club_position IN ('CDM','CAM','CM')
         ORDER BY p.overall DESC
         LIMIT 10;
         `;
@@ -51,6 +57,7 @@ export const getBestDefenders = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -59,7 +66,7 @@ export const getBestDefenders = async (req, res) => {
             p.nationality_name
         FROM players p
         JOIN wages w ON p.wage_id = w.wage_id
-        WHERE p.club_position IN ('CB', 'LCB', 'RCB', 'LB', 'RB', 'LWB', 'RWB')
+        WHERE p.club_position IN ('RB','CB','LB')
         ORDER BY p.overall DESC
         LIMIT 10;
         `;
@@ -74,6 +81,7 @@ export const getBestGoalkeepers = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 

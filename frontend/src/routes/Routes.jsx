@@ -12,8 +12,6 @@ import Defenders from "@/pages/basket/defenders/Defenders";
 import Forwards from "@/pages/basket/forwards/Forwards";
 import Goalkeepers from "@/pages/basket/goalkeepers/Goalkeepers";
 import Midfielders from "@/pages/basket/midfielders/Midfielders";
-import Reserves from "@/pages/basket/reserves/Reserves";
-import Wingers from "@/pages/basket/wingers/Wingers";
 import CartPage from "@/pages/cart/CartPage";
 import Dashboard from "@/pages/dashboard/dashboard";
 import Home from "@/pages/home/Home";
@@ -31,6 +29,11 @@ import MarkSold from "@/admin/admin-dashboard/mark-sold/MarkSold";
 import AllPlayers from "@/pages/players/AllPlayers";
 import AdminRoute from "./AdminRoute";
 import SuperAdminRoute from "./SuperAdminRoute";
+import Playing from "@/pages/football-field/Playing";
+import AddPlayer from "@/admin/admin-dashboard/add-player/AddPlayer";
+import Contact from "@/pages/contact/contact";
+
+
 
 const router = createBrowserRouter([
   {
@@ -133,26 +136,19 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "reserves",
-        element: (
-          <PrivateRoute>
-            <Reserves />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "wingers",
-        element: (
-          <PrivateRoute>
-            <Wingers />
-          </PrivateRoute>
-        ),
-      },
+      
       {
         path: "player-comparison",
-        element: <PlayerComparison />,
+        element:<PrivateRoute><PlayerComparison /></PrivateRoute> ,
       },
+      {
+        path:"playing",
+        element:<PrivateRoute><Playing/></PrivateRoute>,
+      },
+      {
+        path:"contact",
+        element:<Contact/>
+      }
     ],
   },
 
@@ -217,6 +213,14 @@ const router = createBrowserRouter([
             element: (
               <AdminRoute>
                 <MarkSold />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "add-player",
+            element: (
+              <AdminRoute>
+                <AddPlayer />
               </AdminRoute>
             ),
           },

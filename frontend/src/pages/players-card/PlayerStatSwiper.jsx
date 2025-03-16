@@ -1,4 +1,3 @@
-import { PieStatChart } from "@/components/PieStatChart";
 import { RadialChart } from "@/components/RadialChart";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,28 +11,12 @@ import React from "react";
 import { Pagination, Navigation } from "swiper/modules";
 const PlayerStatSwiper = ({ playerPhysical, playerDetails, playerSkills }) => {
   return (
-    // <div className="sm:flex gap-2 items-stretch">
-    //   <div className="sm:w-[220px]">
-    //     <RadialChart title={"Potential"} score={playerDetails.potential} />
-    //   </div>
-    //   <div className="sm:w-[220px]">
-    //     <PieStatChart
-    //       title={"Physical"}
-    //       playerDetails={playerDetails}
-    //       playerPhysical={playerPhysical}
-    //     />
-    //   </div>
-    //   <div className="sm:w-[220px]">
-    //     <RadialChart title={"Fitness"} score={playerSkills.physic} />
-    //   </div>
-    // </div>
-    
 
     <Swiper
       slidesPerView={1}
       spaceBetween={10}
       breakpoints={{
-       
+
         970: {
           slidesPerView: 2,
           spaceBetween: 10,
@@ -55,11 +38,9 @@ const PlayerStatSwiper = ({ playerPhysical, playerDetails, playerSkills }) => {
 
       <SwiperSlide>
         <div className="">
-          <PieStatChart
-            title={"Physical"}
-            playerDetails={playerDetails}
-            playerPhysical={playerPhysical}
-          />
+          <h1>Age {playerDetails.age}</h1>
+          <h2>height {playerPhysical.height_cm}</h2>
+          <h3>weight {playerPhysical.weight_kg}</h3>
         </div>
       </SwiperSlide>
 
@@ -73,3 +54,4 @@ const PlayerStatSwiper = ({ playerPhysical, playerDetails, playerSkills }) => {
 };
 
 export default PlayerStatSwiper;
+

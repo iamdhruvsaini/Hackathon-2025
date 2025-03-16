@@ -5,6 +5,7 @@ export const getPlayersWithHighestSkillMoves = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -28,6 +29,7 @@ export const getBestAttackingPlayers = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -51,6 +53,7 @@ export const getBestDefensivePlayers = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -74,6 +77,7 @@ export const getBestAllRoundPlayers = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -97,6 +101,7 @@ export const getPlayersWithBestFitnessLevel = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 

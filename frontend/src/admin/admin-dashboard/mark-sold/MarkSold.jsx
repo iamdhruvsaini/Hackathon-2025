@@ -112,9 +112,9 @@ const MarkSold = () => {
   }
 
   return (
-    <section className="bg-gray-50 mx-auto p-4 w-full">
+    <section className="bg-gray-50 w-full mx-auto">
       <div className="mx-auto">
-        <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+        <div className="bg-white relative shadow-md sm:rounded-lg">
           <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
             Mark Sold
           </h1>

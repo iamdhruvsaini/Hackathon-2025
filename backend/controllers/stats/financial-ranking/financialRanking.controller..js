@@ -5,6 +5,7 @@ export const getMostValuablePlayers = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -28,6 +29,7 @@ export const getHighestPaidPlayers = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 
@@ -50,6 +52,7 @@ export const getBestValueForMoneyPlayers = async (req, res) => {
     try {
         const players = await sql`
         SELECT 
+            p.player_id,
             p.player_face_url, 
             p.short_name, 
             w.bought, 

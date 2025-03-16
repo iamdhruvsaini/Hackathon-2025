@@ -278,13 +278,7 @@ const GoalKeepers = () => {
                               autoComplete="off"
                             >
                               <option value="">Select Position</option>
-                              <option value="CB">CB</option>
-                              <option value="RCB">RCB</option>
-                              <option value="LCB">LCB</option>
-                              <option value="LB">LB</option>
-                              <option value="RB">RB</option>
-                              <option value="LWB">LWB</option>
-                              <option value="RWB">RWB</option>
+                              <option value="GK">GK</option>
                             </select>
                           </div>
 

@@ -19,7 +19,7 @@ const dashboardContent = [
   {
     title: "Performance Analysis",
     description: "Analyze player performances based on real match data to refine your team selection.",
-    link:'match-performance'
+    link:'players'
   },
   {
     title: "Team Prediction",

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserSelectedPlayer } from "@/redux/cart/cartSlice";
 import Loading from "@/components/Loading";
 import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 const positionMap = {
@@ -19,6 +20,7 @@ const positionMap = {
 
 const CartPage = () => {
     const {currentUser} = useAuth();
+    const navigate=useNavigate();
     const [userId, setUserId] = useState(currentUser?.uid);
     const [cartSummary, setCartSummary] = useState({
       totalPlayer: 0,
@@ -66,6 +68,10 @@ const CartPage = () => {
       return <Loading/>
     }
 
+
+  const handlePredictionClick=()=>{
+    navigate('/playing');
+  }
 
   return (
     <section className="xl:max-w-[1300px] mx-auto mt-10 px-4">
@@ -124,6 +130,7 @@ const CartPage = () => {
               <button
                 className={`flex w-full items-center justify-center rounded-lg p-2 font-semibold text-white ${cartSummary.totalPlayer === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-600"}`}
                 disabled={cartSummary.totalPlayer === 0}
+                onClick={handlePredictionClick}
               >
                 Proceed to Prediction
               </button>

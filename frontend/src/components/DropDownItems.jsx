@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 const DropDownItems = () => {
   const { logout, currentUser } = useAuth();
   const navigate = useNavigate();
-  const photoURL = currentUser?.photoURL || "https://github.com/shadcn.png";
+  const photoURL = currentUser?.photo;
   const handleLogout = async () => {
     await logout();
     navigate("/login");
@@ -23,11 +23,12 @@ const DropDownItems = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar className="flex justify-center items-center">
-          <AvatarImage
+        <Avatar className="flex justify-center items-center ">
+          <img src={photoURL} alt="" className="bg-cover" />
+          {/* <AvatarImage
             src={photoURL}
             alt="User Avatar"
-          />
+          /> */}
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

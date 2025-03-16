@@ -6,6 +6,7 @@ export const getTopRatedPlayers = async (req, res) => {
     try {
         const topRatedPlayers = await sql`
             SELECT 
+                p.player_id,
                 p.player_face_url, 
                 p.short_name, 
                 w.bought, 
@@ -29,6 +30,7 @@ export const getHighPotentialPlayers = async (req, res) => {
     try {
         const highPotentialPlayers = await sql`
             SELECT 
+                p.player_id,
                 p.player_face_url, 
                 p.short_name, 
                 w.bought, 
@@ -52,6 +54,7 @@ export const getBiggestRatingDifferences = async (req, res) => {
     try {
         const ratingDifferences = await sql`
             SELECT 
+                p.player_id,
                 p.player_face_url, 
                 p.short_name, 
                 w.bought, 

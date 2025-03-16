@@ -88,6 +88,27 @@ export const adminApi = createApi({
           console.error("Error removing player:", error);
         }
       }
+    }),
+
+    AddPlayer: builder.mutation({
+      query: (formData) => {
+        return {
+          url: '/admin/add-new-player',
+          method: 'PUT',
+          body: formData,
+        }
+      },
+      invalidatesTags: ['ADMIN'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(dashboardApi.util.invalidateTags(['Dashboard']));
+          dispatch(playerPositionApi.util.invalidateTags(['PlayerPosition']));
+          dispatch(statsRankingApi.util.invalidateTags(['STATS']));
+        } catch (error) {
+          console.error("Error removing player:", error);
+        }
+      }
     })
   }),
 
@@ -101,7 +122,8 @@ export const {
   useAddNewEmployeeMutation,
   useRemoveEmployeeMutation,
   useUpdateEmployeeMutation,
-  useRemovePlayersMutation
+  useRemovePlayersMutation,
+  useAddPlayerMutation
 } = adminApi;
 
 export default adminApi;

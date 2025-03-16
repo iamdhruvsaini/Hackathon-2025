@@ -4,7 +4,7 @@ export const DominionFcModel = async () => {
     // Users Table
     await sql`
     CREATE TABLE IF NOT EXISTS users (
-        user_id TEXT PRIMARY KEY ,
+        user_id TEXT PRIMARY KEY,
         email TEXT NOT NULL,
         subscribed BOOLEAN DEFAULT FALSE
     );
@@ -15,8 +15,8 @@ export const DominionFcModel = async () => {
     CREATE TABLE IF NOT EXISTS wages (
         wage_id SERIAL PRIMARY KEY,
         bought SMALLINT DEFAULT 0,
-        wage_eur DECIMAL(10,2),
-        value_eur DECIMAL(10,2),
+        wage_eur DOUBLE PRECISION,
+        value_eur DOUBLE PRECISION,
         timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     `;
@@ -35,7 +35,8 @@ export const DominionFcModel = async () => {
         wage_id INT,
         nationality_name TEXT,  
         player_face_url TEXT NOT NULL,
-        club_position VARCHAR(100),
+        club_position VARCHAR(50),
+        formation TEXT,
         club_jersey_number INT,
         trending VARCHAR(5) DEFAULT 'NO',
         timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -49,7 +50,7 @@ export const DominionFcModel = async () => {
         physical_id SERIAL PRIMARY KEY,
         player_id INT NOT NULL,
         height_cm INT,
-        weight_kg INT,
+        weight_kg DECIMAL(10,2),
         bmi DECIMAL(10,2),
         FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
     );
@@ -61,19 +62,19 @@ export const DominionFcModel = async () => {
         skill_id SERIAL PRIMARY KEY,
         player_id INT NOT NULL,
         skill_moves INT,
-        pace INT,
-        shooting INT,
-        passing INT,
-        dribbling INT,
-        defending INT,
-        physic INT,
-        attacking_skills DECIMAL(10,2),
-        skill_attributes DECIMAL(10,2),
-        movement_skills DECIMAL(10,2),
-        power_attributes DECIMAL(10,2),
-        mental_attributes DECIMAL(10,2),
-        defending_skills DECIMAL(10,2),
-        goalkeeping_ability DECIMAL(10,2),
+        pace FLOAT,
+        shooting FLOAT,
+        passing FLOAT,
+        dribbling FLOAT,
+        defending FLOAT,
+        physic FLOAT,
+        attacking_skills FLOAT,
+        skill_attributes FLOAT,
+        movement_skills FLOAT,
+        power_attributes FLOAT,
+        mental_attributes FLOAT,
+        defending_skills FLOAT,
+        goalkeeping_ability FLOAT,
         FOREIGN KEY (player_id) REFERENCES players(player_id) ON DELETE CASCADE
     );
     `;
@@ -89,8 +90,9 @@ export const DominionFcModel = async () => {
     );
     `;
 
+    // Admin Table
     await sql`
-    CREATE TABLE IF NOT EXISTS admin(
+    CREATE TABLE IF NOT EXISTS admin (
         admin_id SERIAL NOT NULL PRIMARY KEY, 
         name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
@@ -98,5 +100,5 @@ export const DominionFcModel = async () => {
         role VARCHAR(255),
         timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
-    `
+    `;
 };

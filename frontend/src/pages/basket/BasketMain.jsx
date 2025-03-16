@@ -22,14 +22,6 @@ const positionDetails = {
     description: "Players who link defense and attack, controlling the game.",
     link: "/midfielders"
   },
-  "Substitutes & Reserves": {
-    description: "Backup players who can be rotated into matches.",
-    link: "/reserves"
-  },
-  Wingers: {
-    description: "Players who operate on the flanks to provide crosses and speed.",
-    link: "/wingers"
-  }
 };
 
 

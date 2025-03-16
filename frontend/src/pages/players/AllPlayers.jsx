@@ -27,6 +27,12 @@ import { Link } from "react-router-dom";
 
 const socket = io(getBaseURL(), { autoConnect: true });
 
+
+// 'LW', 'ST', 'RW', // Forwards
+// 'CDM', 'CAM', 'CM', // Midfielders
+// 'RB', 'CB', 'LB', // Defenders
+// 'GK' // Goalkeeper
+
 const AllPlayers = () => {
 
   const [pageCount, setPageCount] = useState(1);
@@ -197,13 +203,16 @@ const AllPlayers = () => {
                               autoComplete="off"
                             >
                               <option value="">Select Position</option>
-                              <option value="CB">CB</option>
-                              <option value="RCB">RCB</option>
-                              <option value="LCB">LCB</option>
-                              <option value="LB">LB</option>
+                              <option value="LW">LW</option>
+                              <option value="ST">ST</option>
+                              <option value="RW">RW</option>
+                              <option value="CDM">CDM</option>
+                              <option value="CAM">CAM</option>
+                              <option value="CM">CM</option>
                               <option value="RB">RB</option>
-                              <option value="LWB">LWB</option>
-                              <option value="RWB">RWB</option>
+                              <option value="CB">CB</option>
+                              <option value="LB">LB</option>
+                              <option value="GK">GK</option>
                             </select>
                           </div>
 

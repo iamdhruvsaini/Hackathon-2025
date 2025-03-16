@@ -7,8 +7,11 @@ import { Button } from "@/components/ui/button";
 import StepsContent from "./StepsContent";
 import Paidplans from "./Paidplans";
 import Questions from "./Questions";
+import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
+  const navigate=useNavigate();
   return (
     <>
       <div
@@ -17,7 +20,7 @@ const Home = () => {
       >
         <div className="xl:w-[1200px] xl:mx-auto px-4 pt-4">
           <div className="py-10">
-            <div className="flex items-center bg-yellow-50 border border-yellow-400 w-fit px-4 py-1 rounded-lg sm:mx-auto group shadow-md hover:-translate-y-2 cursor-pointer duration-500">
+            <button className="flex items-center bg-yellow-50 border border-yellow-400 w-fit px-4 py-1 rounded-lg sm:mx-auto group shadow-md hover:-translate-y-2 cursor-pointer duration-500" onClick={()=>navigate('/cart')}>
               <div className="h-2 w-2 mr-2 rounded-full bg-yellow-300 border border-yellow-600  "></div>
               <span className="text-yellow-600 font-medium">v0.1: </span>
               <span className="text-yellow-700 font-medium mr-2 pl-2">
@@ -26,7 +29,7 @@ const Home = () => {
               <span className="fa-solid fa-arrow-right text-yellow-600 group-hover:translate-x-1 duration-500">
                 <IoArrowForwardSharp />
               </span>
-            </div>
+            </button>
 
             <div className=" hidden sm:flex gap-4 justify-center mt-6 text-gray-500 font-display">
               <div className="flex items-center gap-2">
@@ -53,10 +56,10 @@ const Home = () => {
 
             <div className="sm:flex gap-12 pt-10 sm:justify-center justify-start">
               <div className="mb-3 sm:mb-0">
-                <Button>Choose Players</Button>
+                <Button onClick={()=>navigate('/basket')}>Choose Players</Button>
               </div>
               <div>
-                <Button variant={"outline"}>Player Stats</Button>
+                <Button variant={"outline"} onClick={()=>navigate('/players')} >Player Stats</Button>
               </div>
             </div>
           </div>

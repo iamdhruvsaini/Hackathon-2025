@@ -165,4 +165,110 @@ export const markPlayerAsSold = async (playerId, bought, wage) => {
     `;
     return updatedWage;
 };
+
+
+
+
+//ADD A new Player
+export const addPlayer = async (req, res) => {
+  try {
+    // Destructure the incoming fields from req.body
+    const {
+      // Player Basic Info
+      shortName,
+      longName,
+      age,
+      nationality,
+      leagueName,
+      clubName,
+      overall,
+      potential,
+      clubPosition,
+      clubJerseyNumber,
+      trending,
+      playerFaceUrl,
+      // Wage Info
+      wageEur,
+      valueEur,
+      bought,
+      // Physical Attributes
+      heightCm,
+      weightKg,
+      // Player Skills
+      skillMoves,
+      pace,
+      shooting,
+      passing,
+      dribbling,
+      defending,
+      physic,
+      attackingSkills,
+      skillAttributes,
+      movementSkills,
+      powerAttributes,
+      mentalAttributes,
+      defendingSkills,
+      goalkeepingAbility,
+
+
+    } = req.body;
+
+    // 1. Insert wage data first and get wage_id.
+    const wageInsert = await sql`
+      INSERT INTO wages (wage_eur, value_eur, bought)
+      VALUES (${wageEur}, ${valueEur}, ${bought})
+      RETURNING wage_id;
+    `;
+    const wage_id = wageInsert[0].wage_id;
+
+    // 2. Insert player data with the wage_id reference.
+    const playerInsert = await sql`
+      INSERT INTO players (
+        short_name, long_name, league_name, club_name, overall, potential, age, wage_id,
+        nationality_name, player_face_url, club_position, formation, club_jersey_number, trending
+      )
+      VALUES (
+        ${shortName}, ${longName?longName:""}, ${leagueName?leagueName:""}, ${clubName?clubName:""}, ${overall}, ${potential},
+        ${age}, ${wage_id}, ${nationality}, ${playerFaceUrl}, ${clubPosition}, ${"Midfielder"},
+        ${clubJerseyNumber}, ${trending}
+      )
+      RETURNING player_id;
+    `;
+    const player_id = playerInsert[0].player_id;
+
+    // 3. Compute BMI from height and weight.
+    const heightM = heightCm / 100;
+    const bmi = weightKg / (heightM * heightM);
+
+    // 4. Insert physical attributes.
+    await sql`
+      INSERT INTO physical (player_id, height_cm, weight_kg, bmi)
+      VALUES (${player_id}, ${heightCm}, ${weightKg}, ${bmi});
+    `;
+
+    // 5. Insert player skills.
+    await sql`
+      INSERT INTO player_skills (
+        player_id, skill_moves, pace, shooting, passing, dribbling, defending,
+        physic, attacking_skills, skill_attributes, movement_skills, power_attributes,
+        mental_attributes, defending_skills, goalkeeping_ability
+      )
+      VALUES (
+        ${player_id}, ${skillMoves}, ${pace}, ${shooting}, ${passing}, ${dribbling}, ${defending},
+        ${physic}, ${attackingSkills}, ${skillAttributes}, ${movementSkills}, ${powerAttributes},
+        ${mentalAttributes || null}, ${defendingSkills || null}, ${goalkeepingAbility || null}
+      );
+    `;
+
+    console.log("Player Added ✅");
+
+    res.status(201).json({ message: "Player added successfully" });
+  } catch (error) {
+    console.error("Error adding player:", error);
+    res.status(500).json({ error: "Error adding player" });
+  }
+};
+
+
+
   

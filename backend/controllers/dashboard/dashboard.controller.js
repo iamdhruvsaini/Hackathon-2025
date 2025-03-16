@@ -6,11 +6,9 @@ export const getPlayerPositionCount = async (req, res) => {
        SELECT 
        CASE 
             WHEN club_position = 'GK' THEN 'Goalkeepers'
-            WHEN club_position IN ('CB', 'LCB', 'RCB', 'LB', 'RB', 'LWB', 'RWB') THEN 'Defenders'
-            WHEN club_position IN ('CDM', 'LDM', 'RDM', 'CM', 'LCM', 'RCM', 'CAM', 'LAM', 'RAM') THEN 'Midfielders'
-            WHEN club_position IN ('LM', 'RM', 'LW', 'RW') THEN 'Wingers'
-            WHEN club_position IN ('ST', 'LS', 'RS', 'CF', 'RF', 'LF') THEN 'Forwards'
-            WHEN club_position IN ('SUB', 'RES') THEN 'Substitutes & Reserves'
+            WHEN club_position IN ('CB','RB','LB') THEN 'Defenders'
+            WHEN club_position IN ('CDM','CM', 'CAM') THEN 'Midfielders'
+            WHEN club_position IN ('LW','ST','RW') THEN 'Forwards'
             ELSE 'Unknown'
             END AS position_bucket,
             COUNT(*) AS player_count

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import phoneStadium from "@/assets/Images/stadium-phone.jpeg";
 import getBaseURL from "@/utils/baseURL";
 import axios from "axios";
-import { replace, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const AdminLogin = () => {

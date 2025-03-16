@@ -52,6 +52,15 @@ import { Link } from "react-router-dom";
 const socket = io(getBaseURL(), { autoConnect: true });
 
 
+// const positions = [
+//   'LW', 'ST', 'RW', // Forwards
+//   'CDM', 'CAM', 'CM', // Midfielders
+//   'RB', 'CB', 'LB', // Defenders
+//   'GK' // Goalkeeper
+// ];
+
+
+
 const Defenders = () => {
   const {currentUser} = useAuth();
   const userId = currentUser?.uid;
@@ -275,12 +284,8 @@ const Defenders = () => {
                             >
                               <option value="">Select Position</option>
                               <option value="CB">CB</option>
-                              <option value="RCB">RCB</option>
-                              <option value="LCB">LCB</option>
                               <option value="LB">LB</option>
                               <option value="RB">RB</option>
-                              <option value="LWB">LWB</option>
-                              <option value="RWB">RWB</option>
                             </select>
                           </div>
 

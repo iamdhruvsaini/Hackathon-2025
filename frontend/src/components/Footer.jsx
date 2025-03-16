@@ -5,10 +5,12 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-
 const Footer = () => {
-
-  const {handleSubmit,register,formState:{errors}}=useForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
   const handleSubscribe = async (formData) => {
     try {
@@ -21,12 +23,11 @@ const Footer = () => {
         });
         return;
       }
-  
-      const response = await axios.post(
-        `${getBaseURL()}/api/users/subscribe`,
-        { email: formData.email }
-      );
-  
+
+      const response = await axios.post(`${getBaseURL()}/api/users/subscribe`, {
+        email: formData.email,
+      });
+
       if (response.status === 200) {
         Swal.fire({
           title: "Subscribed!",
@@ -69,11 +70,10 @@ const Footer = () => {
       }
     }
   };
-  
 
   return (
     <div id="footer" className="mt-10 w-full bg-slate-50">
-      <div className="xl:max-w-[1300px] mx-auto px-4">
+      <div className="xl:max-w-[1300px] mx-auto">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="lg:flex lg:justify-between">
             <div className="mb-6 md:mb-0 lg:w-[40%]">
@@ -86,12 +86,12 @@ const Footer = () => {
 
             <div className="lg:w-[60%] md:flex md:justify-between space-y-6 mt-8 lg:mt-0">
               <div className="flex gap-10 ">
-                
-
                 <div>
-                  <h2 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                    Contact us
-                  </h2>
+                  <Link to={"/contact"}>
+                    <h1 className="mb-4 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                      Contact us
+                    </h1>
+                  </Link>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
                     <li className="mb-4">
                       <a
@@ -113,7 +113,7 @@ const Footer = () => {
                 </div>
                 {/* Admin  */}
                 <div>
-                  <Link to={'/admin'}>
+                  <Link to={"/admin"}>
                     <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                       Admin
                     </h2>
@@ -125,12 +125,13 @@ const Footer = () => {
                 <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-2">
                   SUBSCRIBE
                 </h2>
-                <form className="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap md:justify-start items-end" onSubmit={handleSubmit(handleSubscribe)}>
+                <form
+                  className="flex xl:flex-nowrap md:flex-nowrap lg:flex-wrap flex-wrap md:justify-start items-end"
+                  onSubmit={handleSubmit(handleSubscribe)}
+                >
                   <div className="relative w-40 sm:w-auto xl:mr-4 lg:mr-0 sm:mr-4 mr-2">
-                    <label
-                      className="leading-7 text-sm text-gray-600"
-                    >
-                     Enter Email
+                    <label className="leading-7 text-sm text-gray-600">
+                      Enter Email
                     </label>
                     <input
                       type="text"
@@ -148,15 +149,16 @@ const Footer = () => {
                       })}
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
-                   
-
                   </div>
                   <button className="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                     Subscribe
                   </button>
                 </form>
-                  {errors.email && <span className="text-red-500 text-sm mt-1">{errors.email.message}</span> }
-               
+                {errors.email && (
+                  <span className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
             </div>
           </div>

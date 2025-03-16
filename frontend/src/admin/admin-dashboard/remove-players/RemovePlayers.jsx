@@ -81,7 +81,7 @@ const RemovePlayers = () => {
         <div className="mx-auto">
           <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
-              Players List
+              Remove Player
             </h1>
             {/* table header */}
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
