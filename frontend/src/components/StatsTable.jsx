@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import playerNan from '@/assets/Images/player.jpg';
+
 import { useGetRankingQuery } from "@/redux/features/stats/statsRankingApi";
 import Loading from "./Loading";
-import { CloudLightning } from "lucide-react";
+
 
 const StatsTable = () => {
   const navigate = useNavigate();
@@ -11,7 +11,6 @@ const StatsTable = () => {
   const { link } = useParams();
   const { data: players, isLoading, isError } = useGetRankingQuery(link);
 
-  console.log(players);
   
   useEffect(() => {
     if (players && players.data && Array.isArray(players.data) && players.data.length > 0) {

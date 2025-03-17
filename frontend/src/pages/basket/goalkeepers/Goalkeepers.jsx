@@ -1,12 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {Check,Filter,X,Award ,Users,ShieldCheck,BarChart2 } from "lucide-react";
-
-
+import { Filter, X, Award, Users, ShieldCheck, BarChart2 } from "lucide-react";
 
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -17,7 +14,6 @@ import {
   PaginationContent,
   PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
@@ -55,8 +51,6 @@ import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
 
 const socket = io(getBaseURL(), { autoConnect: true });
-
-
 
 const Pagelinks = [
   { title: "Forwards", path: "/forwards", icon: <Award size={18} /> },
@@ -177,7 +171,7 @@ const GoalKeepers = () => {
   return (
     <>
       <section className="bg-gray-50 xl:w-[1300px] mx-auto p-4 mt-10">
-      <ul className="flex flex-wrap gap-3 mb-4">
+        <ul className="flex flex-wrap gap-3 mb-4">
           {Pagelinks.map((link, index) => (
             <li key={index}>
               <Link
@@ -450,7 +444,8 @@ const GoalKeepers = () => {
                         ) : (
                           <button
                             className={`w-24 text-xs font-medium text-center text-white py-2 rounded-md ${
-                              player.bought === 1? "bg-red-500" : "bg-blue-500"}`}
+                              player.bought === 1 ? "bg-red-500" : "bg-blue-500"
+                            }`}
                             type="button"
                             onClick={() => handleCartAdd(player)}
                             disabled={player.bought === 1}
@@ -496,7 +491,9 @@ const GoalKeepers = () => {
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
-                <div className="font-semibold border-2 rounded-full size-8 text-center">{pageCount}</div>
+                <div className="font-semibold border-2 rounded-full size-8 text-center">
+                  {pageCount}
+                </div>
               </ul>
             </nav>
           </div>

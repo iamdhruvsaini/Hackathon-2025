@@ -49,10 +49,3 @@ export default router;
 
 
 
-// Bucket	Included Positions
-// Goalkeepers	GK
-// Defenders	CB, LCB, RCB, LB, RB, LWB, RWB
-// Midfielders	CDM, LDM, RDM, CM, LCM, RCM, CAM, LAM, RAM
-// Wingers	LM, RM, LW, RW
-// Forwards	ST, LS, RS, CF, RF, LF
-// Substitutes & Reserves	SUB, RES

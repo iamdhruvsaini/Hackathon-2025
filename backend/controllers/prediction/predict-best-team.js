@@ -1,10 +1,16 @@
 import Groq from 'groq-sdk';
 import dotenv from 'dotenv';
-import { spawn } from 'child_process';
+import fetch from 'node-fetch'; // Add this import
 import { sql } from '../../neon/connection.js';
+import { spawn } from 'child_process'; // Keep for local development
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 dotenv.config();
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const predict_best_teams = async (req, res) => {
     try {
@@ -38,7 +44,6 @@ export const predict_best_teams = async (req, res) => {
         }
 
         const playerNames = players.map(player => player.name);
-
 
         function calculateAgeFactor(age) {
             if (age < 25) {
@@ -130,34 +135,76 @@ export const predict_best_teams = async (req, res) => {
 
         await Injury();
 
-        // Call Python script and pass data directly
-        const pythonProcess = spawn("python", ["controllers\\prediction\\player_optimizer.py"]);
-        let dataBuffer = "";
+        // Check if we're running on Vercel
+        const isVercel = process.env.VERCEL === '1';
 
-        // Send players data to Python script
-        pythonProcess.stdin.write(JSON.stringify(players));
-        pythonProcess.stdin.end();
-
-        pythonProcess.stdout.on("data", (data) => {
-            dataBuffer += data.toString(); // Collect data from Python script
-        });
-
-        pythonProcess.stderr.on("data", (data) => {
-            console.error(`Python Error: ${data.toString()}`);
-        });
-
-        pythonProcess.on("close", (code) => {
-            if (code === 0) {
-                // Parse the JSON output from Python
-                const teams = JSON.parse(dataBuffer);
+        // Modify this part in your predict_best_teams function
+        if (isVercel) {
+            // In Vercel, use the API endpoint
+            let baseUrl='https://dominionfc-backend.vercel.app'
+            try {
+                const response = await fetch(`${baseUrl}/api/optimize`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(players)
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error(`API error (${response.status}): ${errorText}`);
+                    throw new Error(`API responded with status ${response.status}`);
+                }
+         
+                const responseText = await response.text();
+                console.log("Raw response:", responseText);
+                
+                // Try to parse it as JSON
+                let teams;
+                try {
+                    teams = JSON.parse(responseText);
+                } catch (parseError) {
+                    console.error("JSON parse error:", parseError);
+                    throw new Error("Failed to parse response as JSON");
+                }
+                
                 res.status(200).json({ success: true, data: teams });
-            } else {
-                console.log(`Python process exited with code ${code}`);
-                res.status(500).json({ success: false, message: "Python script failed." });
+            } catch (apiError) {
+                console.error("Error calling optimization API:", apiError);
+                res.status(500).json({ success: false, message: "Optimization service failed." });
             }
-        });
+        } else {
+            // For local development, use the original Python script approach
+            const pythonProcess = spawn("python", [path.join(__dirname, "player_optimizer.py")]);
+            let dataBuffer = "";
+
+            // Send players data to Python script
+            pythonProcess.stdin.write(JSON.stringify(players));
+            pythonProcess.stdin.end();
+
+            pythonProcess.stdout.on("data", (data) => {
+                dataBuffer += data.toString(); // Collect data from Python script
+            });
+
+            pythonProcess.stderr.on("data", (data) => {
+                console.error(`Python Error: ${data.toString()}`);
+            });
+
+            pythonProcess.on("close", (code) => {
+                if (code === 0) {
+                    // Parse the JSON output from Python
+                    const teams = JSON.parse(dataBuffer);
+                    res.status(200).json({ success: true, data: teams });
+                } else {
+                    console.log(`Python process exited with code ${code}`);
+                    res.status(500).json({ success: false, message: "Python script failed." });
+                }
+            });
+        }
 
     } catch (error) {
+        console.error("Controller error:", error);
         res.status(500).json({
             success: false,
             message: "Something went wrong in Prediction Controller."

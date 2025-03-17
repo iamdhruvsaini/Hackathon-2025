@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "server.js", "use": "@vercel/node" },
+      { "src": "api/*.py", "use": "@vercel/python" }
+    ],
+    "routes": [
+      { 
+        "src": "/api/optimize", 
+        "dest": "/api/optimize.py",
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        }
+      },
+      { "src": "/(.*)", "dest": "/server.js" }
+    ]
+  }

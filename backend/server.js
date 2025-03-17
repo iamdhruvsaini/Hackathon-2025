@@ -21,7 +21,16 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(helmet());
 app.use(morgan('dev'));
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({
+   origin: ["http://localhost:5173","https://dominionfc.vercel.app"],
+   credentials: true
+ }));
+
+
+// Default route
+app.get('/', (req, res) => {
+  res.status(200).send('Server is running!');
+});
 
 
 //route for stats page
@@ -44,6 +53,12 @@ app.use('/api/admin', adminPortalRouter);
 
 // route to predict best 11
 app.use('/api/prediction', predictionRoutes)
+
+// Handle 404 errors for undefined routes
+app.use((req, res, next) => {
+  res.status(404).send("Sorry, can't find that!");
+});
+
 
 //creating a server
 const server = http.createServer(app);
