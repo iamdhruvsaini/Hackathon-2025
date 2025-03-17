@@ -1,7 +1,7 @@
 import { Activity, Layers, UserRoundPlus, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
-import PlayersList from "./playersList";
+import PlayersList from "./PlayersList";
 import PopupSelect from "@/utils/PopupSelect";
 import { PlayerComparisonChart } from "./PlayerComparisonChart";
 
