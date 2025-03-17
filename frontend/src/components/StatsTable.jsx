@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import playerNan from '@/assets/Images/player.jpg';
 import { useGetRankingQuery } from "@/redux/features/stats/statsRankingApi";
 import Loading from "./Loading";
-import { CloudLightning } from "lucide-react";
+
 
 const StatsTable = () => {
   const navigate = useNavigate();
