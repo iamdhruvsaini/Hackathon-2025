@@ -83,6 +83,7 @@ const Midfielders = () => {
     data: playerData,
     isLoading,
     isError,
+    isFetching,
     refetch,
   } = useGetMidFieldersPlayersQuery({ page: pageCount, ...filters });
 
@@ -171,7 +172,7 @@ const Midfielders = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
 
@@ -199,7 +200,7 @@ const Midfielders = () => {
           ))}
         </ul>
         <div className="mx-auto">
-          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden p-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
               Mid Fielders
             </h1>
@@ -367,10 +368,13 @@ const Midfielders = () => {
                       Age
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Overall Score
+                      Score
                     </th>
                     <th scope="col" className="px-4 py-3">
                       Position
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Value Eur
                     </th>
                     <th scope="col" className="px-4 py-3 flex justify-center">
                       <span className="">Actions</span>
@@ -387,7 +391,7 @@ const Midfielders = () => {
                     >
                       <th
                         scope="row"
-                        className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-2 cursor-pointer"
+                        className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-3 cursor-pointer"
                       >
                         <img src={player.player_face_url} className="size-8" />
                         <Link to={`/card/${player.player_id}`}>
@@ -405,6 +409,9 @@ const Midfielders = () => {
                       <td className="px-4 py-3">{player.age}</td>
                       <td className="px-4 py-3">{player.overall}</td>
                       <td className="px-4 py-3">{player.club_position}</td>
+                      <td className="px-4 py-3">
+                        {player.value_eur?.toFixed(2)}
+                      </td>
                       <td className="px-4 py-3 flex items-center justify-center gap-1">
                         {cartItems.some(
                           (item) => item.player_id === player.player_id

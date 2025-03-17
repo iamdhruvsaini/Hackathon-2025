@@ -87,6 +87,7 @@ const Forwards = () => {
     data: playerData,
     isLoading,
     isError,
+    isFetching,
     refetch,
   } = useGetForwardsPlayersQuery({ page: pageCount, ...filters });
 
@@ -172,14 +173,15 @@ const Forwards = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
+
 
   return (
     <>
       <section className="bg-gray-50 xl:w-[1300px] mx-auto p-4 mt-10">
-        <ul className="flex flex-wrap gap-3 mb-4">
+        <ul className="flex flex-wrap gap-3 mb-4 ">
           {Pagelinks.map((link, index) => (
             <li key={index}>
               <Link
@@ -199,8 +201,8 @@ const Forwards = () => {
             </li>
           ))}
         </ul>
-        <div className="mx-auto">
-          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+        <div className="mx-auto ">
+          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden p-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
               Forwards
             </h1>
@@ -211,7 +213,7 @@ const Forwards = () => {
                   Search
                 </label>
                 <div className="relative w-full">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
                     <svg
                       aria-hidden="true"
                       className="w-5 h-5 text-gray-500"
@@ -368,10 +370,13 @@ const Forwards = () => {
                       Age
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Overall Score
+                      Score
                     </th>
                     <th scope="col" className="px-4 py-3">
                       Position
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Value Eur
                     </th>
                     <th scope="col" className="px-4 py-3 flex justify-center">
                       <span className="">Actions</span>
@@ -388,7 +393,7 @@ const Forwards = () => {
                     >
                       <th
                         scope="row"
-                        className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-2 cursor-pointer"
+                        className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-3 cursor-pointer"
                       >
                         <img src={player.player_face_url} className="size-8" />
                         <Link to={`/card/${player.player_id}`}>
@@ -406,6 +411,8 @@ const Forwards = () => {
                       <td className="px-4 py-3">{player.age}</td>
                       <td className="px-4 py-3">{player.overall}</td>
                       <td className="px-4 py-3">{player.club_position}</td>
+                      <td className="px-4 py-3">{player.value_eur?.toFixed(2)}</td>
+
                       <td className="px-4 py-3 flex items-center justify-center gap-1">
                         {cartItems.some(
                           (item) => item.player_id === player.player_id

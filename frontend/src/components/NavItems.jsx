@@ -21,7 +21,7 @@ const NavItems = () => {
         </Link>
       </MenubarMenu>
       <MenubarMenu>
-        <Link to={"/basket"}>
+        <Link to={"/bucket"}>
           <MenubarTrigger><SwatchBookIcon className="pr-2" />Bucket</MenubarTrigger>
         </Link>
       </MenubarMenu>

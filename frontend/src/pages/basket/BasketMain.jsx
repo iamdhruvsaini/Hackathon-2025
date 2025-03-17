@@ -59,7 +59,7 @@ const BasketMain = () => {
           insights, and unlock strategic advantages in football management
         </p>
       </div>
-      <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-2 lg:pr-40 lg:pl-40 lg:gap-24 md:gap-12 md:space-y-0">
+      <div className="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-2  lg:gap-18 md:gap-12 md:space-y-0">
         {positions.map((option, index) => (
           <BasketCard option={option} key={index} />
         ))}

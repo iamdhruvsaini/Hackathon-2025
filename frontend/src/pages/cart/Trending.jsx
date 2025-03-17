@@ -13,13 +13,13 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
 
-const Recommended = () => {
+const Trending = () => {
   const { data: trendingPlayer, isLoading } = useGetTrendingPlayersQuery();
   
   return (
     <div className="hidden xl:mt-8 xl:block">
       <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-3xl">
-        Recommended
+        Trending
       </h1>
 
       {isLoading ? (
@@ -41,7 +41,7 @@ const Recommended = () => {
           {trendingPlayer.data.map((player, index) => (
             <SwiperSlide  key={index}>
               <div
-                className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm mt-10"
+                className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-gray-50 p-6 shadow-sm mt-10"
                 key={index}
               >
                 <Link className="overflow-hidden rounded">
@@ -78,4 +78,4 @@ const Recommended = () => {
   );
 };
 
-export default Recommended;
+export default Trending;

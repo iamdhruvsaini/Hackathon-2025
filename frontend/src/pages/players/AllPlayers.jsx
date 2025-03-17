@@ -48,6 +48,7 @@ const AllPlayers = () => {
   const {
     data: playerData,
     isLoading,
+    isFetching,
     refetch,
   } = useGetAllPlayersQuery({ page: pageCount, ...filters });
 
@@ -86,17 +87,18 @@ const AllPlayers = () => {
     setFilters({ player: "", country: "", position: "", age: "" });
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     <Loading />;
   }
+  console.log(filters);
 
   return (
     <>
-      <section className="bg-gray-50 xl:w-[1300px] mx-auto p-4 mt-10">
-        <div className="mx-auto">
-          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+      <section className="bg-gray-50 xl:w-[1300px] mx-auto p-8 mt-10 rounded-lg">
+        <div className="mx-auto shadow-lg">
+          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden p-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
-              Players List
+              Look for player
             </h1>
             {/* table header */}
             <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
@@ -275,7 +277,7 @@ const AllPlayers = () => {
                       Position
                     </th>
                     <th scope="col" className="px-4 py-3 flex justify-center">
-                      Player ID
+                      Value Eur
                     </th>
                   </tr>
                 </thead>
@@ -287,7 +289,7 @@ const AllPlayers = () => {
                     >
                       <th
                         scope="row"
-                        className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-2 cursor-pointer"
+                        className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-3 cursor-pointer"
                       >
                         <img src={player.player_face_url} className="size-8 hover:scale-105" />
                         <Link to={`/card/${player.player_id}`}><p className="pt-3">{player.short_name}</p></Link>
@@ -303,9 +305,7 @@ const AllPlayers = () => {
                       <td className="px-4 py-3">{player.age}</td>
                       <td className="px-4 py-3">{player.overall}</td>
                       <td className="px-4 py-3">{player.club_position}</td>
-                      <td className="px-4 py-3 text-center">
-                        {player.player_id}
-                      </td>
+                      <td className="text-center">{player.value_eur?.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>

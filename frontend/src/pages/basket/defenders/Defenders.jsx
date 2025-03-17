@@ -88,6 +88,7 @@ const Defenders = () => {
   const {
     data: playerData,
     isLoading,
+    isFetching,
     refetch,
   } = useGetDefendersPlayersQuery({ page: pageCount, ...filters });
 
@@ -173,13 +174,13 @@ const Defenders = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     <Loading />;
   }
 
   return (
     <>
-      <section className="bg-gray-50 xl:w-[1300px] mx-auto p-4 mt-10">
+      <section className="bg-gray-50 xl:w-[1300px] mx-auto p-4 mt-10 rounded-lg">
       <ul className="flex flex-wrap gap-3 mb-4">
           {Pagelinks.map((link, index) => (
             <li key={index}>
@@ -201,7 +202,7 @@ const Defenders = () => {
           ))}
         </ul>
         <div className="mx-auto">
-          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden p-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
               Defenders
             </h1>
@@ -369,10 +370,13 @@ const Defenders = () => {
                       Age
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Overall Score
+                      Score
                     </th>
                     <th scope="col" className="px-4 py-3">
                       Position
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Value Eur
                     </th>
                     <th scope="col" className="px-4 py-3 flex justify-center">
                       <span className="">Actions</span>
@@ -384,7 +388,7 @@ const Defenders = () => {
                     <tr className={`border-b ${player.bought===1?"bg-red-50":"bg-white"}`} key={index}>
                       <th
                         scope="row"
-                        className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-2 cursor-pointer"
+                        className="px-4 font-medium text-blue-600 whitespace-nowrap hover:underline flex items-center gap-3 cursor-pointer"
                       >
                         <img src={player.player_face_url} className="size-8" />
                         <Link to={`/card/${player.player_id}`}><p className="pt-3">{player.short_name}</p></Link>
@@ -400,6 +404,7 @@ const Defenders = () => {
                       <td className="px-4 py-3">{player.age}</td>
                       <td className="px-4 py-3">{player.overall}</td>
                       <td className="px-4 py-3">{player.club_position}</td>
+                      <td className="px-4 py-3">{player.value_eur?.toFixed(2)}</td>
                       <td className="px-4 py-3 flex items-center justify-center gap-1">
                         {cartItems.some(
                           (item) => item.player_id === player.player_id

@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "basket",
+        path: "bucket",
         element: (
           <PrivateRoute>
             <BasketMain />

@@ -79,6 +79,7 @@ const GoalKeepers = () => {
     data: playerData,
     isLoading,
     isError,
+    isFetching,
     refetch,
   } = useGetGoalkeepersPlayersQuery({ page: pageCount, ...filters });
 
@@ -164,7 +165,7 @@ const GoalKeepers = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading||isFetching) {
     return <Loading />;
   }
 
@@ -192,7 +193,7 @@ const GoalKeepers = () => {
           ))}
         </ul>
         <div className="mx-auto">
-          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+          <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden p-4">
             <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight p-2 text-gray-700">
               Goalkeepers
             </h1>
@@ -358,10 +359,14 @@ const GoalKeepers = () => {
                       Age
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Overall Score
+                      Score
                     </th>
+
                     <th scope="col" className="px-4 py-3">
                       Position
+                    </th>
+                    <th scope="col" className="px-4 py-3">
+                      Value Eur
                     </th>
                     <th scope="col" className="px-4 py-3 flex justify-center">
                       <span className="">Actions</span>
@@ -396,6 +401,9 @@ const GoalKeepers = () => {
                       <td className="px-4 py-3">{player.age}</td>
                       <td className="px-4 py-3">{player.overall}</td>
                       <td className="px-4 py-3">{player.club_position}</td>
+                      <td className="px-4 py-3">
+                        {player.value_eur?.toFixed(2)}
+                      </td>
                       <td className="px-4 py-3 flex items-center justify-center gap-1">
                         {cartItems.some(
                           (item) => item.player_id === player.player_id

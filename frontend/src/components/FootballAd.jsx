@@ -4,12 +4,12 @@ import league from "../assets/league.gif";
 const FootballAd = () => {
   return (
     <section>
-      <div className="mx-auto grid max-w-screen-xl rounded-lg p-4 md:p-8 lg:grid-cols-12 lg:gap-8 lg:p-16 xl:gap-16">
+      <div className="mx-auto grid max-w-screen-xl rounded-lg p-4 md:p-8 lg:grid-cols-12 lg:gap-8 lg:p-16 xl:gap-16 mt-4 space-y-6">
         <div className="lg:col-span-5">
           <img
             src={league}
             alt=""
-            className="w-[60%] sm:w-[40%] lg:w-full rounded-xl mx-auto"
+            className="sm:w-[50%] lg:w-full rounded-xl mx-auto"
           />
         </div>
         <div className="mx-auto place-self-center lg:col-span-7">

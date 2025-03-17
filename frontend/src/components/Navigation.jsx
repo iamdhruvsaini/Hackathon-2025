@@ -1,16 +1,30 @@
 import React from "react";
-import { Volleyball } from 'lucide-react';
 import NavItems from "./NavItems";
 import { FaUser } from "react-icons/fa6";
-import DropDownItems from "./DropDownItems";
 import { useAuth } from "@/context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { LogOutIcon, Volleyball } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import DropDownItems from "./DropDownItems";
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
+  const photoURL = currentUser?.photo;
+
   const handleProfileClick = () => {
     navigate("/login");
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
   };
   return (
     <div className="sticky z-30 top-0 bg-white w-full shadow-lg">
@@ -23,16 +37,35 @@ const Navigation = () => {
         </div>
 
         <div className="flex gap-4 items-center">
-          <button className="hidden text-sm lg:flex gap-2 justify-between items-center border-gray-300 px-3 py-2 border rounded-xl w-fit hover:border-gray-700 duration-300"
+          <button
+            className="hidden text-sm lg:flex gap-2 justify-between items-center border-gray-300 px-3 py-2 border rounded-xl w-fit hover:border-gray-700 duration-300"
             onClick={() => navigate("/players")}
           >
             <Volleyball size={20} />
-            <span className="font-medium">
-             Look Out Players
-            </span>
+            <span className="font-medium">Look Out Players</span>
           </button>
           {currentUser ? (
-            <DropDownItems />
+            <>
+              {/* Profile Link  */}
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar className="flex justify-center items-center">
+                    <AvatarImage src={photoURL} alt="User Avatar" />
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="mt-2 bg-gray-50">
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="cursor-pointer"
+                  >
+                    <LogOutIcon className="h-50 w-50" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropDownItems />
+            </>
           ) : (
             <FaUser
               className="cursor-pointer"

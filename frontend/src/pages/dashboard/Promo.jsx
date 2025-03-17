@@ -8,7 +8,7 @@ const Promo = () => {
         <div className="lg:col-span-5">
           <a href="#">
             <img
-              className="mb-4 h-56 w-56 dark:hidden sm:h-96 sm:w-96 rounded-lg xl:w-full"
+              className="mb-4 w-[90%] dark:hidden sm:h-96 sm:w-96 rounded-lg xl:w-full"
               src={promoPlayer}
               alt="Football player"
             />
@@ -22,12 +22,7 @@ const Promo = () => {
           <p className="mb-6 text-gray-500 dark:text-gray-400">
             Gear up for the season with our limited-time offer. Get your favorite football jerseys, boots, and accessories at unbeatable prices. Don't miss out—shop now and elevate your game!
           </p>
-          <a
-            href="#"
-            className="inline-flex items-center justify-center rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium hover:bg-primary-800 focus:ring-2 focus:ring-primary-300 dark:focus:ring-primary-900"
-          >
-            Shop Now
-          </a>
+        
         </div>
       </div>
     </section>

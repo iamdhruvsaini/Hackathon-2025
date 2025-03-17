@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import SelectedPlayer from "./SelectedPlayer";
-import Recommended from "./Recommended";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserSelectedPlayer } from "@/redux/cart/cartSlice";
 import Loading from "@/components/Loading";
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import Trending from "./Trending";
 
 const positionMap = {
   forwards: ["LW", "ST", "RW"], // Forwards
@@ -64,8 +65,26 @@ const CartPage = () => {
     return <Loading />;
   }
 
-  const handlePredictionClick = () => {
+  const handlePredictionClick = (positionsSummary) => {
+   if(!positionsSummary.forwards){
+    toast.error("Select atleast 3 Forwards");
+    return;
+   }
+   else if(!positionsSummary.backwards){
+    toast.error("Select atleast 3 backwards");
+    return;
+   }
+   else if(!positionsSummary.defenders){
+    toast.error("Select atleast 3 defenders");
+    return;
+   }
+   else if(!positionsSummary.goalkeepers){
+    toast.error("Select atleast 1 goalkeepers");
+    return;
+   }
+
     navigate('/playing');
+    
   };
 
   return (
@@ -80,11 +99,11 @@ const CartPage = () => {
             {/* selected player */}
             <SelectedPlayer players={players} />
             {/* Recommended section */}
-            <Recommended />
+            <Trending/>
           </div>
           {/* Player summary */}
           <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-            <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
+            <div className="space-y-4 rounded-lg border border-gray-300 bg-gray-50 p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
               <p className="text-xl font-semibold text-gray-900 dark:text-white">
                 Player summary
               </p>
@@ -133,7 +152,7 @@ const CartPage = () => {
                     : "bg-blue-600"
                 }`}
                 disabled={cartSummary.totalPlayer === 0}
-                onClick={handlePredictionClick}
+                onClick={()=>handlePredictionClick(cartSummary.positionCounts)}
               >
                 Proceed to Prediction
               </button>

@@ -81,7 +81,7 @@ const SelectedPlayer = ({players}) => {
         {displayedPlayers.length > 0 ? (
           displayedPlayers.map((player, index) => (
             <div
-              className="rounded-lg border bg-white border-gray-200 p-4 shadow-sm"
+              className="rounded-lg border bg-white border-gray-300 p-4 shadow-sm"
               key={index}
             >
               <div className="md:flex md:items-center md:justify-between md:gap-4 md:space-y-0">
