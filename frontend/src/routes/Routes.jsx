@@ -13,7 +13,7 @@ import Forwards from "@/pages/basket/forwards/Forwards";
 import Goalkeepers from "@/pages/basket/goalkeepers/Goalkeepers";
 import Midfielders from "@/pages/basket/midfielders/Midfielders";
 import CartPage from "@/pages/cart/CartPage";
-import Dashboard from "@/pages/dashboard/dashboard";
+import Dashboard from "@/pages/dashboard/Dashboard";
 import Home from "@/pages/home/Home";
 import PlayerComparison from "@/pages/player-comparison/PlayerComparison";
 import PlayerCard from "@/pages/players-card/PlayerCard";
@@ -31,7 +31,7 @@ import AdminRoute from "./AdminRoute";
 import SuperAdminRoute from "./SuperAdminRoute";
 import Playing from "@/pages/football-field/Playing";
 import AddPlayer from "@/admin/admin-dashboard/add-player/AddPlayer";
-import Contact from "@/pages/contact/contact";
+import Contact from "@/pages/contact/Contact";
 
 
 
