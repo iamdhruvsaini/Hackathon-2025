@@ -141,7 +141,7 @@ export const predict_best_teams = async (req, res) => {
         // Modify this part in your predict_best_teams function
         if (isVercel) {
             // In Vercel, use the API endpoint
-            let baseUrl='https://testing-kefv.vercel.app'
+            let baseUrl='https://dominionfc-backend.vercel.app'
             try {
                 const response = await fetch(`${baseUrl}/api/optimize`, {
                     method: 'POST',
