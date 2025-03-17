@@ -13,7 +13,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export function PlayerComparisonChart({ playerSkills}) {
+export function PlayerComparisonChart({ playerSkills }) {
   // Format playerSkills into chartData
   const chartData = Object.keys(playerSkills).map((skill) => ({
     skill: skill.replace("_", " ").toUpperCase(), // Format key names to display nicely
@@ -30,7 +30,7 @@ export function PlayerComparisonChart({ playerSkills}) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle> Skills</CardTitle>
+        <CardTitle>Skills</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="w-full">

@@ -73,15 +73,15 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
-      <div className="container mx-auto px-4">
+    <footer className="bg-gray-50 text-black py-2  mt-10 ">
+      <div className="container px-4 xl:w-[1300px] mx-auto p-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="mb-8 md:mb-0">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold text-white">Dominion FC</span>
+              <span className="text-2xl font-bold text-black">Dominion FC</span>
             </Link>
-            <p className="mt-4 text-gray-400">
+            <p className="mt-4 text-black">
               Your ultimate destination for football news, updates, and exclusive content.
             </p>
           </div>
@@ -91,22 +91,22 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" className="text-gray-400 hover:text-white transition duration-300">
+                <Link to="/about" className="text-black hover:text-blue-600 transition duration-300">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition duration-300">
+                <Link to="/contact" className="text-black hover:text-blue-600 transition duration-300">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="text-gray-400 hover:text-white transition duration-300">
+                <Link to="/privacy" className="text-black hover:text-blue-600 transition duration-300">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="text-gray-400 hover:text-white transition duration-300">
+                <Link to="/terms" className="text-black hover:text-blue-600transition duration-300">
                   Terms & Conditions
                 </Link>
               </li>
@@ -121,7 +121,7 @@ const Footer = () => {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition duration-300"
+                className="text-black hover:text-blue-600 transition duration-300"
               >
                 <FaFacebook size={24} />
               </a>
@@ -129,7 +129,7 @@ const Footer = () => {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition duration-300"
+                className="text-black hover:text-blue-600 transition duration-300"
               >
                 <FaTwitter size={24} />
               </a>
@@ -137,7 +137,7 @@ const Footer = () => {
                 href="https://discord.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition duration-300"
+                className="text-black hover:text-blue-600 transition duration-300"
               >
                 <FaDiscord size={24} />
               </a>
@@ -145,7 +145,7 @@ const Footer = () => {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition duration-300"
+                className="text-black hover:text-blue-600 transition duration-300"
               >
                 <FaGithub size={24} />
               </a>
@@ -153,7 +153,7 @@ const Footer = () => {
                 href="https://dribbble.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition duration-300"
+                className="text-black hover:text-blue-600 transition duration-300"
               >
                 <FaDribbble size={24} />
               </a>
@@ -163,7 +163,7 @@ const Footer = () => {
           {/* Newsletter Subscription */}
           <div className="flex flex-col gap-4">
             <div>
-              <Link to="/admin" className="text-gray-400 hover:text-white transition duration-300">
+              <Link to="/admin" className="text-black hover:text-blue-600 transition duration-300">
                 <h3 className="text-lg rounded-lg font-extrabold">
                   Login as Admin
                 </h3>
@@ -182,7 +182,7 @@ const Footer = () => {
                     },
                   })}
                   placeholder="Enter your email"
-                  className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 rounded-lg bg-gray-100 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 {errors.email && (
                   <span className="text-red-500 text-sm">{errors.email.message}</span>
@@ -199,8 +199,8 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400">
+        <div className="border-t border-gray-800 mt-4 pt-2 text-center">
+          <p className="text-black">
             © {new Date().getFullYear()} Dominion FC. All rights reserved.
           </p>
         </div>
