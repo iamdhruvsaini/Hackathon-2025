@@ -1,3 +1,4 @@
+import formatPrice from "@/utils/formatPrice";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -408,12 +409,8 @@ const TeamRender = ({ team, index }) => {
 
         {/* Formation indicator */}
         <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-1 rounded-full text-sm font-medium border border-white/30 flex gap-4">
-            <li>
-                4-3-2
-            </li>
-            <li>
-                Total Cost = {teamSummary.totalPrice} Eur
-            </li>
+          <li>4-3-3</li>
+          <li>Total Cost = {teamSummary.totalPrice} Eur</li>
         </div>
       </div>
 
@@ -423,12 +420,8 @@ const TeamRender = ({ team, index }) => {
         <div className="bg-gradient-to-r from-green-800 to-green-600 rounded-xl p-4 text-center shadow-lg">
           <h2 className="text-white font-bold text-xl">Team Formation</h2>
           <div className="bg-white/20 text-white  font-bold rounded-full px-8 py-2 mt-2 inline-block">
-          <li className="text-lg">
-                4-3-2
-            </li>
-            <li>
-                Total Cost = {teamSummary.totalPrice} Eur
-            </li>
+            <li className="text-lg">4-3-3</li>
+            <li>Total Cost = {teamSummary.totalPrice} Eur</li>
           </div>
         </div>
 
@@ -454,7 +447,7 @@ const TeamRender = ({ team, index }) => {
           },
           {
             title: "Forwards",
-            players: teamSummary.playersByPosition.goalkeepers || [],
+            players: teamSummary.playersByPosition.forwards || [],
             color: "yellow",
             colorClass: "bg-yellow-600",
           },
@@ -507,6 +500,96 @@ const TeamRender = ({ team, index }) => {
             </div>
           </div>
         ))}
+      </div>
+      {/* Squad Info Section - Only visible on larger devices */}
+      <div className="mt-6 bg-white rounded-xl shadow-md p-6 max-w-6xl mx-auto">
+        <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+          <svg
+            className="w-5 h-5 mr-2 text-blue-600"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Squad Players
+        </h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {team && team.players ? (
+            team.players.map((player, idx) => (
+              <div
+                key={idx}
+                className="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                onClick={() => handlePlayerClick(player)}
+              >
+                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200 flex-shrink-0">
+                  <img
+                    src={player.image}
+                    alt={player.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="ml-3 overflow-hidden">
+                  <p className="font-medium text-gray-800 truncate">
+                    {player.name}
+                  </p>
+                  <div className="flex items-center text-sm text-gray-500 mt-1">
+                    <span
+                      className={`w-2 h-2 rounded-full mr-1 ${
+                        player.position === "Defence"
+                          ? "bg-blue-500"
+                          : player.position === "Midfield"
+                          ? "bg-green-500"
+                          : player.position === "Forward"
+                          ? "bg-yellow-500"
+                          : "bg-red-500"
+                      }`}
+                    ></span>
+                    <span className="mr-2">{player.position}</span>
+                    <span className="text-xs text-green-600 font-medium">
+                      €{formatPrice(player.price)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No player data available</p>
+          )}
+        </div>
+
+        {/* Team Summary Stats */}
+        <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="bg-blue-50 rounded-lg p-3 text-center">
+            <p className="text-sm text-gray-500 font-medium">Total Players</p>
+            <p className="text-xl font-bold text-blue-700">
+              {teamSummary.totalPlayer}
+            </p>
+          </div>
+          <div className="bg-green-50 rounded-lg p-3 text-center">
+            <p className="text-sm text-gray-500 font-medium">Total Budget</p>
+            <p className="text-xl font-bold text-green-700">
+              €{formatPrice(teamSummary.totalPrice)}
+            </p>
+          </div>
+          <div className="bg-purple-50 rounded-lg p-3 text-center">
+            <p className="text-sm text-gray-500 font-medium">Formation</p>
+            <p className="text-xl font-bold text-purple-700">4-3-3</p>
+          </div>
+          <div className="bg-yellow-50 rounded-lg p-3 text-center">
+            <p className="text-sm text-gray-500 font-medium">Avg. Price</p>
+            <p className="text-xl font-bold text-yellow-700">
+              €
+              {teamSummary.totalPlayer > 0
+                ? formatPrice(teamSummary.totalPrice / teamSummary.totalPlayer)
+                : "0M"}
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );

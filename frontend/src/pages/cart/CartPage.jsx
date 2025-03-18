@@ -70,8 +70,8 @@ const CartPage = () => {
     toast.error("Select atleast 3 Forwards");
     return;
    }
-   else if(!positionsSummary.backwards){
-    toast.error("Select atleast 3 backwards");
+   else if(!positionsSummary.midfielders){
+    toast.error("Select atleast 3 midfielders");
     return;
    }
    else if(!positionsSummary.defenders){

@@ -38,7 +38,7 @@ const Trending = () => {
           modules={[Pagination, Navigation]}
           className="mySwiper"
         >
-          {trendingPlayer.data.map((player, index) => (
+          {trendingPlayer?.data.map((player, index) => (
             <SwiperSlide  key={index}>
               <div
                 className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-gray-50 p-6 shadow-sm mt-10"

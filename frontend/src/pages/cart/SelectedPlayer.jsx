@@ -13,6 +13,7 @@ import { removeFromCart } from "@/redux/cart/cartSlice";
 import { useRemoveSelectedPlayerMutation } from "@/redux/features/user-selection/userSelectionApi";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
+import { Link } from "react-router-dom";
 
 
 const rowsPerPage = 8;
@@ -85,13 +86,13 @@ const SelectedPlayer = ({players}) => {
               key={index}
             >
               <div className="md:flex md:items-center md:justify-between md:gap-4 md:space-y-0">
-                <a href="#" className="shrink-0 md:order-1">
+                <Link to={`/card/${player.player_id}`} className="shrink-0 md:order-1">
                   <img
-                    className="h-20 w-20 dark:hidden"
+                    className="h-20 w-20 dark:hidden hover:scale-105 duration-300"
                     src={player.player_face_url}
                     alt="Player"
                   />
-                </a>
+                </Link>
 
                 <div className="w-full min-w-0 flex-1 space-y-2 md:order-2 md:max-w-md">
                   <p className="text-lg font-bold text-gray-700">

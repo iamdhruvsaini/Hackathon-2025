@@ -25,7 +25,6 @@ export function LoginForm({ className, ...props }) {
     setLoading(true); // Start loading
     try {
       const userCredential = await emailSignIn(data.email, data.password);
-      console.log("User ID:", userCredential.user.uid);
       toast.success("Login Successful!");
       navigate("/", { replace: true }); // Redirect after success
     } catch (error) {
@@ -40,7 +39,7 @@ export function LoginForm({ className, ...props }) {
     setLoading(true);
     try {
       await googleSignIn();
-      toast.success("Login Successful! Redirecting...");
+      toast.success("Login Successful");
       navigate("/", { replace: true });
     } catch (error) {
       console.error("Google Sign-in Error:", error.message);

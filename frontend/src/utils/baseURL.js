@@ -1,5 +1,5 @@
 function getBaseURL(){
-    return "https://dominionfc-backend.vercel.app";
+    return "http://localhost:3000";
 }
 
 export default getBaseURL;
